@@ -1,0 +1,137 @@
+package kappafox.di.electrics;
+
+import ic2.api.item.Items;
+import kappafox.di.DiscreteIndustry;
+import kappafox.di.base.tileentities.TileEntityDiscreteBlock;
+import kappafox.di.electrics.blocks.BlockDiscreteCable;
+import kappafox.di.electrics.blocks.items.ItemDiscreteCableBlock;
+import kappafox.di.electrics.items.ItemHorseInspector;
+import kappafox.di.electrics.renderers.DiscreteRenderManager;
+import kappafox.di.electrics.tileentities.TileEntityDiscreteCable;
+import kappafox.di.lib.DiscreteID;
+import kappafox.di.lib.IC2Data;
+import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.Configuration;
+import net.minecraftforge.oredict.ShapedOreRecipe;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
+import cpw.mods.fml.client.registry.RenderingRegistry;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.LanguageRegistry;
+
+public class DiscreteElectrics
+{
+	
+	//blocks
+	public static Block discreteCableBlock;
+	
+	//items
+	public static Item horseInspector;
+	
+	//ids
+	public static int discreteCableID;
+	public static int discreteElectricItemID;
+	
+	//Render IDS
+	private static int renderID;
+
+	public static int discreteCableModelID;
+	
+	
+	public DiscreteElectrics( )
+	{
+		
+	}
+	
+	public void load(FMLInitializationEvent event_)
+	{
+		//Renderers
+		registerRenderers();
+		
+		//Blocks
+		registerBlocks();
+		
+		//Items
+		this.registerItems();
+		//Recipies
+		registerRecipies();
+		
+		
+		//register tile entities
+		GameRegistry.registerTileEntity(TileEntityDiscreteCable.class, "Cable Block");
+		GameRegistry.registerTileEntity(TileEntityDiscreteBlock.class, "Discrete Block");
+				
+		
+	}
+
+
+	private void registerItems( ) 
+	{
+		horseInspector = new ItemHorseInspector(discreteElectricItemID, "Horse Inspector", 1);
+		LanguageRegistry.addName(horseInspector, "Horse Inspector");
+	}
+
+	public void preInitialisation(FMLPreInitializationEvent event_, Configuration config_)
+	{
+		//grab the id database
+		DiscreteID ids = DiscreteIndustry.librarian.dibi;
+		
+		discreteElectricItemID = config_.getItem("DiscreteElectricItems", ids.itemDiscreteItem).getInt(ids.itemDiscreteItem);
+		discreteCableID = config_.getBlock("DiscreteCables", ids.discreteCable).getInt(ids.discreteCable);
+	}
+	
+	private void registerBlocks( )
+	{
+		//grab the IC2 name stuff first
+		IC2Data ic2 = DiscreteIndustry.librarian.ic2;
+		
+		//initialise all our block objects
+		discreteCableBlock = new BlockDiscreteCable(discreteCableID, Material.anvil, discreteCableModelID);
+		
+		//add them to the game registry
+		GameRegistry.registerBlock(discreteCableBlock, ItemDiscreteCableBlock.class, DiscreteIndustry.MODID + "cableBlock");
+		
+		//And finally for meta blocks add the subblocks
+		
+		String prefix = "Discrete ";
+		LanguageRegistry.addName(new ItemStack(discreteCableBlock, 1, 0), prefix + ic2.cableName[0]);
+		LanguageRegistry.addName(new ItemStack(discreteCableBlock, 1, 1), prefix + ic2.cableName[1]);
+		LanguageRegistry.addName(new ItemStack(discreteCableBlock, 1, 2), prefix + ic2.cableName[2]);
+		LanguageRegistry.addName(new ItemStack(discreteCableBlock, 1, 3), prefix + ic2.cableName[3]);
+		LanguageRegistry.addName(new ItemStack(discreteCableBlock, 1, 4), prefix + ic2.cableName[4]);
+		LanguageRegistry.addName(new ItemStack(discreteCableBlock, 1, 5), prefix + ic2.cableName[5]);
+	}
+	
+	private void registerRenderers( )
+	{
+		renderID = RenderingRegistry.getNextAvailableRenderId();
+		discreteCableModelID = RenderingRegistry.getNextAvailableRenderId();
+		
+		RenderingRegistry.registerBlockHandler(discreteCableModelID, new DiscreteRenderManager(renderID));
+	}
+	
+	//OreDictionary n = new OreDictionary();
+
+	private void registerRecipies( )
+	{
+		ItemStack frameDiscreteCable = new ItemStack(discreteCableBlock, 16, 0);
+		ItemStack frameDiscreteCable24 = new ItemStack(discreteCableBlock, 24, 0);
+		ItemStack frameDiscreteCable32 = new ItemStack(discreteCableBlock, 32, 0);
+		ItemStack frameDiscreteCable1 = new ItemStack(discreteCableBlock, 1, 0);
+		
+		GameRegistry.addRecipe(new ShapedOreRecipe(horseInspector, new Object[]{ "X X", "ZYZ", "ZMZ", 'X', Item.ingotIron, 'Z', "itemRubber", 'Y', Block.glass, 'M', Items.getItem("electronicCircuit")}));
+		
+		GameRegistry.addRecipe(new ShapedOreRecipe(frameDiscreteCable, new Object[]{ "X X", " Y ", "X X", 'Y', Item.ingotIron, 'X', "itemRubber"}));
+		GameRegistry.addRecipe(new ShapedOreRecipe(frameDiscreteCable24, new Object[]{ "X X", " Y ", "X X", 'Y', Items.getItem("plateiron"), 'X', "itemRubber"}));
+		GameRegistry.addRecipe(new ShapedOreRecipe(frameDiscreteCable32, new Object[]{ "X X", " Y ", "X X", 'Y', Item.ingotGold, 'X', "itemRubber"}));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(discreteCableBlock, 1, 1), new Object[]{frameDiscreteCable1, Items.getItem("tinCableItem")}));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(discreteCableBlock, 1, 2), new Object[]{frameDiscreteCable1, Items.getItem("insulatedCopperCableItem")}));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(discreteCableBlock, 1, 3), new Object[]{frameDiscreteCable1, Items.getItem("doubleInsulatedGoldCableItem")}));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(discreteCableBlock, 1, 4), new Object[]{frameDiscreteCable1, Items.getItem("glassFiberCableItem")}));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(discreteCableBlock, 1, 5), new Object[]{frameDiscreteCable1, Items.getItem("trippleInsulatedIronCableItem")}));
+	}
+}

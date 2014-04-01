@@ -1643,7 +1643,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 				for(int i = 0; i < 2; i++)
 				{
 					renderer_.setRenderBounds(onePx, ymin, zeroPx, fifteenPx, ymax, onePx);
-					drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					
 					ymin += inc;
 					ymax += inc;
@@ -1658,7 +1658,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 				for(int i = 0; i < 2; i++)
 				{
 					renderer_.setRenderBounds(onePx, ymin, fifteenPx, fifteenPx, ymax, sixteenPx);
-					drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					
 					ymin += inc;
 					ymax += inc;
@@ -1673,7 +1673,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 				for(int i = 0; i < 2; i++)
 				{
 					renderer_.setRenderBounds(fifteenPx, ymin, onePx, sixteenPx, ymax, fifteenPx);
-					drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					
 					ymin += inc;
 					ymax += inc;
@@ -1688,7 +1688,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 				for(int i = 0; i < 2; i++)
 				{
 					renderer_.setRenderBounds(zeroPx, ymin, onePx, onePx, ymax, fifteenPx);
-					drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					
 					ymin += inc;
 					ymax += inc;
@@ -1971,7 +1971,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 						
 
 						renderer_.setRenderBounds((xmax - onePx), ymax, onePx, xmax, (ymax + onePx), twoPx);
-						drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+						drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					}
 					else
 					{
@@ -1979,12 +1979,12 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 						xmax = sevenPx;
 						
 						renderer_.setRenderBounds(xmin, ymax, onePx, (xmin + onePx), (ymax + onePx), twoPx);
-						drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+						drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 
 					}
 					
 					renderer_.setRenderBounds(xmin, ymin, onePx, xmax, ymax, twoPx);
-					drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					
 					ymin += inc;
 					ymax += inc;
@@ -2012,7 +2012,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 						
 
 						renderer_.setRenderBounds((xmax - onePx), ymax, fourteenPx, xmax, (ymax + onePx), fifteenPx);
-						drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+						drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					}
 					else
 					{
@@ -2020,12 +2020,12 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 						xmax = sevenPx;
 						
 						renderer_.setRenderBounds(xmin, ymax, fourteenPx, (xmin + onePx), (ymax + onePx), fifteenPx);
-						drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+						drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 
 					}
 					
 					renderer_.setRenderBounds(xmin, ymin, fourteenPx, xmax, ymax, fifteenPx);
-					drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					
 					ymin += inc;
 					ymax += inc;
@@ -2052,7 +2052,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 						
 
 						renderer_.setRenderBounds(fourteenPx, ymax, (xmax - onePx), fifteenPx, (ymax + onePx), xmax);
-						drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+						drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					}
 					else
 					{
@@ -2060,12 +2060,12 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 						xmax = sevenPx;
 						
 						renderer_.setRenderBounds(fourteenPx, ymax, xmin, fifteenPx, (ymax + onePx), (xmin + onePx));
-						drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+						drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 
 					}
 					
 					renderer_.setRenderBounds(fourteenPx, ymin, xmin, fifteenPx, ymax, xmax);
-					drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					
 					ymin += inc;
 					ymax += inc;
@@ -2093,7 +2093,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 						
 
 						renderer_.setRenderBounds(onePx, ymax, (xmax - onePx), twoPx, (ymax + onePx), xmax);
-						drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+						drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					}
 					else
 					{
@@ -2101,12 +2101,12 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 						xmax = sevenPx;
 						
 						renderer_.setRenderBounds(onePx, ymax, xmin, twoPx, (ymax + onePx), (xmin + onePx));
-						drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+						drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 
 					}
 					
 					renderer_.setRenderBounds(onePx, ymin, xmin, twoPx, ymax, xmax);
-					drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					
 					ymin += inc;
 					ymax += inc;
@@ -2156,13 +2156,13 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 					}
 					
 					renderer_.setRenderBounds(xmin, ymin, onePx, xmax, ymax, twoPx);
-					drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					
 					renderer_.setRenderBounds(xmin, ymin, zeroPx, (xmin + onePx), ymax, onePx);
-					drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					
 					renderer_.setRenderBounds((xmax - onePx), ymin, zeroPx, xmax, ymax, onePx);
-					drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					
 					ymin += inc;
 					ymax += inc;
@@ -2191,13 +2191,13 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 					}
 					
 					renderer_.setRenderBounds(xmin, ymin, fourteenPx, xmax, ymax, fifteenPx);
-					drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					
 					renderer_.setRenderBounds(xmin, ymin, fifteenPx, (xmin + onePx), ymax, sixteenPx);
-					drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					
 					renderer_.setRenderBounds((xmax - onePx), ymin, fifteenPx, xmax, ymax, sixteenPx);
-					drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					
 					ymin += inc;
 					ymax += inc;
@@ -2224,13 +2224,13 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 					}
 					
 					renderer_.setRenderBounds(fourteenPx, ymin, zmin, fifteenPx, ymax, zmax);
-					drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					
 					renderer_.setRenderBounds(fifteenPx, ymin, zmin, sixteenPx, ymax, (zmin + onePx));
-					drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					
 					renderer_.setRenderBounds(fifteenPx, ymin, (zmax - onePx), sixteenPx, ymax, zmax);
-					drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					
 					ymin += inc;
 					ymax += inc;
@@ -2258,13 +2258,13 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 					}
 					
 					renderer_.setRenderBounds(onePx, ymin, zmin, twoPx, ymax, zmax);
-					drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					
 					renderer_.setRenderBounds(zeroPx, ymin, zmin, onePx, ymax, (zmin + onePx));
-					drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					
 					renderer_.setRenderBounds(zeroPx, ymin, (zmax - onePx), onePx, ymax, zmax);
-					drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					
 					ymin += inc;
 					ymax += inc;
@@ -2477,7 +2477,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 				{
 					
 					renderer_.setRenderBounds(threePx, ymin, onePx, thirteenPx, ymax, twoPx);
-					drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					
 					ymin += inc;
 					ymax += inc;
@@ -2498,7 +2498,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 				for(int i = 0; i < 4; i++)
 				{
 					renderer_.setRenderBounds(threePx, ymin, fourteenPx, thirteenPx, ymax, fifteenPx);
-					drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					
 					ymin += inc;
 					ymax += inc;
@@ -2518,7 +2518,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 				for(int i = 0; i < 4; i++)
 				{
 					renderer_.setRenderBounds(fourteenPx, ymin, threePx, fifteenPx, ymax, thirteenPx);
-					drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					
 					ymin += inc;
 					ymax += inc;
@@ -2539,7 +2539,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 				for(int i = 0; i < 4; i++)
 				{
 					renderer_.setRenderBounds(onePx, ymin, threePx, twoPx, ymax, thirteenPx);
-					drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					
 					ymin += inc;
 					ymax += inc;
@@ -2579,13 +2579,13 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 				for(int i = 0; i < 4; i++)
 				{
 					renderer_.setRenderBounds(twoPx, ymin, onePx, fourteenPx, ymax, twoPx);
-					drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					
 					renderer_.setRenderBounds(twoPx, ymin, zeroPx, threePx, ymax, onePx);
-					drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					
 					renderer_.setRenderBounds(thirteenPx, ymin, zeroPx, fourteenPx, ymax, onePx);
-					drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					
 					ymin += inc;
 					ymax += inc;
@@ -2599,13 +2599,13 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 				for(int i = 0; i < 4; i++)
 				{
 					renderer_.setRenderBounds(twoPx, ymin, fourteenPx, fourteenPx, ymax, fifteenPx);
-					drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					
 					renderer_.setRenderBounds(twoPx, ymin, fifteenPx, threePx, ymax, sixteenPx);
-					drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					
 					renderer_.setRenderBounds(thirteenPx, ymin, fifteenPx, fourteenPx, ymax, sixteenPx);
-					drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					
 					ymin += inc;
 					ymax += inc;
@@ -2619,13 +2619,13 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 				for(int i = 0; i < 4; i++)
 				{
 					renderer_.setRenderBounds(fourteenPx, ymin, twoPx, fifteenPx, ymax, fourteenPx);
-					drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					
 					renderer_.setRenderBounds(fifteenPx, ymin, twoPx, sixteenPx, ymax, threePx);
-					drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					
 					renderer_.setRenderBounds(fifteenPx, ymin, thirteenPx, sixteenPx, ymax, fourteenPx);
-					drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					
 					ymin += inc;
 					ymax += inc;
@@ -2639,13 +2639,13 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 				for(int i = 0; i < 4; i++)
 				{
 					renderer_.setRenderBounds(onePx, ymin, twoPx, twoPx, ymax, fourteenPx);
-					drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					
 					renderer_.setRenderBounds(zeroPx, ymin, twoPx, onePx, ymax, threePx);
-					drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					
 					renderer_.setRenderBounds(zeroPx, ymin, thirteenPx, onePx, ymax, fourteenPx);
-					drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
+					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
 					
 					ymin += inc;
 					ymax += inc;

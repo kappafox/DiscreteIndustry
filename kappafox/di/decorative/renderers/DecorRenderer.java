@@ -2,7 +2,7 @@ package kappafox.di.decorative.renderers;
 import kappafox.di.base.DiscreteRenderHelper;
 import kappafox.di.base.tileentities.TileEntityDiscreteBlock;
 import kappafox.di.base.util.PixelSet;
-import kappafox.di.base.util.TextureOffsets;
+import kappafox.di.base.util.TextureOffset;
 import kappafox.di.decorative.tileentities.TileEntityFixtureBlock;
 import kappafox.di.decorative.tileentities.TileEntityLoomBlock;
 import kappafox.di.decorative.tileentities.TileEntitySwordRack;
@@ -29,10 +29,12 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class DecorRenderer implements ISimpleBlockRenderingHandler
 {
 	
-	private static final PixelSet px = PixelSet.getInstance();
+	private static final PixelSet px = PixelSet.getInstance();	
+	private static final DiscreteRenderHelper drh = new DiscreteRenderHelper();
 	
 	private int renderID;
-	//included purely as a legacy helper, Always use px.<num> from now on!
+	
+	//included purely as a legacy helper while converting to the new px method, Always use px.<num> from now on!
 	private static final double zeroPx = px.dzero;
 	private static final double onePx = px.done;
 	private static final double twoPx = px.dtwo;
@@ -50,8 +52,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 	private static final double fourteenPx = px.dfourteen;
 	private static final double fifteenPx = px.dfifteen;
 	private static final double sixteenPx = px.dsixteen;
-	
-	private static DiscreteRenderHelper drh = new DiscreteRenderHelper();
+
 	
 	@SideOnly(Side.CLIENT)
 	private static Tessellator tessellator;
@@ -832,7 +833,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 			case 2:
 			{
 				int offset = 4;
-				TextureOffsets off = new TextureOffsets();
+				TextureOffset off = new TextureOffset();
 				off.setOffsetU(5, offset);	//Offsetting +X
 				
 				float min = px.zero;
@@ -853,7 +854,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 			case 3:
 			{
 				int offset = -4;
-				TextureOffsets off = new TextureOffsets();
+				TextureOffset off = new TextureOffset();
 				off.setOffsetU(5, offset);	//Offsetting +X
 				
 				float min = px.four;
@@ -874,7 +875,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 			{
 				
 				int offset = 4;
-				TextureOffsets off = new TextureOffsets();
+				TextureOffset off = new TextureOffset();
 				off.setOffsetU(2, offset);	//Offsetting +X
 				
 				float min = px.zero;
@@ -894,7 +895,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 			case 5:
 			{
 				int offset = -4;
-				TextureOffsets off = new TextureOffsets();
+				TextureOffset off = new TextureOffset();
 				off.setOffsetU(2, offset);	//Offsetting +X
 				
 				float min = px.four;
@@ -985,7 +986,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 			case 2:
 			{
 
-				TextureOffsets off = new TextureOffsets();
+				TextureOffset off = new TextureOffset();
 				off.setOffsetU(5, 8);	//Offsetting +X
 				
 				double x1 = zeroPx;
@@ -1039,7 +1040,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 			//+Z
 			case 3:
 			{
-				TextureOffsets off = new TextureOffsets();
+				TextureOffset off = new TextureOffset();
 				off.setOffsetU(5, -8);	//Offsetting -X
 
 				double x1 = zeroPx;
@@ -1093,7 +1094,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 			//-X
 			case 4:
 			{
-				TextureOffsets off = new TextureOffsets();
+				TextureOffset off = new TextureOffset();
 				off.setOffsetU(2, 8);	//Offsetting -Z
 				
 				double z1 = zeroPx;
@@ -1149,7 +1150,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 			//+X
 			case 5:
 			{
-				TextureOffsets off = new TextureOffsets();
+				TextureOffset off = new TextureOffset();
 				off.setOffsetU(2, -8);	//Offsetting -Z
 				
 				double z1 = zeroPx;

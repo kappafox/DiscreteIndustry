@@ -2,7 +2,7 @@ package kappafox.di.base;
 
 import kappafox.di.base.tileentities.TileEntityDiscreteBlock;
 import kappafox.di.base.util.AdjustableIcon;
-import kappafox.di.base.util.TextureOffsets;
+import kappafox.di.base.util.TextureOffset;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.client.Minecraft;
@@ -155,7 +155,7 @@ public class DiscreteRenderHelper
 	}
 	
 	
-	public void renderDiscreteQuadWithTextureOffsets(IBlockAccess world_, RenderBlocks renderer_, Block block_, int x_, int y_, int z_, TextureOffsets off_)
+	public void renderDiscreteQuadWithTextureOffsets(IBlockAccess world_, RenderBlocks renderer_, Block block_, int x_, int y_, int z_, TextureOffset off_)
 	{				
 			renderer_.enableAO = true;
 			

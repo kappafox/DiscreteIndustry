@@ -32,9 +32,6 @@ public class DiscreteDecorativeRenderManager implements ISimpleBlockRenderingHan
 		{
 			decorRenderer.renderInventoryBlock(block_, meta_, modelID_, renderer_);
 		}
-		
-
-		
 	}
 
 	@Override

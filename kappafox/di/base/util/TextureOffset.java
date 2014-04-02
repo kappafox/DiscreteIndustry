@@ -1,10 +1,10 @@
 package kappafox.di.base.util;
 
-public class TextureOffsets 
+public class TextureOffset 
 {
 	private int[] offsets;
 	
-	public TextureOffsets( )
+	public TextureOffset( )
 	{
 		offsets = new int[12];
 	}

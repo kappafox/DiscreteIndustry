@@ -30,33 +30,45 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockDecor extends BlockDiscreteBlock
 {
-	
 	private static final short SUB_BLOCKS = 7;
 	private static SubBlock[] blocks;
 	
-	private static final double zeroPx = 0.0;
-	private static final double onePx = 0.0625;
-	private static final double twoPx = onePx * 2;
-	private static final double threePx = onePx * 3;
-	private static final double fourPx = onePx * 4;
-	private static final double fivePx = onePx * 5;
-	private static final double sixPx = onePx * 6;
-	private static final double sevenPx = onePx * 7;
-	private static final double eightPx = onePx * 8;
-	private static final double ninePx = onePx * 9;
-	private static final double tenPx = onePx * 10;
-	private static final double elevenPx = onePx * 11;
-	private static final double twelvePx = onePx * 12;
-	private static final double thirteenPx = onePx * 13;
-	private static final double fourteenPx = onePx * 14;
-	private static final double fifteenPx = onePx * 15;
-	private static final double sixteenPx = onePx * 16;
+	public static final short ID_LADDER_FOOTHOLD = 800;
+	public static final short ID_LADDER_POLE = 801;
+	public static final short ID_LADDER_SIMPLE = 802;
+	public static final short ID_LADDER_ROPE = 803;
+	public static final short ID_LADDER_FIXED = 804;
+	public static final short ID_LADDER_CLASSIC = 806;
+	public static final short ID_LADDER_INDUSTRIAL = 807;
 	
+	public static final short ID_RACK_SWORDREST = 821;
+	public static final short ID_RACK_SWORDRACK = 822;
+	
+	public static final short ID_STAIRS_NORMAL = 861;
+	public static final short ID_STAIRS_SMALL = 862;
+	
+	public static final short ID_STRUT_2X2 = 871;
+	public static final short ID_STRUT_4X4 = 872;
+	public static final short ID_STRUT_6X6 = 873;
+	
+	
+	public static final short RANGE_LADDER_MIN = 800;
+	public static final short RANGE_LADDER_MAX = 820;
+	
+	public static final short RANGE_RACK_MIN = 821;
+	public static final short RANGE_RACK_MAX = 840;
+	
+	public static final short RANGE_STAIRS_MIN = 861;
+	public static final short RANGE_STAIRS_MAX = 870;
+	
+	public static final short RANGE_STRUT_MIN = 871;
+	public static final short RANGE_STRUT_MAX = 880;
 	
 	@SideOnly(Side.CLIENT)
 	private int rid;
@@ -104,16 +116,6 @@ public class BlockDecor extends BlockDiscreteBlock
 		for(int i = 0; i < SUB_BLOCKS; i++)
 		{
 			list_.add(new ItemStack(id_, 1, 3));
-			/*
-			if(i == 0 || i == 1 || i == 2 || i == 4 || i == 5 || i == 6)
-			{
-				
-			}
-			else
-			{
-				list_.add(new ItemStack(id_, 1, i));
-			}
-			*/
 		}		
 	}
 	
@@ -130,22 +132,22 @@ public class BlockDecor extends BlockDiscreteBlock
 	{
 		if(meta_ > 15)
 		{
-			if(meta_ >= 800 && meta_ <= 820)
+			if(meta_ >= RANGE_LADDER_MIN && meta_ <= RANGE_LADDER_MAX)
 			{
 				return blocks[2].getOverloadedIcon(side_, meta_);
 			}
 			
-			if(meta_ >= 821 && meta_ <= 840)
+			if(meta_ >= RANGE_RACK_MIN && meta_ <= RANGE_RACK_MAX)
 			{
 				return blocks[4].getOverloadedIcon(side_, meta_);
 			}
 			
-			if(meta_ >= 861 && meta_ <= 870)
+			if(meta_ >= RANGE_STAIRS_MIN && meta_ <= RANGE_STAIRS_MAX)
 			{
 				return blocks[5].getOverloadedIcon(side_, meta_);
 			}
 			
-			if(meta_ >= 871 && meta_ <= 880)
+			if(meta_ >= RANGE_STRUT_MIN && meta_ <= RANGE_STRUT_MAX)
 			{
 				return blocks[6].getOverloadedIcon(side_, meta_);
 			}
@@ -324,107 +326,6 @@ public class BlockDecor extends BlockDiscreteBlock
     	{
     		this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
     	}
-    	
-    	/*
-      	if(meta == 1 || meta == 2)
-    	{
-      		TileEntityDiscreteBlock tile = (TileEntityDiscreteBlock)world_.getBlockTileEntity(x_, y_, z_);
-        	
-        	if(tile != null)
-        	{
-
-            	int direction = tile.getVariable();
-            	
-            	switch(direction)
-            	{
-        			//North
-        			case 2:
-        			{
-        				this.setBlockBounds((float)zeroPx, (float)zeroPx, (float)zeroPx, (float)sixteenPx, (float)sixteenPx, (float)twoPx);
-        				break;
-        			}
-        			
-        			//South
-        			case 3:
-        			{
-        				this.setBlockBounds((float)zeroPx, (float)zeroPx, (float)fourteenPx, (float)sixteenPx, (float)sixteenPx, (float)sixteenPx);
-        				break;
-        			}
-        			
-        			//East
-        			case 5:
-        			{
-        				this.setBlockBounds((float)fourteenPx, (float)zeroPx, (float)zeroPx, (float)sixteenPx, (float)sixteenPx, (float)sixteenPx);
-        				break;
-        			}
-        			
-        			//West
-        			case 4:
-        			{
-        				this.setBlockBounds((float)zeroPx, (float)zeroPx, (float)zeroPx, (float)twoPx, (float)sixteenPx, (float)sixteenPx);
-        				break;
-        			}
-            	}    
-            	
-        		if(tile.getSubType() == 888)
-        		{
-        			this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-        		}
-        	}
-    	}
-      	
-      	//Sword Rack
-      	if(meta == 4)
-      	{
-      		
-      		TileEntityDiscreteBlock tile = (TileEntityDiscreteBlock)world_.getBlockTileEntity(x_, y_, z_);
-      		
-        	if(tile != null)
-        	{
-        		
-        		if(tile.getSubType() == 822)
-        		{	
-	            	int direction = tile.getVariable();
-	            	
-	            	if(direction == 2 || direction == 3)
-	            	{
-	            		this.setBlockBounds((float)zeroPx, (float)zeroPx, (float)fourPx, (float)sixteenPx, (float)sixteenPx, (float)twelvePx);
-	            	}
-	            	
-	            	if(direction == 4 || direction == 5)
-	            	{
-	            		this.setBlockBounds((float)fourPx, (float)zeroPx, (float)zeroPx, (float)twelvePx, (float)sixteenPx, (float)sixteenPx);
-	            	}
-        		}
-            	
-            	if(tile.getSubType() == 821)
-            	{
-	            	if(direction == 2 || direction == 3)
-	            	{
-	            		this.setBlockBounds((float)zeroPx, (float)zeroPx, (float)fourPx, (float)sixteenPx, (float)sixteenPx, (float)twelvePx);
-	            	}
-	            	
-	            	if(direction == 4 || direction == 5)
-	            	{
-	            		this.setBlockBounds((float)fourPx, (float)zeroPx, (float)zeroPx, (float)twelvePx, (float)sixteenPx, (float)sixteenPx);
-	            	}
-            	}
-
-
-        	}
-        	
-
-        	
-        	
-
-      	}
-      	
-      	else
-      	{
-      		this.setBlockBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
-      	}
-      	*/
-    	
     }
 
     

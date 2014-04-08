@@ -98,43 +98,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 			case 822:
 				this.renderInventorySwordRackBlock(block_, meta_, modelID_, renderer_);
 				break;
-				
-				
-			//Foothold Ladder
-			case 800:
-				this.renderInventoryFootholdLadderBlock(block_, meta_, modelID_, renderer_);
-				break;
-				
-			//Pole Ladder
-			case 801:
-				this.renderInventoryPoleLadderBlock(block_, meta_, modelID_, renderer_);
-				break;
-				
-			//Simple Ladder
-			case 802:
-				this.renderInventorySimpleLadderBlock(block_, meta_, modelID_, renderer_);
-				break;
-			
-			//Rope Ladder
-			case 803:
-				this.renderInventoryRopeLadderBlock(block_, meta_, modelID_, renderer_);
-				break;
-				
-			//Rope Ladder
-			case 804:
-				this.renderInventoryFixedPlankLadderBlock(block_, meta_, modelID_, renderer_);
-				break;
-				
-			//Classic Ladder
-			case 806:
-				this.renderInventoryClassicLadderBlock(block_, meta_, modelID_, renderer_);
-				break;
-				
-			//Industrial Ladder
-			case 807:
-				this.renderInventoryIndustrialLadderBlock(block_, meta_, modelID_, renderer_);
-				break;
-			
+							
 			case 861:
 				this.renderInventoryDiscreteStairsBlock(block_, meta_, modelID_, renderer_);
 				break;
@@ -278,82 +242,24 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 	}
 
 
+	@Deprecated
 	private void renderInventoryFixedPlankLadderBlock(Block block_, int meta_, int modelID_, RenderBlocks renderer_) 
 	{
-		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-		drh.setGL11Scale(1.3);
-		tessellator.startDrawingQuads();
-		
-		double ymin = twoPx;
-		double ymax = sixPx;
-		double inc = eightPx;
-		
-		for(int i = 0; i < 2; i++)
-		{
-			renderer_.setRenderBounds(onePx, ymin, sevenPx, fifteenPx, ymax, eightPx);
-			drh.tessellateInventoryBlock(renderer_, block_, meta_);
-			
-			ymin += inc;
-			ymax += inc;
-		}
-		
-		tessellator.draw();
-		drh.resetGL11Scale();
+		temp.renderInventoryBlock(block_, meta_, modelID_, renderer_);
 	}
 
-
+	
+	@Deprecated
 	private void renderInventoryRopeLadderBlock(Block block_, int meta_, int modelID_, RenderBlocks renderer_) 
 	{
-		
-		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-		drh.setGL11Scale(1.3);
-		tessellator.startDrawingQuads();
-		
-		renderer_.setOverrideBlockTexture(block_.getIcon(3, 2));
-		renderer_.setRenderBounds(sixPx, fifteenPx, sixPx, tenPx, sixteenPx, ninePx);
-		drh.tessellateInventoryBlock(renderer_, block_, meta_);
-		renderer_.clearOverrideBlockTexture();
-		
-		renderer_.setRenderBounds(sevenPx, zeroPx, sevenPx, ninePx, fifteenPx, eightPx);
-		drh.tessellateInventoryBlock(renderer_, block_, meta_);
-		
-		tessellator.draw();
-		drh.resetGL11Scale();
+		temp.renderInventoryBlock(block_, meta_, modelID_, renderer_);
 	}
 
 
+	@Deprecated
 	private void renderInventorySimpleLadderBlock(Block block_, int meta_, int modelID_, RenderBlocks renderer_) 
 	{
-		
-		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-		drh.setGL11Scale(1.3);
-		tessellator.startDrawingQuads();
-		
-		double ymin = threePx;
-		double ymax = fourPx;
-		double inc = eightPx;
-		
-		double zmin = sevenPx;
-		double zmax = eightPx;
-
-
-		renderer_.setRenderBounds(twoPx, zeroPx, zmin, threePx, sixteenPx, zmax);
-		drh.tessellateInventoryBlock(renderer_, block_, meta_);
-		
-		renderer_.setRenderBounds(thirteenPx, zeroPx, zmin, fourteenPx, sixteenPx, zmax);
-		drh.tessellateInventoryBlock(renderer_, block_, meta_);
-		
-		for(int i = 0; i < 2; i++)
-		{
-			renderer_.setRenderBounds(threePx, ymin, zmin, thirteenPx, ymax, zmax);
-			drh.tessellateInventoryBlock(renderer_, block_, meta_);
-			
-			ymin += inc;
-			ymax += inc;
-		}
-		
-		tessellator.draw();
-		drh.resetGL11Scale();
+		temp.renderInventoryBlock(block_, meta_, modelID_, renderer_);
 	}
 
 
@@ -404,62 +310,19 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 		tessellator.draw();		
 	}
 	
+	@Deprecated
 	private void renderInventoryPoleLadderBlock(Block block_, int meta_, int modelID_, RenderBlocks renderer_) 
 	{
-		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-		drh.setGL11Scale(1.3);
-		
-		tessellator.startDrawingQuads();
-		
-		renderer_.setRenderBounds(sevenPx, zeroPx, sevenPx, ninePx, sixteenPx, ninePx);
-		drh.tessellateInventoryBlock(renderer_, block_, meta_);
-		
-		double ymin = onePx;
-		double ymax = twoPx;
-		double inc = fourPx;
-		
-		double xmin = twoPx;
-		double xmax = sevenPx;
-		
-		
-		for(int i = 0; i < 4; i++)
-		{
-			
-			if(i % 2 == 0)
-			{
-				xmin = ninePx;
-				xmax = fifteenPx;
-				
-
-				renderer_.setRenderBounds((xmax - onePx), ymax, sevenPx, xmax, (ymax + onePx), eightPx);
-				drh.tessellateInventoryBlock(renderer_, block_, meta_);
-			}
-			else
-			{
-				xmin = onePx;
-				xmax = sevenPx;
-				
-				renderer_.setRenderBounds(xmin, ymax, sevenPx, (xmin + onePx), (ymax + onePx), eightPx);
-				drh.tessellateInventoryBlock(renderer_, block_, meta_);
-
-			}
-			
-			renderer_.setRenderBounds(xmin, ymin, sevenPx, xmax, ymax, eightPx);
-			drh.tessellateInventoryBlock(renderer_, block_, meta_);
-			
-			ymin += inc;
-			ymax += inc;
-		}
-		
-		tessellator.draw();	
-		drh.resetGL11Scale();
-		//this.renderInventoryClassicLadderBlock(block_, meta_, modelID_, renderer_);
+		temp.renderInventoryBlock(block_, meta_, modelID_, renderer_);
 	}
 	
+	@Deprecated
 	private void renderInventoryFootholdLadderBlock(Block block_, int meta_, int modelID_, RenderBlocks renderer_) 
 	{
-		//renderer_.renderBlockAsItem(block_, meta_, 1.0F);
+		temp.renderInventoryBlock(block_, meta_, modelID_, renderer_);
 		
+		
+		/*
 		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
 		GL11.glScaled(1.5, 1.5, 1.5);
 		tessellator.startDrawingQuads();
@@ -501,136 +364,21 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 		
 		tessellator.draw();
 		GL11.glScaled(1.0, 1.0, 1.0);
+		*/
 		
 	}
 
 
+	@Deprecated
 	private void renderInventoryIndustrialLadderBlock(Block block_, int meta_, int modelID_, RenderBlocks renderer_)
 	{
-		GL11.glScaled(1.3, 1.3, 1.3);
-		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-		tessellator.startDrawingQuads();
-		
-		double ymin = onePx;
-		double ymax = threePx;
-		double inc = fourPx;
-		
-			for(int i = 0; i < 4; i++)
-			{
-				renderer_.setRenderBounds(twoPx, ymin, sevenPx, fourteenPx, ymax, eightPx);
-				tessellator.setNormal(0.0F, -1.0F, 0.0F);
-				renderer_.renderFaceYNeg(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(0, meta_));
-				tessellator.setNormal(0.0F, 1.0F, 0.0F);
-				renderer_.renderFaceYPos(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(0, meta_));
-				tessellator.setNormal(0.0F, 0.0F, -1.0F);
-				renderer_.renderFaceZNeg(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(0, meta_));
-				tessellator.setNormal(0.0F, 0.0F, 1.0F);
-				renderer_.renderFaceZPos(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(0, meta_));
-				tessellator.setNormal(-1.0F, 0.0F, 0.0F);
-				renderer_.renderFaceXNeg(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(0, meta_));
-				tessellator.setNormal(1.0F, 0.0F, 0.0F);
-				renderer_.renderFaceXPos(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(0, meta_));
-				
-				renderer_.setRenderBounds(twoPx, ymin, sixPx, threePx, ymax, sevenPx);
-				tessellator.setNormal(0.0F, -1.0F, 0.0F);
-				renderer_.renderFaceYNeg(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(0, meta_));
-				tessellator.setNormal(0.0F, 1.0F, 0.0F);
-				renderer_.renderFaceYPos(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(0, meta_));
-				tessellator.setNormal(0.0F, 0.0F, -1.0F);
-				renderer_.renderFaceZNeg(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(0, meta_));
-				tessellator.setNormal(0.0F, 0.0F, 1.0F);
-				renderer_.renderFaceZPos(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(0, meta_));
-				tessellator.setNormal(-1.0F, 0.0F, 0.0F);
-				renderer_.renderFaceXNeg(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(0, meta_));
-				tessellator.setNormal(1.0F, 0.0F, 0.0F);
-				renderer_.renderFaceXPos(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(0, meta_));
-				
-				
-				renderer_.setRenderBounds(thirteenPx, ymin, sixPx, fourteenPx, ymax, sevenPx);
-				tessellator.setNormal(0.0F, -1.0F, 0.0F);
-				renderer_.renderFaceYNeg(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(0, meta_));
-				tessellator.setNormal(0.0F, 1.0F, 0.0F);
-				renderer_.renderFaceYPos(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(0, meta_));
-				tessellator.setNormal(0.0F, 0.0F, -1.0F);
-				renderer_.renderFaceZNeg(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(0, meta_));
-				tessellator.setNormal(0.0F, 0.0F, 1.0F);
-				renderer_.renderFaceZPos(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(0, meta_));
-				tessellator.setNormal(-1.0F, 0.0F, 0.0F);
-				renderer_.renderFaceXNeg(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(0, meta_));
-				tessellator.setNormal(1.0F, 0.0F, 0.0F);
-				renderer_.renderFaceXPos(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(0, meta_));
-				
-				ymin += inc;
-				ymax += inc;
-			}
-		
-		tessellator.draw();
-		GL11.glScaled(1.0, 1.0, 1.0);
+		temp.renderInventoryBlock(block_, meta_, modelID_, renderer_);
 	}
 	
+	@Deprecated
 	private void renderInventoryClassicLadderBlock(Block block_, int meta_, int modelID_, RenderBlocks renderer_)
-	{
-		GL11.glScaled(1.3, 1.3, 1.3);
-		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-		tessellator.startDrawingQuads();
-		
-		double ymin = onePx;
-		double ymax = threePx;
-		double inc = fourPx;
-			
-			renderer_.setRenderBounds(twoPx, zeroPx, sixPx, threePx, sixteenPx, ninePx);
-			tessellator.setNormal(0.0F, -1.0F, 0.0F);
-			renderer_.renderFaceYNeg(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(0, meta_));
-			tessellator.setNormal(0.0F, 1.0F, 0.0F);
-			renderer_.renderFaceYPos(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(0, meta_));
-			tessellator.setNormal(0.0F, 0.0F, -1.0F);
-			renderer_.renderFaceZNeg(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(0, meta_));
-			tessellator.setNormal(0.0F, 0.0F, 1.0F);
-			renderer_.renderFaceZPos(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(0, meta_));
-			tessellator.setNormal(-1.0F, 0.0F, 0.0F);
-			renderer_.renderFaceXNeg(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(0, meta_));
-			tessellator.setNormal(1.0F, 0.0F, 0.0F);
-			renderer_.renderFaceXPos(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(0, meta_));
-			
-			
-			renderer_.setRenderBounds(thirteenPx, zeroPx, sixPx, fourteenPx, sixteenPx, ninePx);
-			tessellator.setNormal(0.0F, -1.0F, 0.0F);
-			renderer_.renderFaceYNeg(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(0, meta_));
-			tessellator.setNormal(0.0F, 1.0F, 0.0F);
-			renderer_.renderFaceYPos(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(0, meta_));
-			tessellator.setNormal(0.0F, 0.0F, -1.0F);
-			renderer_.renderFaceZNeg(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(0, meta_));
-			tessellator.setNormal(0.0F, 0.0F, 1.0F);
-			renderer_.renderFaceZPos(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(0, meta_));
-			tessellator.setNormal(-1.0F, 0.0F, 0.0F);
-			renderer_.renderFaceXNeg(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(0, meta_));
-			tessellator.setNormal(1.0F, 0.0F, 0.0F);
-			renderer_.renderFaceXPos(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(0, meta_));
-		
-			for(int i = 0; i < 4; i++)
-			{
-				renderer_.setRenderBounds(twoPx, ymin, sevenPx, fourteenPx, ymax, eightPx);
-				tessellator.setNormal(0.0F, -1.0F, 0.0F);
-				renderer_.renderFaceYNeg(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(0, meta_));
-				tessellator.setNormal(0.0F, 1.0F, 0.0F);
-				renderer_.renderFaceYPos(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(0, meta_));
-				tessellator.setNormal(0.0F, 0.0F, -1.0F);
-				renderer_.renderFaceZNeg(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(0, meta_));
-				tessellator.setNormal(0.0F, 0.0F, 1.0F);
-				renderer_.renderFaceZPos(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(0, meta_));
-				tessellator.setNormal(-1.0F, 0.0F, 0.0F);
-				renderer_.renderFaceXNeg(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(0, meta_));
-				tessellator.setNormal(1.0F, 0.0F, 0.0F);
-				renderer_.renderFaceXPos(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(0, meta_));
-				
-
-				
-				ymin += inc;
-				ymax += inc;
-			}
-		
-		tessellator.draw();
-		GL11.glScaled(1.0, 1.0, 1.0);
+	{	
+		temp.renderInventoryBlock(block_, meta_, modelID_, renderer_);
 	}
 
 	@Override
@@ -651,7 +399,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 		if(t instanceof TileEntitySwordRack)
 		{
 			TileEntityDiscreteBlock tile = (TileEntityDiscreteBlock)t;
-			int type = tile.getSubType();
+			int type = tile.getSubtype();
 			
 			switch(type)
 			{
@@ -672,7 +420,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 		if(t instanceof TileEntityDiscreteBlock)
 		{
 			TileEntityDiscreteBlock tile = (TileEntityDiscreteBlock)t;
-			int type = tile.getSubType();
+			int type = tile.getSubtype();
 			
 			switch(meta)
 			{
@@ -685,47 +433,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 				{
 					if(tile != null)
 					{
-						if(type == 800)
-						{
-							return renderWorldFootholdLadderBlock(world_, x_, y_, z_,  block_,  modelID_,  renderer_, meta);
-						}
-						
-						if(type == 801)
-						{
-							return renderWorldPoleLadderBlock(world_, x_, y_, z_,  block_,  modelID_,  renderer_, meta);
-						}
-						
-						if(type == 802)
-						{
-							return renderWorldSimpleLadderBlock(world_, x_, y_, z_,  block_,  modelID_,  renderer_, meta);
-						}
-						
-						if(type == 803)
-						{
-							return renderWorldRopeLadderBlock(world_, x_, y_, z_,  block_,  modelID_,  renderer_, meta);
-						}
-						
-						if(type == 804)
-						{
-							return renderWorldFixedPlankLadderBlock(world_, x_, y_, z_,  block_,  modelID_,  renderer_, meta);
-						}
-						
-						if(type == 805)
-						{
-							return renderWorldTestBlock(world_, x_, y_, z_,  block_,  modelID_,  renderer_, meta);
-						}
-						
-						if(type == 806)
-						{
-							return renderWorldClassicLadderBlock(world_, x_, y_, z_,  block_,  modelID_,  renderer_, meta);
-						}
-						
-						if(type == 807)
-						{
-							return renderWorldIndustrialLadderBlock(world_, x_, y_, z_,  block_,  modelID_,  renderer_, meta);
-						}
-					
-						
+				
 						if(type == 888)
 						{
 							return renderWorldTestBlock2(world_, x_, y_, z_,  block_,  modelID_,  renderer_, meta);
@@ -799,7 +507,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 		
 		int dir = tile.getDirection();
 		int ori = tile.getVariable();
-		int subtype = tile.getSubType();
+		int subtype = tile.getSubtype();
 		
 		float y1 = px.zero;
 		float y2 = px.four;
@@ -959,7 +667,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 		
 		int dir = tile.getDirection();
 		int ori = tile.getVariable();
-		int subtype = tile.getSubType();
+		int subtype = tile.getSubtype();
 		
 		float y1 = (float)zeroPx; 
 		float y2 = (float)eightPx;
@@ -995,7 +703,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 				
 				if(north != null)
 				{
-					if(north.getSubType() == subtype)
+					if(north.getSubtype() == subtype)
 					{
 						int dir2 = north.getDirection();
 						
@@ -1013,7 +721,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 					}				
 				}
 				
-				if(south != null  && connected == false && south.getSubType() == subtype)
+				if(south != null  && connected == false && south.getSubtype() == subtype)
 				{
 					int dir3 = south.getDirection();
 					off.setOffsetU(5, -8);
@@ -1048,7 +756,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 				boolean connected = false;
 				if(south != null)
 				{
-					if(south.getSubType() == subtype)
+					if(south.getSubtype() == subtype)
 					{
 						int dir2 = south.getDirection();
 						
@@ -1067,7 +775,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 					
 				}
 				
-				if(north != null  && connected == false && north.getSubType() == subtype)
+				if(north != null  && connected == false && north.getSubtype() == subtype)
 				{
 					int dir3 = north.getDirection();
 					off.setOffsetU(5, 8);
@@ -1103,7 +811,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 				
 				if(west != null)
 				{
-					if(west.getSubType() == subtype)
+					if(west.getSubtype() == subtype)
 					{
 						int dir2 = west.getDirection();
 						
@@ -1122,7 +830,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 					
 				}
 				
-				if(east != null && connected == false && east.getSubType() == subtype)
+				if(east != null && connected == false && east.getSubtype() == subtype)
 				{
 					int dir3 = east.getDirection();
 					off.setOffsetU(2, -8);
@@ -1160,7 +868,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 				
 				if(east != null)
 				{
-					if(east.getSubType() == subtype)
+					if(east.getSubtype() == subtype)
 					{
 						int dir2 = east.getDirection();
 						if(dir2 == 2)
@@ -1178,7 +886,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 					
 				}
 				
-				if(west != null && connected == false && west.getSubType() == subtype)
+				if(west != null && connected == false && west.getSubtype() == subtype)
 				{
 					off.setOffsetU(2, 8);
 					int dir3 = west.getDirection();
@@ -1610,6 +1318,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 	}
 
 
+	@Deprecated
 	private boolean renderWorldFixedPlankLadderBlock(IBlockAccess world_, int x_, int y_, int z_, Block block_, int modelID_, RenderBlocks renderer_, int meta) 
 	{
 
@@ -1622,87 +1331,11 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 			return true;
 		}
 		
-		
-		int side = tile.getVariable();
-		
-		boolean renderEnd = false;
-		if(world_.isAirBlock(x_, y_ + 1, z_) == false && world_.isBlockNormalCube(x_, y_ + 1, z_) == true)
-		{
-			renderEnd = true;
-		}
-		
-		double ymin = twoPx;
-		double ymax = sixPx;
-		double inc = eightPx;
-		
-		switch(side)
-		{
-		
-			//North
-			case 2:
-			{					
-				for(int i = 0; i < 2; i++)
-				{
-					renderer_.setRenderBounds(onePx, ymin, zeroPx, fifteenPx, ymax, onePx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					ymin += inc;
-					ymax += inc;
-				}
-				
-				break;
-			}
-			
-			//South
-			case 3:
-			{
-				for(int i = 0; i < 2; i++)
-				{
-					renderer_.setRenderBounds(onePx, ymin, fifteenPx, fifteenPx, ymax, sixteenPx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					ymin += inc;
-					ymax += inc;
-				}
-				
-				break;
-			}
-			
-			//East
-			case 5:
-			{
-				for(int i = 0; i < 2; i++)
-				{
-					renderer_.setRenderBounds(fifteenPx, ymin, onePx, sixteenPx, ymax, fifteenPx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					ymin += inc;
-					ymax += inc;
-				}
-				
-				break;
-			}
-			
-			//West
-			case 4:
-			{
-				for(int i = 0; i < 2; i++)
-				{
-					renderer_.setRenderBounds(zeroPx, ymin, onePx, onePx, ymax, fifteenPx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					ymin += inc;
-					ymax += inc;
-				}
-				
-				break;
-			}
-		}
-
-		return true;
+		return this.newSystemWorldRenderer(world_, x_, y_, z_, block_, modelID_, renderer_);
 	}
 
 
+	@Deprecated
 	private boolean renderWorldRopeLadderBlock(IBlockAccess world_, int x_, int y_, int z_, Block block_, int modelID_, RenderBlocks renderer_, int meta) 
 	{
 
@@ -1715,222 +1348,26 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 			return true;
 		}
 		
-		
-		int side = tile.getVariable();
-		double ymin = zeroPx;
-		double ymax = sixteenPx;
-		double xmin = sevenPx;
-		double xmax = ninePx;
-		double zmin = onePx;
-		double zmax = threePx;
-		
-		boolean renderEnd = false;
-		if(world_.isAirBlock(x_, y_ + 1, z_) == false && world_.isBlockNormalCube(x_, y_ + 1, z_) == true)
-		{
-			renderEnd = true;
-		}
-		
-		switch(side)
-		{
-		
-			//North
-			case 2:
-			{	
-				if(renderEnd)
-				{
-					renderer_.setOverrideBlockTexture(block_.getIcon(3, 2));
-					renderer_.setRenderBounds(sixPx, fifteenPx, zeroPx, tenPx, sixteenPx, fourPx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					renderer_.clearOverrideBlockTexture();
-					
-					renderer_.setRenderBounds(sevenPx, zeroPx, onePx, ninePx, fifteenPx, threePx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-				}
-				else
-				{
-					renderer_.setRenderBounds(sevenPx, zeroPx, onePx, ninePx, sixteenPx, threePx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);							
-				}
-				break;
-			}
-			
-			//South
-			case 3:
-			{
-				if(renderEnd)
-				{
-					renderer_.setOverrideBlockTexture(block_.getIcon(3, 2));
-					renderer_.setRenderBounds(sixPx, fifteenPx, twelvePx, tenPx, sixteenPx, sixteenPx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					renderer_.clearOverrideBlockTexture();
-					
-					renderer_.setRenderBounds(sevenPx, zeroPx, thirteenPx, ninePx, fifteenPx, fifteenPx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-				}
-				else
-				{
-					renderer_.setRenderBounds(sevenPx, zeroPx, thirteenPx, ninePx, sixteenPx, fifteenPx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);							
-				}
-				break;
-			}
-			
-			//East
-			case 5:
-			{
-				if(renderEnd)
-				{
-					renderer_.setOverrideBlockTexture(block_.getIcon(3, 2));
-					renderer_.setRenderBounds(twelvePx, fifteenPx, sixPx, sixteenPx, sixteenPx, tenPx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					renderer_.clearOverrideBlockTexture();
-					
-					renderer_.setRenderBounds(thirteenPx, zeroPx, sevenPx, fifteenPx, fifteenPx, ninePx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-				}
-				else
-				{
-					renderer_.setRenderBounds(thirteenPx, zeroPx, sevenPx, fifteenPx, sixteenPx, ninePx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);							
-				}
-				break;	
-			}
-			
-			//West
-			case 4:
-			{
-				if(renderEnd)
-				{
-					renderer_.setOverrideBlockTexture(block_.getIcon(3, 2));
-					renderer_.setRenderBounds(zeroPx, fifteenPx, sixPx, fourPx, sixteenPx, tenPx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					renderer_.clearOverrideBlockTexture();
-					
-					renderer_.setRenderBounds(onePx, zeroPx, sevenPx, threePx, fifteenPx, ninePx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-				}
-				else
-				{
-					renderer_.setRenderBounds(onePx, zeroPx, sevenPx, threePx, sixteenPx, ninePx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);							
-				}
-				break;	
-			}
-			
-			
-		}
-
-		return true;
+		return this.newSystemWorldRenderer(world_, x_, y_, z_, block_, modelID_, renderer_);
 	}
 
-
-	private boolean renderWorldSimpleLadderBlock(IBlockAccess world_, int x_, int y_, int z_, Block block_, int modelID_, RenderBlocks renderer_,int meta) 
+	
+	//FIXME
+	private static final SubRendererLadder temp = new SubRendererLadder();
+	
+	private boolean newSystemWorldRenderer(IBlockAccess world, int x, int y, int z, Block block, int modelID, RenderBlocks renderer)
 	{
-
-		
-		TileEntityDiscreteBlock tile = (TileEntityDiscreteBlock)world_.getBlockTileEntity(x_, y_, z_);
-
-		
-		if(tile == null)
-		{
-			return true;
-		}
-				
-		double ymin = threePx;
-		double ymax = fourPx;
-		double inc = eightPx;
-		
-		
-		int side = tile.getVariable();
-		switch(side)
-		{
-		
-			//North
-			case 2:
-			{
-				renderer_.setRenderBounds(twoPx, zeroPx, zeroPx, threePx, sixteenPx, onePx);
-				drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-				
-				renderer_.setRenderBounds(thirteenPx, zeroPx, zeroPx, fourteenPx, sixteenPx, onePx);
-				drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-				
-				for(int i = 0; i < 2; i++)
-				{
-					renderer_.setRenderBounds(threePx, ymin, zeroPx, thirteenPx, ymax, onePx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					ymin += inc;
-					ymax += inc;
-				}
-				break;
-			}
-			
-			//South
-			case 3:
-			{
-				
-				renderer_.setRenderBounds(twoPx, zeroPx, fifteenPx, threePx, sixteenPx, sixteenPx);
-				drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-				
-				renderer_.setRenderBounds(thirteenPx, zeroPx, fifteenPx, fourteenPx, sixteenPx, sixteenPx);
-				drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-				
-				for(int i = 0; i < 2; i++)
-				{
-					renderer_.setRenderBounds(threePx, ymin, fifteenPx, thirteenPx, ymax, sixteenPx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					ymin += inc;
-					ymax += inc;
-				}
-				
-				break;
-			}
-			
-			//East
-			case 5:
-			{
-				renderer_.setRenderBounds(fifteenPx, zeroPx, twoPx, sixteenPx, sixteenPx, threePx);
-				drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-				
-				renderer_.setRenderBounds(fifteenPx, zeroPx, thirteenPx, sixteenPx, sixteenPx, fourteenPx);
-				drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-				
-				for(int i = 0; i < 2; i++)
-				{
-					renderer_.setRenderBounds(fifteenPx, ymin, threePx, sixteenPx, ymax, thirteenPx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					ymin += inc;
-					ymax += inc;
-				}
-				break;				
-			}
-			
-			//West
-			case 4:
-			{
-				renderer_.setRenderBounds(zeroPx, zeroPx, twoPx, onePx, sixteenPx, threePx);
-				drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-				
-				renderer_.setRenderBounds(zeroPx, zeroPx, thirteenPx, onePx, sixteenPx, fourteenPx);
-				drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-				
-				for(int i = 0; i < 2; i++)
-				{
-					renderer_.setRenderBounds(zeroPx, ymin, threePx, onePx, ymax, thirteenPx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					ymin += inc;
-					ymax += inc;
-				}
-				break;
-			}
-		}
-		return true;
+		return temp.renderWorldBlock(world, x, y, z, block, modelID, renderer);
+	}
+	
+	@Deprecated
+	private boolean renderWorldSimpleLadderBlock(IBlockAccess world_, int x_, int y_, int z_, Block block_, int modelID_, RenderBlocks renderer_,int meta) 
+	{	
+		return newSystemWorldRenderer(world_, x_, y_, z_, block_, modelID_, renderer_);
 	}
 
 
+	@Deprecated
 	private boolean renderWorldPoleLadderBlock(IBlockAccess world_, int x_, int y_, int z_, Block block_, int modelID_, RenderBlocks renderer_, int meta_)
 	{
 
@@ -1942,182 +1379,12 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 		{
 			return true;
 		}
-				
-		double ymin = onePx;
-		double ymax = twoPx;
-		double inc = fourPx;
-
 		
-		int side = tile.getVariable();
-		switch(side)
-		{
-		
-			//North
-			case 2:
-			{
-				
-				double xmin = onePx;
-				double xmax = fifteenPx;
-				
-				renderer_.setRenderBounds(sevenPx, zeroPx, onePx, ninePx, sixteenPx, threePx);
-				drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-				
-				for(int i = 0; i < 4; i++)
-				{
-					
-					if(i % 2 == 0)
-					{
-						xmin = ninePx;
-						xmax = fifteenPx;
-						
-
-						renderer_.setRenderBounds((xmax - onePx), ymax, onePx, xmax, (ymax + onePx), twoPx);
-						drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					}
-					else
-					{
-						xmin = onePx;
-						xmax = sevenPx;
-						
-						renderer_.setRenderBounds(xmin, ymax, onePx, (xmin + onePx), (ymax + onePx), twoPx);
-						drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-
-					}
-					
-					renderer_.setRenderBounds(xmin, ymin, onePx, xmax, ymax, twoPx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					ymin += inc;
-					ymax += inc;
-				}
-				break;
-			}
-			
-			//South
-			case 3:
-			{
-				
-				double xmin = onePx;
-				double xmax = fifteenPx;
-				
-				renderer_.setRenderBounds(sevenPx, zeroPx, thirteenPx, ninePx, sixteenPx, fifteenPx);
-				drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-				
-				for(int i = 0; i < 4; i++)
-				{
-					
-					if(i % 2 == 0)
-					{
-						xmin = ninePx;
-						xmax = fifteenPx;
-						
-
-						renderer_.setRenderBounds((xmax - onePx), ymax, fourteenPx, xmax, (ymax + onePx), fifteenPx);
-						drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					}
-					else
-					{
-						xmin = onePx;
-						xmax = sevenPx;
-						
-						renderer_.setRenderBounds(xmin, ymax, fourteenPx, (xmin + onePx), (ymax + onePx), fifteenPx);
-						drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-
-					}
-					
-					renderer_.setRenderBounds(xmin, ymin, fourteenPx, xmax, ymax, fifteenPx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					ymin += inc;
-					ymax += inc;
-				}
-				break;
-			}
-			
-			//East
-			case 5:
-			{
-				double xmin = onePx;
-				double xmax = fifteenPx;
-				
-				renderer_.setRenderBounds(thirteenPx, zeroPx, sevenPx, fifteenPx, sixteenPx, ninePx);
-				drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-				
-				for(int i = 0; i < 4; i++)
-				{
-					
-					if(i % 2 == 0)
-					{
-						xmin = ninePx;
-						xmax = fifteenPx;
-						
-
-						renderer_.setRenderBounds(fourteenPx, ymax, (xmax - onePx), fifteenPx, (ymax + onePx), xmax);
-						drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					}
-					else
-					{
-						xmin = onePx;
-						xmax = sevenPx;
-						
-						renderer_.setRenderBounds(fourteenPx, ymax, xmin, fifteenPx, (ymax + onePx), (xmin + onePx));
-						drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-
-					}
-					
-					renderer_.setRenderBounds(fourteenPx, ymin, xmin, fifteenPx, ymax, xmax);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					ymin += inc;
-					ymax += inc;
-				}
-				break;
-			}
-			
-			//West
-			case 4:
-			{
-				
-				double xmin = onePx;
-				double xmax = fifteenPx;
-				
-				renderer_.setRenderBounds(onePx, zeroPx, sevenPx, threePx, sixteenPx, ninePx);
-				drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-				
-				for(int i = 0; i < 4; i++)
-				{
-					
-					if(i % 2 == 0)
-					{
-						xmin = ninePx;
-						xmax = fifteenPx;
-						
-
-						renderer_.setRenderBounds(onePx, ymax, (xmax - onePx), twoPx, (ymax + onePx), xmax);
-						drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					}
-					else
-					{
-						xmin = onePx;
-						xmax = sevenPx;
-						
-						renderer_.setRenderBounds(onePx, ymax, xmin, twoPx, (ymax + onePx), (xmin + onePx));
-						drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-
-					}
-					
-					renderer_.setRenderBounds(onePx, ymin, xmin, twoPx, ymax, xmax);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					ymin += inc;
-					ymax += inc;
-				}
-				break;
-			}
-		}
-		return true;
+		SubRendererLadder test = new SubRendererLadder();
+		return test.renderWorldBlock(world_, x_, y_, z_, block_, modelID_, renderer_);
 	}
 	
+	@Deprecated
 	private boolean renderWorldFootholdLadderBlock(IBlockAccess world_, int x_, int y_, int z_, Block block_, int modelID_, RenderBlocks renderer_, int meta_)
 	{
 		TileEntityDiscreteBlock tile = (TileEntityDiscreteBlock)world_.getBlockTileEntity(x_, y_, z_);
@@ -2128,152 +1395,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 		}
 		
 		
-		double ymin = onePx;
-		double ymax = twoPx;
-		double inc = fourPx;
-		
-		renderer_.setRenderBounds(twoPx, zeroPx, onePx, fourteenPx, sixteenPx, twoPx);
-		
-		int side = tile.getVariable();
-		switch(side)
-		{
-			//North
-			case 2:
-			{
-				
-				double xmin = twoPx;
-				double xmax = sevenPx;
-				for(int i = 0; i < 4; i++)
-				{
-					if(i % 2 == 0)
-					{
-						xmin = twoPx;
-						xmax = sevenPx;					
-					}
-					else
-					{
-						xmin = ninePx;
-						xmax = fourteenPx;
-					}
-					
-					renderer_.setRenderBounds(xmin, ymin, onePx, xmax, ymax, twoPx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					renderer_.setRenderBounds(xmin, ymin, zeroPx, (xmin + onePx), ymax, onePx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					renderer_.setRenderBounds((xmax - onePx), ymin, zeroPx, xmax, ymax, onePx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					ymin += inc;
-					ymax += inc;
-				}
-				break;
-			}
-			
-			//South
-			case 3:
-			{
-				double xmin = twoPx;
-				double xmax = sevenPx;
-				
-				for(int i = 0; i < 4; i++)
-				{
-					
-					if(i % 2 == 0)
-					{
-						xmin = twoPx;
-						xmax = sevenPx;					
-					}
-					else
-					{
-						xmin = ninePx;
-						xmax = fourteenPx;
-					}
-					
-					renderer_.setRenderBounds(xmin, ymin, fourteenPx, xmax, ymax, fifteenPx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					renderer_.setRenderBounds(xmin, ymin, fifteenPx, (xmin + onePx), ymax, sixteenPx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					renderer_.setRenderBounds((xmax - onePx), ymin, fifteenPx, xmax, ymax, sixteenPx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					ymin += inc;
-					ymax += inc;
-				}
-				break;
-			}
-			
-			//East
-			case 5:
-			{
-				double zmin = twoPx;
-				double zmax = sevenPx;
-				for(int i = 0; i < 4; i++)
-				{
-					if(i % 2 == 0)
-					{
-						zmin = twoPx;
-						zmax = sevenPx;					
-					}
-					else
-					{
-						zmin = ninePx;
-						zmax = fourteenPx;
-					}
-					
-					renderer_.setRenderBounds(fourteenPx, ymin, zmin, fifteenPx, ymax, zmax);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					renderer_.setRenderBounds(fifteenPx, ymin, zmin, sixteenPx, ymax, (zmin + onePx));
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					renderer_.setRenderBounds(fifteenPx, ymin, (zmax - onePx), sixteenPx, ymax, zmax);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					ymin += inc;
-					ymax += inc;
-				}
-				break;
-			}
-			
-			//West
-			case 4:
-			{
-				double zmin = twoPx;
-				double zmax = sevenPx;
-				
-				for(int i = 0; i < 4; i++)
-				{
-					if(i % 2 == 0)
-					{
-						zmin = twoPx;
-						zmax = sevenPx;					
-					}
-					else
-					{
-						zmin = ninePx;
-						zmax = fourteenPx;
-					}
-					
-					renderer_.setRenderBounds(onePx, ymin, zmin, twoPx, ymax, zmax);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					renderer_.setRenderBounds(zeroPx, ymin, zmin, onePx, ymax, (zmin + onePx));
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					renderer_.setRenderBounds(zeroPx, ymin, (zmax - onePx), onePx, ymax, zmax);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					ymin += inc;
-					ymax += inc;
-				}
-				break;
-			}
-		}
-		return true;
+		return this.newSystemWorldRenderer(world_, x_, y_, z_, block_, modelID_, renderer_);
 	}
 	
 	private boolean renderWorldFixtureBlock(IBlockAccess world_, int x_, int y_, int z_, Block block_, int modelID_, RenderBlocks renderer_, int meta_) 
@@ -2304,7 +1426,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 		//we need this legacy because of the old fixtures not using this tileentity
 		if(tile != null && tile instanceof TileEntityFixtureBlock)
 		{
-			int type = tile.getSubType();
+			int type = tile.getSubtype();
 			
 			TileEntityFixtureBlock t2 = (TileEntityFixtureBlock)tile;
 			
@@ -2443,114 +1565,20 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
         return true;
 	}
 	
+	@Deprecated
 	private boolean renderWorldClassicLadderBlock(IBlockAccess world_, int x_, int y_, int z_, Block block_, int modelID_, RenderBlocks renderer_, int meta_) 
-	{
-
-		
+	{	
 		TileEntityDiscreteBlock tile = (TileEntityDiscreteBlock)world_.getBlockTileEntity(x_, y_, z_);
-
-		
+	
 		if(tile == null)
 		{
 			return true;
 		}
-				
-		double ymin = onePx;
-		double ymax = twoPx;
-		double inc = fourPx;
-
 		
-		int side = tile.getVariable();
-		switch(side)
-		{
-			//North
-			case 2:
-			{
-				
-				renderer_.setRenderBounds(twoPx, zeroPx, zeroPx, threePx, sixteenPx, threePx);
-
-				drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-				
-				renderer_.setRenderBounds(thirteenPx, zeroPx, zeroPx, fourteenPx, sixteenPx, threePx);
-				drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-				
-				for(int i = 0; i < 4; i++)
-				{
-					
-					renderer_.setRenderBounds(threePx, ymin, onePx, thirteenPx, ymax, twoPx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					ymin += inc;
-					ymax += inc;
-				}
-				break;
-			}
-			
-			//South
-			case 3:
-			{
-				
-				renderer_.setRenderBounds(twoPx, zeroPx, thirteenPx, threePx, sixteenPx, sixteenPx);
-				drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-
-				renderer_.setRenderBounds(fourteenPx, zeroPx, sixteenPx, thirteenPx, sixteenPx, thirteenPx);
-				drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-				
-				for(int i = 0; i < 4; i++)
-				{
-					renderer_.setRenderBounds(threePx, ymin, fourteenPx, thirteenPx, ymax, fifteenPx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					ymin += inc;
-					ymax += inc;
-				}
-				break;
-			}
-			
-			//East
-			case 5:
-			{
-				renderer_.setRenderBounds(thirteenPx, zeroPx, twoPx, sixteenPx, sixteenPx, threePx);
-				drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-				
-				renderer_.setRenderBounds(thirteenPx, zeroPx, thirteenPx, sixteenPx, sixteenPx, fourteenPx);
-				drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-				
-				for(int i = 0; i < 4; i++)
-				{
-					renderer_.setRenderBounds(fourteenPx, ymin, threePx, fifteenPx, ymax, thirteenPx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					ymin += inc;
-					ymax += inc;
-				}
-				break;
-			}
-			
-			//West
-			case 4:
-			{
-				
-				renderer_.setRenderBounds(zeroPx, zeroPx, twoPx, threePx, sixteenPx, threePx);
-				drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-				
-				renderer_.setRenderBounds(zeroPx, zeroPx, thirteenPx, threePx, sixteenPx, fourteenPx);
-				drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-				
-				for(int i = 0; i < 4; i++)
-				{
-					renderer_.setRenderBounds(onePx, ymin, threePx, twoPx, ymax, thirteenPx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					ymin += inc;
-					ymax += inc;
-				}
-				break;
-			}
-		}
-		return true;
+		return this.newSystemWorldRenderer(world_, x_, y_, z_, block_, modelID_, renderer_);
 	}
 	
+	@Deprecated
 	private boolean renderWorldIndustrialLadderBlock(IBlockAccess world_, int x_, int y_, int z_, Block block_, int modelID_, RenderBlocks renderer_, int meta_) 
 	{	
 		
@@ -2561,100 +1589,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 			return true;
 		}
 		
-		
-		double ymin = onePx;
-		double ymax = threePx;
-		double inc = fourPx;
-		
-		renderer_.setRenderBounds(twoPx, zeroPx, onePx, fourteenPx, sixteenPx, twoPx);
-		
-		int side = tile.getVariable();
-		switch(side)
-		{
-			//North
-			case 2:
-			{
-				
-
-				
-				for(int i = 0; i < 4; i++)
-				{
-					renderer_.setRenderBounds(twoPx, ymin, onePx, fourteenPx, ymax, twoPx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					renderer_.setRenderBounds(twoPx, ymin, zeroPx, threePx, ymax, onePx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					renderer_.setRenderBounds(thirteenPx, ymin, zeroPx, fourteenPx, ymax, onePx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					ymin += inc;
-					ymax += inc;
-				}
-				break;
-			}
-			
-			//South
-			case 3:
-			{
-				for(int i = 0; i < 4; i++)
-				{
-					renderer_.setRenderBounds(twoPx, ymin, fourteenPx, fourteenPx, ymax, fifteenPx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					renderer_.setRenderBounds(twoPx, ymin, fifteenPx, threePx, ymax, sixteenPx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					renderer_.setRenderBounds(thirteenPx, ymin, fifteenPx, fourteenPx, ymax, sixteenPx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					ymin += inc;
-					ymax += inc;
-				}
-				break;
-			}
-			
-			//East
-			case 5:
-			{
-				for(int i = 0; i < 4; i++)
-				{
-					renderer_.setRenderBounds(fourteenPx, ymin, twoPx, fifteenPx, ymax, fourteenPx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					renderer_.setRenderBounds(fifteenPx, ymin, twoPx, sixteenPx, ymax, threePx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					renderer_.setRenderBounds(fifteenPx, ymin, thirteenPx, sixteenPx, ymax, fourteenPx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					ymin += inc;
-					ymax += inc;
-				}
-				break;
-			}
-			
-			//West
-			case 4:
-			{
-				for(int i = 0; i < 4; i++)
-				{
-					renderer_.setRenderBounds(onePx, ymin, twoPx, twoPx, ymax, fourteenPx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					renderer_.setRenderBounds(zeroPx, ymin, twoPx, onePx, ymax, threePx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					renderer_.setRenderBounds(zeroPx, ymin, thirteenPx, onePx, ymax, fourteenPx);
-					drh.renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-					
-					ymin += inc;
-					ymax += inc;
-				}
-				break;
-			}
-		}
-		return true;
+		return this.newSystemWorldRenderer(world_, x_, y_, z_, block_, modelID_, renderer_);
 	}
 
 	@Override

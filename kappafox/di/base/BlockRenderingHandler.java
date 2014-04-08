@@ -6,15 +6,15 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
 
-public abstract class BlockRenderManager 
+public abstract class BlockRenderingHandler 
 {
 	
-	protected HashMap<Integer, SubBlockRenderer> sub;
+	protected HashMap<Integer, SubBlockRenderingHandler> sub;
 	
 	public abstract boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelID, RenderBlocks renderer);
-	public abstract boolean renderInventoryBlock(Block block_, int meta_, int modelID_, RenderBlocks renderer_);
+	public abstract void renderInventoryBlock(Block block, int subtype, int modelID, RenderBlocks renderer);
 	
-	public void registerHandler(int key, SubBlockRenderer handler)
+	public void registerHandler(int key, SubBlockRenderingHandler handler)
 	{
 		if(!sub.containsKey(key))
 		{
@@ -22,16 +22,13 @@ public abstract class BlockRenderManager
 		}
 	}
 	
-	public void registerHandlerRange(int keyStart, int keyEnd, SubBlockRenderer handler)
+	public void registerHandlerRange(int keyStart, int keyEnd, SubBlockRenderingHandler handler)
 	{
 		if(keyStart < keyEnd)
 		{
 			for(int i = keyStart; i <= keyEnd; i++)
 			{
-				if(!sub.containsKey(i))
-				{
-					sub.put(i, handler);
-				}
+				this.registerHandler(i, handler);
 			}
 		}
 	}

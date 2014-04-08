@@ -13,7 +13,7 @@ public class SubItemDiscreteStairs implements SubItem
 		TileEntityDiscreteBlock tile = new TileEntityDiscreteBlock();
 		
 		tile.setFullColour(true);
-		tile.setSubType(type_);
+		tile.setSubtype(type_);
 		tile.setDirection((short)dir_);
 		
 		tile.setAllTexturesFromSource(blockID_, type_);

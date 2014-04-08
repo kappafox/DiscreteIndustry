@@ -73,7 +73,7 @@ public class SubBlockStairs extends SubBlock
 		
 		if(tile != null)
 		{
-			return this.getIcon(0, tile.getSubType());
+			return this.getIcon(0, tile.getSubtype());
 			/*
 			int dir = tile.getDirection();
 			
@@ -137,7 +137,7 @@ public class SubBlockStairs extends SubBlock
 	public void getCollisionBoxes(World world_, int x_, int y_, int z_, AxisAlignedBB mask_, List boxlist_, Entity entity_)
     {
     	TileEntityDiscreteBlock tile = (TileEntityDiscreteBlock)world_.getBlockTileEntity(x_, y_, z_);
-    	int subtype = tile.getSubType();
+    	int subtype = tile.getSubtype();
     	
     	AxisAlignedBB box = null;
     	AxisAlignedBB box2 = null;
@@ -342,7 +342,7 @@ public class SubBlockStairs extends SubBlock
 		{
 			TileEntityDiscreteBlock tile2 = (TileEntityDiscreteBlock)tile;
 			
-			if(tile2.getSubType() == stair_.getSubType())
+			if(tile2.getSubtype() == stair_.getSubtype())
 			{
 				//int dir = stair_.getDirection();
 				return tile2.getDirection();

@@ -46,7 +46,7 @@ public class TileEntitySwordRackRenderer extends TileEntitySpecialRenderer
 
 		if(tile != null)
 		{
-			int type = tile.getSubType();
+			int type = tile.getSubtype();
 			//
 			switch(type)
 			{

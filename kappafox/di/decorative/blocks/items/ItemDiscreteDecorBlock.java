@@ -2,6 +2,9 @@ package kappafox.di.decorative.blocks.items;
 
 import java.util.List;
 
+import com.google.common.collect.Range;
+import com.google.common.collect.Ranges;
+
 import kappafox.di.base.items.SubItem;
 import kappafox.di.base.tileentities.TileEntityDiscreteBlock;
 import net.minecraft.block.Block;
@@ -219,6 +222,7 @@ public class ItemDiscreteDecorBlock extends ItemBlock
     {
         Block.blocksList[this.getBlockID()].getSubBlocks(id_, tab_, itemList_);
         
+
         //Ladders
         itemList_.add(new ItemStack(id_, 1, 800));
         itemList_.add(new ItemStack(id_, 1, 801));
@@ -548,7 +552,7 @@ public class ItemDiscreteDecorBlock extends ItemBlock
 	        t.setTextureOrientation(orient);
         	t.setFullColour(true);
         	t.setOriginalID(this.getBlockID());
-        	t.setSubType(meta);
+        	t.setSubtype(meta);
 	        
 	        tile = t;        	
         }

@@ -1,7 +1,10 @@
 package kappafox.di.base;
 
 import kappafox.di.base.tileentities.TileEntityDiscreteBlock;
+import kappafox.di.base.tileentities.TileEntitySubtype;
 import kappafox.di.base.util.AdjustableIcon;
+import kappafox.di.base.util.BoundSet;
+import kappafox.di.base.util.PointSet;
 import kappafox.di.base.util.TextureOffset;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrass;
@@ -19,6 +22,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.common.ForgeDirection;
 
 import org.lwjgl.opengl.GL11;
 
@@ -27,7 +31,28 @@ public class DiscreteRenderHelper
 	private static Tessellator tessellator = Tessellator.instance;
 	private static TextureManager textureManager = Minecraft.getMinecraft().getTextureManager();
 	
+	private static final TranslationHelper translator = new TranslationHelper();
+	
     private static final ResourceLocation RES_ITEM_GLINT = new ResourceLocation("textures/misc/enchanted_item_glint.png");
+    
+    
+    
+    
+    //For use with blocks that use the same code for inventory and world rendering
+    public void renderDiscreteQuadWithColourMultiplier(IBlockAccess world_, RenderBlocks renderer_, Block block_, int x_, int y_, int z_, boolean isInventory)
+    {
+    	if(isInventory == true)
+    	{
+    		TileEntitySubtype tile = (TileEntitySubtype)world_.getBlockTileEntity(x_, y_, z_);
+    		int subtype = tile.getSubtype();
+    		tessellateInventoryBlock(renderer_, block_, subtype);
+    	}
+    	else
+    	{
+    		renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
+    	}
+    }
+    
     
 	public void renderDiscreteQuadWithColourMultiplier(IBlockAccess world_, RenderBlocks renderer_, Block block_, int x_, int y_, int z_)
 	{
@@ -1776,6 +1801,27 @@ public class DiscreteRenderHelper
             tessellator.addVertexWithUV(d11, d13, d14, d7, d9);
             tessellator.addVertexWithUV(d11, d13, d15, d3, d5);
         }
+    }
+    
+    
+    public void setRenderBounds(RenderBlocks renderer, BoundSet points)
+    {
+    	renderer.setRenderBounds(points.x1, points.y1, points.z1, points.x2, points.y2, points.z2);
+    }
+    
+    public PointSet translate(ForgeDirection from, ForgeDirection to, final PointSet points)
+    {
+    	PointSet ps = new PointSet(points);
+    	return translator.translate(from, to, ps);
+    }
+    
+    //This assumes a natural direction of NORTH
+    public PointSet centerForInventoryRender(PointSet ps, float shift)
+    {
+    	ps.z1 = ps.z1 + shift;
+    	ps.z2 = ps.z2 + shift;
+    	
+    	return ps;
     }
 
 }

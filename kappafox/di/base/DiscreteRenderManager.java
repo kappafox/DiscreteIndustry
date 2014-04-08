@@ -9,7 +9,7 @@ import cpw.mods.fml.client.registry.ISimpleBlockRenderingHandler;
 
 public class DiscreteRenderManager implements ISimpleBlockRenderingHandler
 {
-	private HashMap<Integer, BlockRenderManager> renderers;
+	private HashMap<Integer, BlockRenderingHandler> renderers;
 	
 	private int renderID;
 	private boolean inventory3D;
@@ -19,7 +19,7 @@ public class DiscreteRenderManager implements ISimpleBlockRenderingHandler
 		renderID = rid;
 		inventory3D = inventory3d;
 		
-		renderers = new HashMap<Integer, BlockRenderManager>();
+		renderers = new HashMap<Integer, BlockRenderingHandler>();
 	}
 	
 	@Override
@@ -53,7 +53,7 @@ public class DiscreteRenderManager implements ISimpleBlockRenderingHandler
 		return renderID;
 	}
 	
-	public void registerRenderer(int modelID, BlockRenderManager renderer)
+	public void registerRenderer(int modelID, BlockRenderingHandler renderer)
 	{
 		if(!renderers.containsKey(modelID))
 		{

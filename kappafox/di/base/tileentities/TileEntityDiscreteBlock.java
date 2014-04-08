@@ -7,7 +7,7 @@ import net.minecraft.network.packet.Packet132TileEntityData;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.common.ForgeDirection;
 
-public class TileEntityDiscreteBlock extends TileEntity
+public class TileEntityDiscreteBlock extends TileEntitySubtype
 {
 
 	
@@ -17,7 +17,7 @@ public class TileEntityDiscreteBlock extends TileEntity
 	private short facing;
 	private int colour = 16777215;
 	private int var1 = 0;
-	private int subType = 0;
+	//private int subType = 0;
 	private boolean fullColour = false;
 	private int textureOrienation = 0;
 	private short direction = 0;
@@ -35,35 +35,24 @@ public class TileEntityDiscreteBlock extends TileEntity
 	}
 	
 	
-	public TileEntityDiscreteBlock(int id_, int meta_)
+	public TileEntityDiscreteBlock(int id, int meta)
 	{
 		for(int i = 0; i < 6; i++)
 		{
-			blockIDs[i] = id_;
-			blockMetas[i] = meta_;
+			blockIDs[i] = id;
+			blockMetas[i] = meta;
 			blockSides[i] = i;
 		}
 		
-		subType = 0;
+		setSubtype(0);
 	}
 	
-	public TileEntityDiscreteBlock(int id_, int meta_, int sub_)
+	public TileEntityDiscreteBlock(int id, int meta, int sub)
 	{
-		this(id_, meta_);
-		subType = sub_;
+		this(id, meta);
+		setSubtype(sub);
 	}
 	
-
-	
-	public int getSubType( )
-	{
-		return subType;
-	}
-	
-	public void setSubType(int type_)
-	{
-		subType = type_;
-	}
 
 	
 	public void setAllTextureSources(int id_, int meta_, int side_)
@@ -215,7 +204,7 @@ public class TileEntityDiscreteBlock extends TileEntity
 	
 	public int getOriginalMeta( )
 	{
-		return subType;
+		return originalMeta;
 	}
 	
 
@@ -230,7 +219,7 @@ public class TileEntityDiscreteBlock extends TileEntity
 		nbt_.setShort("facing", facing);
 		nbt_.setInteger("colour", colour);
 		nbt_.setInteger("var1", var1);
-		nbt_.setInteger("subType", subType);
+		//nbt_.setInteger("subType", subType);
 		nbt_.setInteger("torient", textureOrienation);
 		nbt_.setShort("direction", direction);
 		
@@ -254,7 +243,7 @@ public class TileEntityDiscreteBlock extends TileEntity
 		facing = nbt_.getShort("facing");
 		colour = nbt_.getInteger("colour");
 		var1 = nbt_.getInteger("var1");
-		subType = nbt_.getInteger("subType");
+		//subType = nbt_.getInteger("subType");
 		textureOrienation = nbt_.getInteger("torient");
 		
 		blockIDs = nbt_.getIntArray("blockIDs");
@@ -277,7 +266,6 @@ public class TileEntityDiscreteBlock extends TileEntity
 	
 	
 	@Override
-	//@SideOnly(Side.SERVER)
     public Packet getDescriptionPacket()
     {
 		NBTTagCompound send = new NBTTagCompound();
@@ -287,7 +275,6 @@ public class TileEntityDiscreteBlock extends TileEntity
     }
 	
 	@Override
-	//@SideOnly(Side.CLIENT)
     public void onDataPacket(INetworkManager net, Packet132TileEntityData packet)
     {
     	NBTTagCompound tag = packet.data;

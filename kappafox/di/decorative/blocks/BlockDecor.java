@@ -9,6 +9,8 @@ package kappafox.di.decorative.blocks;
 import java.util.List;
 import java.util.Random;
 
+import com.google.common.collect.Range;
+
 import kappafox.di.base.blocks.BlockDiscreteBlock;
 import kappafox.di.base.blocks.SubBlock;
 import kappafox.di.base.tileentities.TileEntityDiscreteBlock;
@@ -58,17 +60,12 @@ public class BlockDecor extends BlockDiscreteBlock
 	public static final short ID_STRUT_6X6 = 873;
 	
 	
-	public static final short RANGE_LADDER_MIN = 800;
-	public static final short RANGE_LADDER_MAX = 820;
+	//        Range<Integer> r = Range.closed(851, 860);
 	
-	public static final short RANGE_RACK_MIN = 821;
-	public static final short RANGE_RACK_MAX = 840;
-	
-	public static final short RANGE_STAIRS_MIN = 861;
-	public static final short RANGE_STAIRS_MAX = 870;
-	
-	public static final short RANGE_STRUT_MIN = 871;
-	public static final short RANGE_STRUT_MAX = 880;
+	public static final Range<Integer> RANGE_LADDER = Range.closed(800, 820);
+	public static final Range<Integer> RANGE_RACK = Range.closed(821, 840);
+	public static final Range<Integer> RANGE_STAIRS = Range.closed(861, 870);
+	public static final Range<Integer> RANGE_STRUT = Range.closed(871, 880);
 	
 	@SideOnly(Side.CLIENT)
 	private int rid;
@@ -76,6 +73,7 @@ public class BlockDecor extends BlockDiscreteBlock
 	public BlockDecor(int id_, Material mat_, int renderID_)
 	{
 		super(id_, mat_, renderID_);
+		
 		this.setCreativeTab(CreativeTabs.tabAllSearch);
 		this.setUnlocalizedName("decorBlock");
 		this.setHardness(3.0F);
@@ -132,22 +130,22 @@ public class BlockDecor extends BlockDiscreteBlock
 	{
 		if(meta_ > 15)
 		{
-			if(meta_ >= RANGE_LADDER_MIN && meta_ <= RANGE_LADDER_MAX)
+			if(RANGE_LADDER.contains(meta_))
 			{
 				return blocks[2].getOverloadedIcon(side_, meta_);
 			}
 			
-			if(meta_ >= RANGE_RACK_MIN && meta_ <= RANGE_RACK_MAX)
+			if(RANGE_RACK.contains(meta_))
 			{
 				return blocks[4].getOverloadedIcon(side_, meta_);
 			}
 			
-			if(meta_ >= RANGE_STAIRS_MIN && meta_ <= RANGE_STAIRS_MAX)
+			if(RANGE_STAIRS.contains(meta_))
 			{
 				return blocks[5].getOverloadedIcon(side_, meta_);
 			}
 			
-			if(meta_ >= RANGE_STRUT_MIN && meta_ <= RANGE_STRUT_MAX)
+			if(RANGE_STRUT.contains(meta_))
 			{
 				return blocks[6].getOverloadedIcon(side_, meta_);
 			}
@@ -184,7 +182,7 @@ public class BlockDecor extends BlockDiscreteBlock
 			
 			if(tile != null)
 			{
-				if((tile.getTextureSource(side_) == tile.getOriginalID()) && (tile.getTextureSourceMeta(side_) == tile.getSubType()))
+				if((tile.getTextureSource(side_) == tile.getOriginalID()) && (tile.getTextureSourceMeta(side_) == tile.getSubtype()))
 				{
 					return blocks[meta].getBlockTexture(world_, x_, y_, z_, side_);
 				}
@@ -227,7 +225,7 @@ public class BlockDecor extends BlockDiscreteBlock
 		
 		if(tile != null)
 		{
-			int type = tile.getSubType();
+			int type = tile.getSubtype();
 			
 			ItemStack item = new ItemStack(this, 1, type);
 			super.dropBlockAsItem_do(world_, x_, y_, z_, item);
@@ -344,7 +342,7 @@ public class BlockDecor extends BlockDiscreteBlock
         if(t instanceof TileEntityDiscreteBlock)
         {
         	TileEntityDiscreteBlock tile = (TileEntityDiscreteBlock)t;
-        	int type = tile.getSubType();
+        	int type = tile.getSubtype();
         	
         	if(type != 0)
         	{

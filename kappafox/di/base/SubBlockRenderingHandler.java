@@ -8,7 +8,7 @@ import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.world.IBlockAccess;
 import kappafox.di.base.util.PixelSet;
 
-public abstract class SubBlockRenderer 
+public abstract class SubBlockRenderingHandler 
 {
 	protected static final PixelSet px = PixelSet.getInstance();	
 	protected static final DiscreteRenderHelper drh = new DiscreteRenderHelper();
@@ -17,6 +17,6 @@ public abstract class SubBlockRenderer
 	protected static final TextureManager textureManager = Minecraft.getMinecraft().getTextureManager();
 	
 	public abstract boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelID, RenderBlocks renderer); 
-	public abstract boolean renderInventoryBlock(Block block_, int meta_, int modelID_, RenderBlocks renderer_);
+	public abstract void renderInventoryBlock(Block block, int subtype, int modelID, RenderBlocks renderer);
 
 }

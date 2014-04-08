@@ -95,7 +95,7 @@ public class DiscreteGuiHandler implements IGuiHandler
         	
         	if(tile != null)
         	{
-        		int type = tile.getSubType();
+        		int type = tile.getSubtype();
         		
         		switch(type)
         		{

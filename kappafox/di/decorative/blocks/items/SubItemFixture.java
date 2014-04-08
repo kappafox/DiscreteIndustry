@@ -13,7 +13,7 @@ public class SubItemFixture implements SubItem
 		TileEntityFixtureBlock tile = new TileEntityFixtureBlock();
 		
 		tile.setFullColour(true);
-		tile.setSubType(type_);
+		tile.setSubtype(type_);
 		tile.setDirection((short)dir_);
 		
 		tile.setAllTexturesFromSource(blockID_, type_);

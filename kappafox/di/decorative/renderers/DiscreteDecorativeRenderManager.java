@@ -1,6 +1,9 @@
 package kappafox.di.decorative.renderers;
 
+import kappafox.di.base.BlockRenderingHandler;
+import kappafox.di.base.tileentities.TileEntitySubtype;
 import kappafox.di.decorative.DiscreteDecorative;
+import kappafox.di.decorative.blocks.BlockDecor;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
@@ -10,49 +13,72 @@ public class DiscreteDecorativeRenderManager implements ISimpleBlockRenderingHan
 {
 
 	private int renderID;
-	private ISimpleBlockRenderingHandler stripRenderer;
-	private ISimpleBlockRenderingHandler decorRenderer;
+	private static ISimpleBlockRenderingHandler stripRenderer;
+	private static ISimpleBlockRenderingHandler decorRenderer;
 	
-	public DiscreteDecorativeRenderManager(int rID_)
+	private static BlockRenderingHandler HANDLER_DECOR_BLOCK;
+	
+	public DiscreteDecorativeRenderManager(int rID)
 	{
-		renderID = rID_;
-		stripRenderer = new StripRenderer(rID_);
-		decorRenderer = new DecorRenderer(rID_);
+		renderID = rID;
+		stripRenderer = new StripRenderer(rID);
+		decorRenderer = new DecorRenderer(rID);
+		
+		HANDLER_DECOR_BLOCK = new BlockDecorRenderer();
 	}
 	
 	@Override
-	public void renderInventoryBlock(Block block_, int meta_, int modelID_, RenderBlocks renderer_)
+	public void renderInventoryBlock(Block block, int meta, int modelID, RenderBlocks renderer)
 	{
-		if(modelID_ == DiscreteDecorative.hazardRenderID)
+		if(modelID == DiscreteDecorative.hazardRenderID)
 		{
-			stripRenderer.renderInventoryBlock(block_, meta_, modelID_, renderer_);
+			stripRenderer.renderInventoryBlock(block, meta, modelID, renderer);
 		}
 		
-		if(modelID_ == DiscreteDecorative.decorRenderID)
+		if(modelID == DiscreteDecorative.decorRenderID)
 		{
-			decorRenderer.renderInventoryBlock(block_, meta_, modelID_, renderer_);
+			
+			if(BlockDecor.RANGE_LADDER.contains(meta))
+			{
+				HANDLER_DECOR_BLOCK.renderInventoryBlock(block, meta, modelID, renderer);
+			}
+			else
+			{
+				decorRenderer.renderInventoryBlock(block, meta, modelID, renderer);
+			}
 		}
 	}
 
 	@Override
-	public boolean renderWorldBlock(IBlockAccess world_, int x_, int y_, int z_, Block block_, int modelID_, RenderBlocks renderer_)
+	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelID, RenderBlocks renderer)
 	{
-		int meta = world_.getBlockMetadata(x_, y_, z_);
+		int meta = world.getBlockMetadata(x, y, z);
 		
-		if(modelID_ == DiscreteDecorative.hazardRenderID)
+		if(modelID == DiscreteDecorative.hazardRenderID)
 		{
 			if(meta >= 0 && meta <= 5)
 			{
-				renderer_.renderStandardBlock(block_, x_, y_, z_);
+				renderer.renderStandardBlock(block, x, y, z);
 				return true;
 			}
 			
-			return stripRenderer.renderWorldBlock(world_, x_, y_, z_, block_, modelID_, renderer_);
+			return stripRenderer.renderWorldBlock(world, x, y, z, block, modelID, renderer);
 		}
 		
-		if(modelID_ == DiscreteDecorative.decorRenderID)
+		if(modelID == DiscreteDecorative.decorRenderID)
 		{
-			return decorRenderer.renderWorldBlock(world_, x_, y_, z_, block_, modelID_, renderer_);	
+			TileEntitySubtype tile = (TileEntitySubtype)world.getBlockTileEntity(x, y, z);
+			
+			if(tile != null)
+			{
+				//temp till all old block renderers are converted over
+				if(BlockDecor.RANGE_LADDER.contains(tile.getSubtype()))
+				{
+					return HANDLER_DECOR_BLOCK.renderWorldBlock(world, x, y, z, block, modelID, renderer);
+				}
+			}
+
+			return decorRenderer.renderWorldBlock(world, x, y, z, block, modelID, renderer);	
 		}
 		
 		

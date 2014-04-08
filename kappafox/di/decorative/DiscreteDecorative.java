@@ -247,7 +247,6 @@ public class DiscreteDecorative
 		Recipes.extractor.addRecipe(new RecipeInputItemStack(strut44), null, strut66);
 		Recipes.extractor.addRecipe(new RecipeInputItemStack(strut22), null, strut44);
 		
-		
 		//Stairs
 		GameRegistry.addRecipe(new ShapedOreRecipe(discreteStairs4, new Object[]{ "X  ", "XX ", "XXX", 'X', frameDiscreteCable}));		
 		GameRegistry.addRecipe(new ShapelessOreRecipe(discreteSmallStairs, new Object[]{discreteStairs}));

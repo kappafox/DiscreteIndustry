@@ -15,7 +15,7 @@ public class ContainerSwordRack extends Container
 	{
 		
 		tile = tile_;
-		int size = tile_.getSubType();
+		int size = tile_.getSubtype();
 		int xoffset = 36;
 		int yoffset = 16;
 		int rows = 1;

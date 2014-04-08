@@ -28,22 +28,23 @@ public class ItemDiscreteDecorBlock extends ItemBlock
 	
 	private static SubItem[] subs = new SubItem[3];
 	
-	public ItemDiscreteDecorBlock(int id_)
+	public ItemDiscreteDecorBlock(int id)
 	{
-		super(id_);
+		super(id);
 		this.setHasSubtypes(true);
 		this.setCreativeTab(CreativeTabs.tabAllSearch);
 		
 		subs[0] = new SubItemSwordRack();
 		subs[1] = new SubItemDiscreteStairs();
 		subs[2] = new SubItemFixture();
+		//subs[3] = new SubItemLadder();
 	}
 	
-	public String getUnlocalizedName(ItemStack istack_)
+	public String getUnlocalizedName(ItemStack istack)
 	{
 		String name = "Unset";
 		
-		switch(istack_.getItemDamage())
+		switch(istack.getItemDamage())
 		{
 			case 0:
 			{
@@ -53,77 +54,77 @@ public class ItemDiscreteDecorBlock extends ItemBlock
 			
 			case 1:
 			{
-				name = "DBLOCK_NAME_1";
+				name = "DBLOCKNAME1";
 				break;
 			}
 			case 2:
 			{
-				name = "DBLOCK_NAME_2";
+				name = "DBLOCKNAME2";
 				break;
 			}
 			case 3:
 			{
-				name = "DBLOCK_NAME_3";
+				name = "DBLOCKNAME3";
 				break;
 			}
 			case 4:
 			{
-				name = "DBLOCK_NAME_4";
+				name = "DBLOCKNAME4";
 				break;
 			}
 			case 5:
 			{
-				name = "DBLOCK_NAME_5";
+				name = "DBLOCKNAME5";
 				break;
 			}
 			case 6:
 			{
-				name = "DBLOCK_NAME_6";
+				name = "DBLOCKNAME6";
 				break;
 			}
 			case 7:
 			{
-				name = "DBLOCK_NAME_7";
+				name = "DBLOCKNAME7";
 				break;
 			}
 			case 8:
 			{
-				name = "DBLOCK_NAME_8";
+				name = "DBLOCKNAME8";
 				break;
 			}
 			case 9:
 			{
-				name = "DBLOCK_NAME_9";
+				name = "DBLOCKNAME9";
 				break;
 			}
 			case 10:
 			{
-				name = "DBLOCK_NAME_10";
+				name = "DBLOCKNAME10";
 				break;
 			}
 			case 11:
 			{
-				name = "DBLOCK_NAME_11";
+				name = "DBLOCKNAME11";
 				break;
 			}
 			case 12:
 			{
-				name = "DBLOCK_NAME_12";
+				name = "DBLOCKNAME12";
 				break;
 			}
 			case 13:
 			{
-				name = "DBLOCK_NAME_13";
+				name = "DBLOCKNAME13";
 				break;
 			}
 			case 14:
 			{
-				name = "DBLOCK_NAME_14";
+				name = "DBLOCKNAME14";
 				break;
 			}
 			case 15:
 			{
-				name = "DBLOCK_NAME_15";
+				name = "DBLOCKNAME15";
 				break;
 			}
 			
@@ -218,79 +219,79 @@ public class ItemDiscreteDecorBlock extends ItemBlock
 	}
 	
 	@Override
-    public void getSubItems(int id_, CreativeTabs tab_, List itemList_)
+    public void getSubItems(int id, CreativeTabs tab, List itemList)
     {
-        Block.blocksList[this.getBlockID()].getSubBlocks(id_, tab_, itemList_);
+        Block.blocksList[this.getBlockID()].getSubBlocks(id, tab, itemList);
         
 
         //Ladders
-        itemList_.add(new ItemStack(id_, 1, 800));
-        itemList_.add(new ItemStack(id_, 1, 801));
-        itemList_.add(new ItemStack(id_, 1, 802));
-        itemList_.add(new ItemStack(id_, 1, 803));
-        itemList_.add(new ItemStack(id_, 1, 804));
-        itemList_.add(new ItemStack(id_, 1, 805));
-        itemList_.add(new ItemStack(id_, 1, 806));
-        itemList_.add(new ItemStack(id_, 1, 807));
+        itemList.add(new ItemStack(id, 1, 800));
+        itemList.add(new ItemStack(id, 1, 801));
+        itemList.add(new ItemStack(id, 1, 802));
+        itemList.add(new ItemStack(id, 1, 803));
+        itemList.add(new ItemStack(id, 1, 804));
+        itemList.add(new ItemStack(id, 1, 805));
+        itemList.add(new ItemStack(id, 1, 806));
+        itemList.add(new ItemStack(id, 1, 807));
         
         //Racks/Rests
-        itemList_.add(new ItemStack(id_, 1, 821));
-        itemList_.add(new ItemStack(id_, 1, 822));
+        itemList.add(new ItemStack(id, 1, 821));
+        itemList.add(new ItemStack(id, 1, 822));
         
         //Discrete Stairs
-        itemList_.add(new ItemStack(id_, 1, 861));
-        itemList_.add(new ItemStack(id_, 1, 862));
+        itemList.add(new ItemStack(id, 1, 861));
+        itemList.add(new ItemStack(id, 1, 862));
         
         //StrutS
-        itemList_.add(new ItemStack(id_, 1, 871));	//2x2
-        itemList_.add(new ItemStack(id_, 1, 872));	//4x4
-        itemList_.add(new ItemStack(id_, 1, 873));	//6x6
+        itemList.add(new ItemStack(id, 1, 871));	//2x2
+        itemList.add(new ItemStack(id, 1, 872));	//4x4
+        itemList.add(new ItemStack(id, 1, 873));	//6x6
         
-        //itemList_.add(new ItemStack(id_, 1, 888));
+        //itemList.add(new ItemStack(id, 1, 888));
     }
 	
 	@Override
-	public int getMetadata(int par1_)
+	public int getMetadata(int par1)
 	{
-		return par1_;
+		return par1;
 	}
 	
 	
 	@Override
-    public boolean onItemUse(ItemStack item_, EntityPlayer player_, World world_, int x_, int y_, int z_, int side_, float hitx_, float hity_, float hitz_)
+    public boolean onItemUse(ItemStack item, EntityPlayer player, World world, int x, int y, int z, int side, float hitx, float hity, float hitz)
     {
-		int meta = item_.getItemDamage();
-        int id_ = world_.getBlockId(x_, y_, z_);
+		int meta = item.getItemDamage();
+        int id = world.getBlockId(x, y, z);
        
         int direction;
         
         if(meta >= 800)
         {
-        	return this.OnItemUseOverloaded(item_, player_, world_, x_, y_, z_, side_, hitx_, hity_, hitz_, meta);
+        	return this.OnItemUseOverloaded(item, player, world, x, y, z, side, hitx, hity, hitz, meta);
         }
         
 		if(meta == 0 || meta == 3)
 		{
-			return super.onItemUse(item_, player_, world_, x_, y_, z_, side_, hitx_, hity_, hitz_);
+			return super.onItemUse(item, player, world, x, y, z, side, hitx, hity, hitz);
 		}
 		
 		int tMeta = 0;
-		int ox = x_;
-		int oy = y_;
-		int oz = z_;
+		int ox = x;
+		int oy = y;
+		int oz = z;
 		
-        if (id_ == Block.snow.blockID && (world_.getBlockMetadata(x_, y_, z_) & 7) < 1)
+        if (id == Block.snow.blockID && (world.getBlockMetadata(x, y, z) & 7) < 1)
         {
-            side_ = 1;
+            side = 1;
         }
-        else if (id_ != Block.vine.blockID && id_ != Block.tallGrass.blockID && id_ != Block.deadBush.blockID
-                && (Block.blocksList[id_] == null || !Block.blocksList[id_].isBlockReplaceable(world_, x_, y_, z_)))
+        else if (id != Block.vine.blockID && id != Block.tallGrass.blockID && id != Block.deadBush.blockID
+                && (Block.blocksList[id] == null || !Block.blocksList[id].isBlockReplaceable(world, x, y, z)))
         {
-            if (side_ == 0)
+            if (side == 0)
             {
-                --y_;
+                --y;
                 
-                direction = this.directionFromYaw(player_);
+                direction = this.directionFromYaw(player);
                 switch(direction)
                 {
                 	case 0:
@@ -311,11 +312,11 @@ public class ItemDiscreteDecorBlock extends ItemBlock
                 }
             }
 
-            if (side_ == 1)
+            if (side == 1)
             {
-                ++y_;
+                ++y;
                 
-                direction = this.directionFromYaw(player_);
+                direction = this.directionFromYaw(player);
                 switch(direction)
                 {
                 	case 0:
@@ -336,52 +337,52 @@ public class ItemDiscreteDecorBlock extends ItemBlock
                 }
             }
 
-            if (side_ == 2)
+            if (side == 2)
             {
-                --z_;
+                --z;
                 tMeta = 3;
             }
 
-            if (side_ == 3)
+            if (side == 3)
             {
-                ++z_;
+                ++z;
                 tMeta = 2;
             }
 
-            if (side_ == 4)
+            if (side == 4)
             {
-                --x_;
+                --x;
                 tMeta = 5;
             }
 
-            if (side_ == 5)
+            if (side == 5)
             {
-                ++x_;
+                ++x;
                 tMeta = 4;
             }
         }
 
-        if (item_.stackSize == 0)
+        if (item.stackSize == 0)
         {
             return false;
         }
-        else if (!player_.canPlayerEdit(x_, y_, z_, side_, item_))
+        else if (!player.canPlayerEdit(x, y, z, side, item))
         {
             return false;
         }
-        else if (y_ == 255 && Block.blocksList[this.getBlockID()].blockMaterial.isSolid())
+        else if (y == 255 && Block.blocksList[this.getBlockID()].blockMaterial.isSolid())
         {
             return false;
         }
 
         Block block = Block.blocksList[this.getBlockID()];
-        int j1 = this.getMetadata(item_.getItemDamage());        
-        int k1 = Block.blocksList[this.getBlockID()].onBlockPlaced(world_, x_, y_, z_, side_, hitx_, hity_, hitz_, j1);
+        int j1 = this.getMetadata(item.getItemDamage());        
+        int k1 = Block.blocksList[this.getBlockID()].onBlockPlaced(world, x, y, z, side, hitx, hity, hitz, j1);
 
-        if (placeBlockAt(item_, player_, world_, x_, y_, z_, side_, hitx_, hity_, hitz_, k1))
+        if (placeBlockAt(item, player, world, x, y, z, side, hitx, hity, hitz, k1))
         {
-            world_.playSoundEffect((double)((float)x_ + 0.5F), (double)((float)y_ + 0.5F), (double)((float)z_ + 0.5F), block.stepSound.getPlaceSound(), (block.stepSound.getVolume() + 1.0F) / 2.0F, block.stepSound.getPitch() * 0.8F);
-            --item_.stackSize;
+            world.playSoundEffect((double)((float)x + 0.5F), (double)((float)y + 0.5F), (double)((float)z + 0.5F), block.stepSound.getPlaceSound(), (block.stepSound.getVolume() + 1.0F) / 2.0F, block.stepSound.getPitch() * 0.8F);
+            --item.stackSize;
         }
         
         /*
@@ -404,10 +405,10 @@ public class ItemDiscreteDecorBlock extends ItemBlock
         
         
         
-        if(world_.isRemote == false)
+        if(world.isRemote == false)
         {
-            world_.setBlockTileEntity(x_, y_, z_, tile);
-            world_.markBlockForUpdate(x_, y_, z_);
+            world.setBlockTileEntity(x, y, z, tile);
+            world.markBlockForUpdate(x, y, z);
         }
         */
         
@@ -418,117 +419,91 @@ public class ItemDiscreteDecorBlock extends ItemBlock
 	
 	
 	//Method just for overloaded damages 800+
-	public boolean OnItemUseOverloaded(ItemStack item_, EntityPlayer player_, World world_, int x_, int y_, int z_, int side_, float hitx_, float hity_, float hitz_, int damage_)
+	public boolean OnItemUseOverloaded(ItemStack item, EntityPlayer player, World world, int x, int y, int z, int side, float hitx, float hity, float hitz, int damage)
 	{
-		int meta = damage_;
-        int id_ = world_.getBlockId(x_, y_, z_);
+		int meta = damage;
+        int id = world.getBlockId(x, y, z);
        
         int direction;		
 		int orient = 0;
-		int ox = x_;
-		int oy = y_;
-		int oz = z_;
+		int ox = x;
+		int oy = y;
+		int oz = z;
 		
-        if(id_ == Block.snow.blockID && (world_.getBlockMetadata(x_, y_, z_) & 7) < 1)
+        if(id == Block.snow.blockID && (world.getBlockMetadata(x, y, z) & 7) < 1)
         {
-            side_ = 1;
+            side = 1;
         }
-        else if(id_ != Block.vine.blockID && id_ != Block.tallGrass.blockID && id_ != Block.deadBush.blockID && (Block.blocksList[id_] == null || !Block.blocksList[id_].isBlockReplaceable(world_, x_, y_, z_)))
+        else if(id != Block.vine.blockID && id != Block.tallGrass.blockID && id != Block.deadBush.blockID && (Block.blocksList[id] == null || !Block.blocksList[id].isBlockReplaceable(world, x, y, z)))
         {
-            if(side_ == 0)
+            if(side == 0)
             {
-                y_--;             
-                direction = this.directionFromYaw(player_);
+                y--;             
+                direction = this.directionFromYaw(player);
                 orient = this.getDirectionFromBottom(direction);
             }
 
-            if (side_ == 1)
+            if (side == 1)
             {
-                y_++;               
-                direction = this.directionFromYaw(player_);
+                y++;               
+                direction = this.directionFromYaw(player);
                 orient = this.getDirectionFromTop(direction);
             }
             
-            switch(side_)
+            switch(side)
             {
 	            case 2:
 	            {
-	            	z_--;
+	            	z--;
 	            	orient = 3;
 	            	break;
 	            }
 	            
 	            case 3:
 	            {
-	            	z_++;
+	            	z++;
 	            	orient = 2;
 	            	break;
 	            }
 	            
 	            case 4:
 	            {
-	            	x_--;
+	            	x--;
 	            	orient = 5;
 	            	break;
 	            }
 	            
 	            case 5:
 	            {
-	            	x_++;
+	            	x++;
 	            	orient = 4;
 	            	break;
 	            }
             }
-            
-            /*
-            if (side_ == 2)
-            {
-                --z_;
-                orient = 3;
-            }
-
-            if (side_ == 3)
-            {
-                ++z_;
-                orient = 2;
-            }
-
-            if (side_ == 4)
-            {
-                --x_;
-                orient = 5;
-            }
-
-            if (side_ == 5)
-            {
-                ++x_;
-                orient = 4;
-            }
-            */
         }
 
-        if(item_.stackSize == 0)
+        if(item.stackSize == 0)
         {
             return false;
         }
-        else if(!player_.canPlayerEdit(x_, y_, z_, side_, item_))
+        else if(!player.canPlayerEdit(x, y, z, side, item))
         {
             return false;
         }
-        else if(y_ == 255 && Block.blocksList[this.getBlockID()].blockMaterial.isSolid())
+        else if(y == 255 && Block.blocksList[this.getBlockID()].blockMaterial.isSolid())
         {
             return false;
         }
 
         Block block = Block.blocksList[this.getBlockID()];
         
-        int j1 = this.getOverloadedMeta(damage_);    
-        int k1 = Block.blocksList[this.getBlockID()].onBlockPlaced(world_, x_, y_, z_, side_, hitx_, hity_, hitz_, j1);
+        int j1 = this.getOverloadedMeta(damage);    
+        int k1 = Block.blocksList[this.getBlockID()].onBlockPlaced(world, x, y, z, side, hitx, hity, hitz, j1);
 
-        if(placeBlockAt(item_, player_, world_, x_, y_, z_, side_, hitx_, hity_, hitz_, k1))
+        if(placeBlockAt(item, player, world, x, y, z, side, hitx, hity, hitz, k1))
         {
-            world_.playSoundEffect((double)((float)x_ + 0.5F), (double)((float)y_ + 0.5F), (double)((float)z_ + 0.5F), block.stepSound.getPlaceSound(), (block.stepSound.getVolume() + 1.0F) / 2.0F, block.stepSound.getPitch() * 0.8F);
-            --item_.stackSize;
+            world.playSoundEffect((double)((float)x + 0.5F), (double)((float)y + 0.5F), (double)((float)z + 0.5F), block.stepSound.getPlaceSound(), (block.stepSound.getVolume() + 1.0F) / 2.0F, block.stepSound.getPitch() * 0.8F);
+            --item.stackSize;
         }
 
         
@@ -539,12 +514,12 @@ public class ItemDiscreteDecorBlock extends ItemBlock
         
         if(subindex != -1)
         {
-        	tile = subs[this.getSubIndex(meta)].getTileEntity(meta, orient, -1, this.getBlockID(), meta, side_, hitx_, hity_);
+        	tile = subs[this.getSubIndex(meta)].getTileEntity(meta, orient, -1, this.getBlockID(), meta, side, hitx, hity);
         }
         else
         {
         	//Default Block init stuff for non specialised subblocks
-	        TileEntityDiscreteBlock t = new TileEntityDiscreteBlock(this.getBlockID(), j1, damage_);
+	        TileEntityDiscreteBlock t = new TileEntityDiscreteBlock(this.getBlockID(), j1, damage);
 	        t.setAllTexturesFromSource(this.getBlockID(), meta);
 	        
 	        t.setVariable(orient);
@@ -585,11 +560,11 @@ public class ItemDiscreteDecorBlock extends ItemBlock
         	t.setFullColour(true);
         	t.setAllTexturesFromSource(this.getBlockID(), 4);
 
-        	tile = subs[this.getSubIndex(meta)].getTileEntity(meta, orient, -1, this.getBlockID(), meta, hitx_, hity_);
+        	tile = subs[this.getSubIndex(meta)].getTileEntity(meta, orient, -1, this.getBlockID(), meta, hitx, hity);
         }
         else
         {
-	        TileEntityDiscreteBlock t = new TileEntityDiscreteBlock(this.getBlockID(), j1, damage_);
+	        TileEntityDiscreteBlock t = new TileEntityDiscreteBlock(this.getBlockID(), j1, damage);
 	        t.setAllTexturesFromSource(this.getBlockID(), meta);
 	        
 	        t.setVariable(orient);
@@ -603,12 +578,12 @@ public class ItemDiscreteDecorBlock extends ItemBlock
         }
         
         */
-        if(world_.isRemote == false && tile != null)
+        if(world.isRemote == false && tile != null)
         {
-            world_.setBlockTileEntity(x_, y_, z_, tile);
-            world_.markBlockForUpdate(x_, y_, z_);
+            world.setBlockTileEntity(x, y, z, tile);
+            world.markBlockForUpdate(x, y, z);
         }
-        
+     
         return true;
 	}
 
@@ -616,133 +591,134 @@ public class ItemDiscreteDecorBlock extends ItemBlock
      * Returns true if the given ItemBlock can be placed on the given side of the given block position.
      */
 	@Override
-    public boolean canPlaceItemBlockOnSide(World world_, int x_, int y_, int z_, int side_, EntityPlayer player_, ItemStack item_)
+    public boolean canPlaceItemBlockOnSide(World world, int x, int y, int z, int side, EntityPlayer player, ItemStack item)
     {  	
-        int id = world_.getBlockId(x_, y_, z_);
-        int meta = item_.getItemDamage();
+        int id = world.getBlockId(x, y, z);
+        int meta = item.getItemDamage();
         
         if(meta == 0)
         {
-        	return super.canPlaceItemBlockOnSide(world_, x_, y_, z_, side_, player_, item_);
+        	return super.canPlaceItemBlockOnSide(world, x, y, z, side, player, item);
         }
         
-        int ox = x_;
-        int oy = y_;
-        int oz = z_;
+        int ox = x;
+        int oy = y;
+        int oz = z;
         
         if (id == Block.snow.blockID)
         {
-            side_ = 1;
+            side = 1;
         }
         else if (id != Block.vine.blockID && id != Block.tallGrass.blockID && id != Block.deadBush.blockID
-                && (Block.blocksList[id] == null || !Block.blocksList[id].isBlockReplaceable(world_, x_, y_, z_)))
+                && (Block.blocksList[id] == null || !Block.blocksList[id].isBlockReplaceable(world, x, y, z)))
         {
-            if (side_ == 0)
+            if (side == 0)
             {
-                --y_;
+                --y;
             }
 
-            if (side_ == 1)
+            if (side == 1)
             {
-                ++y_;
+                ++y;
             }
 
-            if (side_ == 2)
+            if (side == 2)
             {
-                --z_;
+                --z;
             }
 
-            if (side_ == 3)
+            if (side == 3)
             {
-                ++z_;
+                ++z;
             }
 
-            if (side_ == 4)
+            if (side == 4)
             {
-                --x_;
+                --x;
             }
 
-            if (side_ == 5)
+            if (side == 5)
             {
-                ++x_;
+                ++x;
             }
         }
         
 
-        return world_.canPlaceEntityOnSide(this.getBlockID(), x_, y_, z_, false, side_, player_, item_);
+        return world.canPlaceEntityOnSide(this.getBlockID(), x, y, z, false, side, player, item);
     }
     
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack item_, EntityPlayer player_, List tooltip_, boolean par4_)
+    public void addInformation(ItemStack item, EntityPlayer player, List tooltip, boolean par4)
     {
-    	int meta = item_.getItemDamage();
+    	int meta = item.getItemDamage();
     	
     	if(meta == 0)
     	{
-        	tooltip_.add("Craft me to update to the new version!");
+        	tooltip.add("Craft me to update to the new version!");
     	}
     	else
     	{
-        	tooltip_.add("Obscurator Compatible");
+        	tooltip.add("Obscurator Compatible");
     		//struts
     		if(meta >= 871 && meta <= 880)
     		{
-            	tooltip_.add("Wrench to toggle connections");
+            	tooltip.add("Wrench to toggle connections");
     		}
 
     	}
 
     }
     
-    private int directionFromYaw(EntityPlayer player_)
+    private int directionFromYaw(EntityPlayer player)
     {
-    	return MathHelper.floor_double((double)((player_.rotationYaw * 4F) / 360F) + 0.5D) & 3;
+    	return MathHelper.floor_double((double)((player.rotationYaw * 4F) / 360F) + 0.5D) & 3;
     }
     
-    private int getSubIndex(int type_)
+    private int getSubIndex(int type)
     {
-        if(type_ >= 821 && type_ <= 840)
+        if(type >= 821 && type <= 840)
         {
         	return 0;
         }
         
-        if(type_ >= 861 && type_ <= 870)
+        if(type >= 861 && type <= 870)
         {
         	return 1;
         }
         
     	//Stairs
-    	if(type_ >= 871 && type_ <= 880)
+    	if(type >= 871 && type <= 880)
     	{
     		return 2;
     	}
+    	
         
         return -1;
     }
     
-    private int getOverloadedMeta(int damage_)
+    private int getOverloadedMeta(int damage)
     {
     	//ladder
-    	if(damage_ >= 800 && damage_ <= 820)
+    	if(damage >= 800 && damage <= 820)
     	{
     		return 2;
     	}
     	
     	//Sword Racks
-    	if(damage_ >= 821 && damage_ <= 840)
+    	if(damage >= 821 && damage <= 840)
     	{
     		return 4;
     	}
     	
     	//Stairs
-    	if(damage_ >= 861 && damage_ <= 870)
+    	if(damage >= 861 && damage <= 870)
     	{
     		return 5;
     	}
     	
     	//Stairs
-    	if(damage_ >= 871 && damage_ <= 880)
+    	if(damage >= 871 && damage <= 880)
     	{
     		return 6;
     	}
@@ -750,14 +726,14 @@ public class ItemDiscreteDecorBlock extends ItemBlock
     	return 0;
     }
     
-    private int getDirectionFromTop(int dir_)
+    private int getDirectionFromTop(int dir)
     {
-    	return this.getDirectionFromBottom(dir_);
+    	return this.getDirectionFromBottom(dir);
     }
     
-    private int getDirectionFromBottom(int dir_)
+    private int getDirectionFromBottom(int dir)
     {
-        switch(dir_)
+        switch(dir)
         {
         	case 0:
         		return 3;

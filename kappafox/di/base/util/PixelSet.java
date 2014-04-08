@@ -4,6 +4,8 @@ public class PixelSet
 {
 	private static PixelSet instance;
 	
+
+	
 	public static final float zero = 0.0F;
 	public static final float one = 0.0625F;
 	public static final float two = 2.0F * one;
@@ -39,6 +41,8 @@ public class PixelSet
 	public static final double dfourteen = 14.0 * done;
 	public static final double dfifteen = 15.0 * done;
 	public static final double dsixteen = 16.0 * done;
+	
+	public static final float half = one / 2.0F;
 	
 	private PixelSet( )
 	{

@@ -38,19 +38,15 @@ public class DiscreteRenderHelper
     
     
     
-    //For use with blocks that use the same code for inventory and world rendering
-    public void renderDiscreteQuadWithColourMultiplier(IBlockAccess world_, RenderBlocks renderer_, Block block_, int x_, int y_, int z_, boolean isInventory)
+    //Combination method for setting bounds and rendering simple
+    public void renderDiscreteQuadWithColourMultiplier(IBlockAccess world, RenderBlocks renderer, Block block, int x, int y, int z, PointSet bounds)
     {
-    	if(isInventory == true)
+    	if(bounds != null)
     	{
-    		TileEntitySubtype tile = (TileEntitySubtype)world_.getBlockTileEntity(x_, y_, z_);
-    		int subtype = tile.getSubtype();
-    		tessellateInventoryBlock(renderer_, block_, subtype);
+    		this.setRenderBounds(renderer, bounds);
     	}
-    	else
-    	{
-    		renderDiscreteQuadWithColourMultiplier(world_, renderer_, block_, x_, y_, z_);
-    	}
+    	
+    	this.renderDiscreteQuadWithColourMultiplier(world, renderer, block, x, y, z);
     }
     
     
@@ -1411,6 +1407,16 @@ public class DiscreteRenderHelper
 
 	}
 	
+	public void tessellateInventoryBlock(RenderBlocks renderer, Block block, int meta, int side, PointSet bounds)
+	{
+		if(bounds != null)
+		{
+			this.setRenderBounds(renderer, bounds);
+		}
+		
+		this.tessellateInventoryBlock(renderer, block, side, meta);
+	}
+	
 	public void tessellateInventoryBlock(RenderBlocks renderer_, Block block_, int side_, int meta_)
 	{
 		tessellator.setNormal(0.0F, -1.0F, 0.0F);
@@ -1427,9 +1433,30 @@ public class DiscreteRenderHelper
 		renderer_.renderFaceXPos(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(side_, meta_));
 	}
 	
+	public void tessellateInventoryBlock(RenderBlocks renderer, Block block, int meta, PointSet bounds)
+	{
+		if(bounds != null)
+		{
+			this.setRenderBounds(renderer, bounds);
+		}
+		
+		this.tessellateInventoryBlock(renderer, block, meta);
+	}
+	
 	public void tessellateInventoryBlock(RenderBlocks renderer_, Block block_, int meta_)
 	{
-		this.tessellateInventoryBlock(renderer_, block_, 0, meta_);
+		tessellator.setNormal(0.0F, -1.0F, 0.0F);
+		renderer_.renderFaceYNeg(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(0, meta_));
+		tessellator.setNormal(0.0F, 1.0F, 0.0F);
+		renderer_.renderFaceYPos(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(1, meta_));
+		tessellator.setNormal(0.0F, 0.0F, -1.0F);
+		renderer_.renderFaceZNeg(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(2, meta_));
+		tessellator.setNormal(0.0F, 0.0F, 1.0F);
+		renderer_.renderFaceZPos(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(3, meta_));
+		tessellator.setNormal(-1.0F, 0.0F, 0.0F);
+		renderer_.renderFaceXNeg(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(4, meta_));
+		tessellator.setNormal(1.0F, 0.0F, 0.0F);
+		renderer_.renderFaceXPos(block_, 0.0D, 0.0D, 0.0D, block_.getIcon(5, meta_));
 	}
 	
 	public void setGL11Scale(double scale_)
@@ -1634,58 +1661,6 @@ public class DiscreteRenderHelper
         OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, (float)i1, (float)j1);
 	}
 	
-	  /**
-     * Renders the given texture to the east (x-positive) face of the block.  Args: block, x, y, z, texture
-     */
-	/*
-    public void renderFaceXPos(RenderBlocks renderer_, Block block_, double x_, double y_, double z_, Icon icon_, double xoff_, double yoff_)
-    {
-
-
-        if(renderer_.hasOverrideBlockTexture())
-        {
-            icon_ = renderer_.overrideBlockTexture;
-        }
-        
-        renderer_.enableAO = true;
-        
-        //interpolated is the internal coords of a texture, 8 px in!
-        double minu = icon_.getInterpolatedU(0 + xoff_);
-        double maxu = icon_.getMaxU();
-        double minv = icon_.getMinV();
-        double maxv = icon_.getInterpolatedV(0 + yoff_);
-        
-        double x = x_ + renderer_.renderMaxX;
-        
-        if (renderer_.enableAO)
-        {
-            tessellator.setColorOpaque_F(renderer_.colorRedBottomLeft, renderer_.colorGreenBottomLeft, renderer_.colorBlueBottomLeft);
-            tessellator.setBrightness(renderer_.brightnessBottomLeft);
-            tessellator.addVertexWithUV(x, y_ + renderer_.renderMinY, z_ + renderer_.renderMaxZ, minu, maxv);
-            
-            tessellator.setColorOpaque_F(renderer_.colorRedBottomRight, renderer_.colorGreenBottomRight, renderer_.colorBlueBottomRight);
-            tessellator.setBrightness(renderer_.brightnessBottomRight);
-            tessellator.addVertexWithUV(x, y_ + renderer_.renderMinY, z_ + renderer_.renderMinZ, maxu, maxv);
-            
-            tessellator.setColorOpaque_F(renderer_.colorRedTopRight, renderer_.colorGreenTopRight, renderer_.colorBlueTopRight);
-            tessellator.setBrightness(renderer_.brightnessTopRight);
-            tessellator.addVertexWithUV(x, y_ + renderer_.renderMaxY, z_ + renderer_.renderMinZ, maxu, minv);
-        	
-            tessellator.setColorOpaque_F(renderer_.colorRedTopLeft, renderer_.colorGreenTopLeft, renderer_.colorBlueTopLeft);
-            tessellator.setBrightness(renderer_.brightnessTopLeft);
-            tessellator.addVertexWithUV(x, y_ + renderer_.renderMaxY, z_ + renderer_.renderMaxZ, minu, minv);
-
-
-        }
-        else
-        {
-            tessellator.addVertexWithUV(x, y_ + renderer_.renderMinY, z_ + renderer_.renderMaxZ, minu, maxv);      
-            tessellator.addVertexWithUV(x, y_ + renderer_.renderMinY, z_ + renderer_.renderMinZ, maxu, maxv);
-            tessellator.addVertexWithUV(x, y_ + renderer_.renderMaxY, z_ + renderer_.renderMinZ, maxu, minv);
-            tessellator.addVertexWithUV(x, y_ + renderer_.renderMaxY, z_ + renderer_.renderMaxZ, minu, minv);
-        }
-    }
-    */
     
     public void renderFaceXPos(Block block_, RenderBlocks renderer_, double x_, double y_, double z_, Icon icon_, double uoff_, double voff_, int texMode_)
     {

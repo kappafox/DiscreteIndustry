@@ -38,7 +38,7 @@ public class DiscreteDecorativeRenderManager implements ISimpleBlockRenderingHan
 		if(modelID == DiscreteDecorative.decorRenderID)
 		{
 			
-			if(BlockDecor.RANGE_LADDER.contains(meta))
+			if(BlockDecor.RANGE_LADDER.contains(meta) || BlockDecor.RANGE_RACK.contains(meta))
 			{
 				HANDLER_DECOR_BLOCK.renderInventoryBlock(block, meta, modelID, renderer);
 			}

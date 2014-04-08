@@ -187,8 +187,7 @@ public class SubRendererLadder extends SubBlockRenderingHandler
 		
 		for(int i = 0; i < 2; i++)
 		{
-			drh.setRenderBounds(renderer, rung);
-			drh.renderDiscreteQuadWithColourMultiplier(world, renderer, block, x, y, z);
+			drh.renderDiscreteQuadWithColourMultiplier(world, renderer, block, x, y, z, rung);
 			
 			rung.y1 += inc;
 			rung.y2 += inc;

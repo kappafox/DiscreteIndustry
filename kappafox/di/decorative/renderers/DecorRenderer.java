@@ -89,15 +89,6 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 			case 0:
 				this.renderInventoryFixture(block_, meta_, modelID_, renderer_);
 				break;
-			
-			case 821:
-				this.renderInventorySwordRestBlock(block_, meta_, modelID_, renderer_);
-				break;
-				
-			//6 Sword Rack
-			case 822:
-				this.renderInventorySwordRackBlock(block_, meta_, modelID_, renderer_);
-				break;
 							
 			case 861:
 				this.renderInventoryDiscreteStairsBlock(block_, meta_, modelID_, renderer_);
@@ -162,7 +153,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 		tessellator.draw();			
 	}
 
-
+	@Deprecated
 	private void renderInventorySwordRestBlock(Block block_, int meta_, int modelID_, RenderBlocks renderer_) 
 	{
 		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
@@ -204,6 +195,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 
 	}
 	
+	@Deprecated
 	private void renderInventorySwordRackBlock(Block block_, int meta_, int modelID_, RenderBlocks renderer_) 
 	{
 		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
@@ -239,27 +231,6 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 		tessellator.draw();
 		drh.resetGL11Scale();
 
-	}
-
-
-	@Deprecated
-	private void renderInventoryFixedPlankLadderBlock(Block block_, int meta_, int modelID_, RenderBlocks renderer_) 
-	{
-		temp.renderInventoryBlock(block_, meta_, modelID_, renderer_);
-	}
-
-	
-	@Deprecated
-	private void renderInventoryRopeLadderBlock(Block block_, int meta_, int modelID_, RenderBlocks renderer_) 
-	{
-		temp.renderInventoryBlock(block_, meta_, modelID_, renderer_);
-	}
-
-
-	@Deprecated
-	private void renderInventorySimpleLadderBlock(Block block_, int meta_, int modelID_, RenderBlocks renderer_) 
-	{
-		temp.renderInventoryBlock(block_, meta_, modelID_, renderer_);
 	}
 
 
@@ -309,78 +280,10 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 		
 		tessellator.draw();		
 	}
-	
-	@Deprecated
-	private void renderInventoryPoleLadderBlock(Block block_, int meta_, int modelID_, RenderBlocks renderer_) 
-	{
-		temp.renderInventoryBlock(block_, meta_, modelID_, renderer_);
-	}
-	
-	@Deprecated
-	private void renderInventoryFootholdLadderBlock(Block block_, int meta_, int modelID_, RenderBlocks renderer_) 
-	{
-		temp.renderInventoryBlock(block_, meta_, modelID_, renderer_);
-		
-		
-		/*
-		GL11.glTranslatef(-0.5F, -0.5F, -0.5F);
-		GL11.glScaled(1.5, 1.5, 1.5);
-		tessellator.startDrawingQuads();
-		
-		double ymin = onePx;
-		double ymax = threePx;
-		double inc = fourPx;
-		
-		double xmin = twoPx;
-		double xmax = sevenPx;
-		
-		
-			for(int i = 0; i < 4; i++)
-			{
-				if(i % 2 == 0)
-				{
-					xmin = twoPx;
-					xmax = sevenPx;					
-				}
-				else
-				{
-					xmin = ninePx;
-					xmax = fourteenPx;
-				}
-				
-				renderer_.setRenderBounds(xmin, ymin, sevenPx, xmax, ymax, eightPx);
-				drh.tessellateInventoryBlock(renderer_, block_, meta_);
-				
-				renderer_.setRenderBounds(xmin, ymin, sixPx, (xmin + onePx), ymax, sevenPx);
-				drh.tessellateInventoryBlock(renderer_, block_, meta_);
-				
-				
-				renderer_.setRenderBounds((xmax - onePx), ymin, sixPx, xmax, ymax, sevenPx);
-				drh.tessellateInventoryBlock(renderer_, block_, meta_);
-				
-				ymin += inc;
-				ymax += inc;
-			}
-		
-		tessellator.draw();
-		GL11.glScaled(1.0, 1.0, 1.0);
-		*/
-		
-	}
 
-
-	@Deprecated
-	private void renderInventoryIndustrialLadderBlock(Block block_, int meta_, int modelID_, RenderBlocks renderer_)
-	{
-		temp.renderInventoryBlock(block_, meta_, modelID_, renderer_);
-	}
 	
-	@Deprecated
-	private void renderInventoryClassicLadderBlock(Block block_, int meta_, int modelID_, RenderBlocks renderer_)
-	{	
-		temp.renderInventoryBlock(block_, meta_, modelID_, renderer_);
-	}
-
+	private static SubRendererWeaponRack newsys = new SubRendererWeaponRack();
+	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public boolean renderWorldBlock(IBlockAccess world_, int x_, int y_, int z_, Block block_, int modelID_, RenderBlocks renderer_)
@@ -398,22 +301,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 
 		if(t instanceof TileEntitySwordRack)
 		{
-			TileEntityDiscreteBlock tile = (TileEntityDiscreteBlock)t;
-			int type = tile.getSubtype();
-			
-			switch(type)
-			{
-				//Single Sword Rest
-				case 821:
-					return renderWorldSwordRest(world_, x_, y_, z_,  block_,  modelID_,  renderer_, meta);
-				
-				//6 Sword Rack
-				case 822:
-					return renderWorldSwordRack(world_, x_, y_, z_,  block_,  modelID_,  renderer_, meta);				
-			}
-			
-			
-					
+			return newsys.renderWorldBlock(world_, x_, y_, z_, block_, modelID_, renderer_);			
 		}
 		
 		
@@ -917,6 +805,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 	}
 
 
+	@Deprecated
 	private boolean renderWorldSwordRest(IBlockAccess world_, int x_, int y_, int z_, Block block_, int modelID_, RenderBlocks renderer_, int meta) 
 	{	
 		
@@ -967,23 +856,11 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 			}
 		}
 		
-		
-		/*
-		renderer_.setRenderBounds(twoPx, zeroPx, fourPx, fourteenPx, twoPx, twelvePx);
-		drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
-		
-		renderer_.setRenderBounds(fourPx, twoPx, fivePx, twelvePx, fivePx, elevenPx);
-		drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
-			
-		renderer_.setRenderBounds(sixPx, fivePx, sixPx, tenPx, sixPx, tenPx);
-		drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
-		*/
-		
-		
 		return false;
 	}
 
-
+	
+	@Deprecated
 	private boolean renderWorldSwordRack(IBlockAccess world_, int x_, int y_, int z_, Block block_, int modelID_, RenderBlocks renderer_, int meta) 
 	{
 		
@@ -1252,150 +1129,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 			
 
 		}
-		
-
-		
-		/*
-		tessellator.draw();
-		tessellator.startDrawingQuads();
-		tessellator.setColorOpaque_F(1.0F, 1.0F, 1.0F);
-		renderer_.setRenderBounds(zeroPx, zeroPx, sevenPx, onePx * 32, sixteenPx, eightPx);
-		
-		double px = zeroPx;
-		double py = onePx;
-		
-		this.bindTexture(flagSheet);
-		
-		for(int i = 0; i < 16; i++)
-		{
-			for(int j = 0; j < 28; j++)
-			{
-				double ymin = (y_ + (i * onePx));
-				double ymax = (y_ + (i * onePx)) + onePx;
-				double xmin = (x_ + (j * onePx));
-				double xmax = (x_ + (j * onePx)) + onePx;
-				
-				tessellator.addVertexWithUV(xmin, ymax, z_ + 1, px, px);
-				tessellator.addVertexWithUV(xmin, ymin, z_ + 1, px, py);		
-				tessellator.addVertexWithUV(xmax, ymin, z_ + 1, py, py);		
-				tessellator.addVertexWithUV(xmax, ymax, z_ + 1, py, px);
-				
-				px = px + onePx;
-				py = px + onePx;
-				if(px > 15)
-				{
-					px = zeroPx;
-					py = onePx;
-				}
-			}
-		}
-		
-
-
-
-
-
-
-	   
-	    //flush the Tessellator and rebind the default texture
-		tessellator.draw();
-        this.bindTexture(TextureMap.locationBlocksTexture);
-        
-		tessellator.startDrawingQuads();
-
-		//renderer_.renderFaceZPos(block_, x_, y_, z_, block_.getIcon(0, 805));
-		//renderer_.renderStandardBlockWithColorMultiplier(block_, x_, y_, z_, 1.0F, 1.0F, 1.0F);
-		
-		
-		//tessellator.
-
-		//renderer_.setRenderBounds(zeroPx, zeroPx, sevenPx, 29 * onePx, sixteenPx, eightPx);
-		//renderer_.renderStandardBlock(block_, x_, y_, z_);
-		//renderer_.renderStandardBlock(block_, x_, y_, z_);
-		
-		*/
 		return true;
-	}
-
-
-	@Deprecated
-	private boolean renderWorldFixedPlankLadderBlock(IBlockAccess world_, int x_, int y_, int z_, Block block_, int modelID_, RenderBlocks renderer_, int meta) 
-	{
-
-		
-		TileEntityDiscreteBlock tile = (TileEntityDiscreteBlock)world_.getBlockTileEntity(x_, y_, z_);
-
-		
-		if(tile == null)
-		{
-			return true;
-		}
-		
-		return this.newSystemWorldRenderer(world_, x_, y_, z_, block_, modelID_, renderer_);
-	}
-
-
-	@Deprecated
-	private boolean renderWorldRopeLadderBlock(IBlockAccess world_, int x_, int y_, int z_, Block block_, int modelID_, RenderBlocks renderer_, int meta) 
-	{
-
-		
-		TileEntityDiscreteBlock tile = (TileEntityDiscreteBlock)world_.getBlockTileEntity(x_, y_, z_);
-
-		
-		if(tile == null)
-		{
-			return true;
-		}
-		
-		return this.newSystemWorldRenderer(world_, x_, y_, z_, block_, modelID_, renderer_);
-	}
-
-	
-	//FIXME
-	private static final SubRendererLadder temp = new SubRendererLadder();
-	
-	private boolean newSystemWorldRenderer(IBlockAccess world, int x, int y, int z, Block block, int modelID, RenderBlocks renderer)
-	{
-		return temp.renderWorldBlock(world, x, y, z, block, modelID, renderer);
-	}
-	
-	@Deprecated
-	private boolean renderWorldSimpleLadderBlock(IBlockAccess world_, int x_, int y_, int z_, Block block_, int modelID_, RenderBlocks renderer_,int meta) 
-	{	
-		return newSystemWorldRenderer(world_, x_, y_, z_, block_, modelID_, renderer_);
-	}
-
-
-	@Deprecated
-	private boolean renderWorldPoleLadderBlock(IBlockAccess world_, int x_, int y_, int z_, Block block_, int modelID_, RenderBlocks renderer_, int meta_)
-	{
-
-		
-		TileEntityDiscreteBlock tile = (TileEntityDiscreteBlock)world_.getBlockTileEntity(x_, y_, z_);
-
-		
-		if(tile == null)
-		{
-			return true;
-		}
-		
-		SubRendererLadder test = new SubRendererLadder();
-		return test.renderWorldBlock(world_, x_, y_, z_, block_, modelID_, renderer_);
-	}
-	
-	@Deprecated
-	private boolean renderWorldFootholdLadderBlock(IBlockAccess world_, int x_, int y_, int z_, Block block_, int modelID_, RenderBlocks renderer_, int meta_)
-	{
-		TileEntityDiscreteBlock tile = (TileEntityDiscreteBlock)world_.getBlockTileEntity(x_, y_, z_);
-		
-		if(tile == null)
-		{
-			return true;
-		}
-		
-		
-		return this.newSystemWorldRenderer(world_, x_, y_, z_, block_, modelID_, renderer_);
 	}
 	
 	private boolean renderWorldFixtureBlock(IBlockAccess world_, int x_, int y_, int z_, Block block_, int modelID_, RenderBlocks renderer_, int meta_) 
@@ -1563,33 +1297,6 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
         drh.renderDiscreteQuadWithFlip(world_, renderer_, block_, x_, y_, z_, new boolean[]{false,true,false,false,false,false});
         
         return true;
-	}
-	
-	@Deprecated
-	private boolean renderWorldClassicLadderBlock(IBlockAccess world_, int x_, int y_, int z_, Block block_, int modelID_, RenderBlocks renderer_, int meta_) 
-	{	
-		TileEntityDiscreteBlock tile = (TileEntityDiscreteBlock)world_.getBlockTileEntity(x_, y_, z_);
-	
-		if(tile == null)
-		{
-			return true;
-		}
-		
-		return this.newSystemWorldRenderer(world_, x_, y_, z_, block_, modelID_, renderer_);
-	}
-	
-	@Deprecated
-	private boolean renderWorldIndustrialLadderBlock(IBlockAccess world_, int x_, int y_, int z_, Block block_, int modelID_, RenderBlocks renderer_, int meta_) 
-	{	
-		
-		TileEntityDiscreteBlock tile = (TileEntityDiscreteBlock)world_.getBlockTileEntity(x_, y_, z_);
-		
-		if(tile == null)
-		{
-			return true;
-		}
-		
-		return this.newSystemWorldRenderer(world_, x_, y_, z_, block_, modelID_, renderer_);
 	}
 
 	@Override

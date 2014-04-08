@@ -15,6 +15,7 @@ import kappafox.di.base.blocks.BlockDiscreteBlock;
 import kappafox.di.base.blocks.SubBlock;
 import kappafox.di.base.tileentities.TileEntityDiscreteBlock;
 import kappafox.di.base.util.BoundSet;
+import kappafox.di.base.util.SubBlockDummy;
 import kappafox.di.decorative.tileentities.TileEntityLoomBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -80,8 +81,9 @@ public class BlockDecor extends BlockDiscreteBlock
 		
 		blocks = new SubBlock[SUB_BLOCKS];
 		
-		blocks[0] = new SubBlockStrut();
-		blocks[1] = new SubBlockLadder();
+		blocks[0] = new SubBlockDummy();
+		blocks[1] = new SubBlockDummy();
+		
 		blocks[2] = new SubBlockLadder();
 		blocks[3] = new SubBlockLoom();
 		blocks[4] = new SubBlockSwordRack();
@@ -174,6 +176,7 @@ public class BlockDecor extends BlockDiscreteBlock
     @SideOnly(Side.CLIENT)
     public Icon getBlockTexture(IBlockAccess world_, int x_, int y_, int z_, int side_)
     {	
+
 		int meta = world_.getBlockMetadata(x_, y_, z_);
 		
 		if(blocks[meta].isDiscrete() == true)
@@ -190,6 +193,8 @@ public class BlockDecor extends BlockDiscreteBlock
 			
 			return super.getBlockTexture(world_, x_, y_, z_, side_);
 		}
+		
+
 		return blocks[meta].getBlockTexture(world_, x_, y_, z_, side_);	
     }
 	

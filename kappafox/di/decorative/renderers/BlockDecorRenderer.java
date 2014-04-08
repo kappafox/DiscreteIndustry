@@ -15,12 +15,14 @@ import kappafox.di.decorative.blocks.BlockDecor;
 public class BlockDecorRenderer extends BlockRenderingHandler
 {
 	private static SubRendererLadder SUB_RENDERER_LADDER;
+	private static SubRendererWeaponRack SUB_RENDERER_WEAPON_RACK;
 	
 	public BlockDecorRenderer( )
 	{
 		 sub = new HashMap<Integer, SubBlockRenderingHandler>();
 		 
 		 SUB_RENDERER_LADDER = new SubRendererLadder();
+		 SUB_RENDERER_WEAPON_RACK = new SubRendererWeaponRack();
 		 
 		 this.mapSubBlockRenderers();
 	}
@@ -55,6 +57,7 @@ public class BlockDecorRenderer extends BlockRenderingHandler
 	private void mapSubBlockRenderers( )
 	{	
 		super.registerHandlerRange(BlockDecor.RANGE_LADDER.lowerEndpoint(), BlockDecor.RANGE_LADDER.upperEndpoint(), SUB_RENDERER_LADDER);
+		super.registerHandlerRange(BlockDecor.RANGE_RACK.lowerEndpoint(), BlockDecor.RANGE_RACK.upperEndpoint(), SUB_RENDERER_WEAPON_RACK);
 	}
 	
 	

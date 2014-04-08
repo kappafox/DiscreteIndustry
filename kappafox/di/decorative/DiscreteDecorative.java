@@ -147,7 +147,7 @@ public class DiscreteDecorative
 		
 		//861-870 Stairs
 		LanguageRegistry.addName(new ItemStack(decorBlock, 1, 861), "Discrete Stairs");
-		LanguageRegistry.addName(new ItemStack(decorBlock, 2, 862), "Discrete Small Stairs");
+		LanguageRegistry.addName(new ItemStack(decorBlock, 1, 862), "Discrete Small Stairs");
 		
 		//871-880 Struts etc
 		LanguageRegistry.addName(new ItemStack(decorBlock, 1, 871), "2x2 Strut");

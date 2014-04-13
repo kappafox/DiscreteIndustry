@@ -87,7 +87,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 		{
 			//Fixture
 			case 0:
-				this.renderInventoryFixture(block_, meta_, modelID_, renderer_);
+				//this.renderInventoryFixture(block_, meta_, modelID_, renderer_);
 				break;
 							
 			case 861:
@@ -232,7 +232,8 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 			switch(meta)
 			{
 				case 0:
-					return renderWorldFixtureBlock(world_, x_, y_, z_,  block_,  modelID_,  renderer_, meta);
+					//return renderWorldFixtureBlock(world_, x_, y_, z_,  block_,  modelID_,  renderer_, meta);
+					break;
 				
 
 					

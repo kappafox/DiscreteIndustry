@@ -32,14 +32,11 @@ public class SubBlockLadder extends SubBlock
 	private static Icon ropeLadderSide;
 	
 	private static Icon testIcon;
-	
-	private static Icon DEFAULT_ICON;
-	
 
-	
 	@Override
 	public void registerIcons(IconRegister ireg) 
 	{
+		super.registerIcons(ireg);
 		indLadderSide = ireg.registerIcon(DiscreteIndustry.MODID + ":" + "blockIndustrialLadder");
 		indLadderTop = ireg.registerIcon(DiscreteIndustry.MODID + ":" + "blockIndustrialLadder_top");
 		
@@ -51,8 +48,6 @@ public class SubBlockLadder extends SubBlock
 		poleLadderSide = ireg.registerIcon(DiscreteIndustry.MODID + ":" + "blockPoleLadder");
 		
 		ropeLadderSide = ireg.registerIcon(DiscreteIndustry.MODID + ":" + "blockRope");
-		
-		DEFAULT_ICON = ireg.registerIcon(DiscreteIndustry.MODID + ":" + "blockDiscreteCable");
 	}
 
 	@Override

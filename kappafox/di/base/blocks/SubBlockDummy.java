@@ -1,10 +1,9 @@
-package kappafox.di.base.util;
+package kappafox.di.base.blocks;
 
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.util.Icon;
 import net.minecraft.world.IBlockAccess;
 import kappafox.di.DiscreteIndustry;
-import kappafox.di.base.blocks.SubBlock;
 
 public class SubBlockDummy extends SubBlock
 {

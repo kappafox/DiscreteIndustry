@@ -2,6 +2,7 @@ package kappafox.di.base.blocks;
 
 import java.util.List;
 
+import kappafox.di.DiscreteIndustry;
 import kappafox.di.base.util.BoundSet;
 import kappafox.di.base.util.PixelSet;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -18,63 +19,61 @@ import net.minecraftforge.common.ForgeDirection;
 
 public abstract class SubBlock
 {
-	
-	public double minX = 0.0;
-	public double maxX = 1.0;
-	public double minY = 0.0;
-	public double maxY = 1.0;
-	public double minZ = 0.0;
-	public double maxZ = 1.0;
-	
 	protected static final PixelSet px = PixelSet.getInstance();
+	
+	protected static Icon DEFAULT_ICON;
 	
 	
 	//public abstract boolean isDiscrete();
-	public abstract void registerIcons(IconRegister ireg_);
-	public abstract Icon getIcon(int side_, int meta_);
-	//public abstract boolean onBlockActivated(World world_, int xcoord_, int ycoord_, int zcoord_, EntityPlayer player_, int side_, float par7, float par8, float par9);
-	public abstract Icon getBlockTexture(IBlockAccess world_, int x_, int y_, int z_, int side_);
-	//public abstract void onBlockPlacedBy(World world_, int x_, int y_, int z_, EntityLivingBase player_, ItemStack istack_);
-	//public abstract TileEntity createTileEntity(World world_, int meta_);
-	//public abstract boolean hasTileEntity(int meta_);
-	//public abstract boolean shouldSideBeRendered(IBlockAccess block_, int x_, int y_, int z_, int side_);
+	public void registerIcons(IconRegister ireg)
+	{
+		DEFAULT_ICON = ireg.registerIcon(DiscreteIndustry.MODID + ":" + "blockDiscreteCable");
+	}
+	
+	public abstract Icon getIcon(int side, int meta);
+	//public abstract boolean onBlockActivated(World world, int xcoord, int ycoord, int zcoord, EntityPlayer player, int side, float par7, float par8, float par9);
+	public abstract Icon getBlockTexture(IBlockAccess world, int x, int y, int z, int side);
+	//public abstract void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack istack);
+	//public abstract TileEntity createTileEntity(World world, int meta);
+	//public abstract boolean hasTileEntity(int meta);
+	//public abstract boolean shouldSideBeRendered(IBlockAccess block, int x, int y, int z, int side);
 	
 	
-    public void breakBlock(World world_, int x_, int y_, int z_, int id_, int meta_)
+    public void breakBlock(World world, int x, int y, int z, int id, int meta)
     {
     	
     }
-	public void onBlockPlacedBy(World world_, int x_, int y_, int z_, EntityLivingBase player_, ItemStack istack_)
+	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack istack)
 	{
 		
 	}
 	
-	public int onBlockPlaced(World world_, int x_, int y_, int z_, int side_, float hitx_, float hity_, float hitz_, int meta_)
+	public int onBlockPlaced(World world, int x, int y, int z, int side, float hitx, float hity, float hitz, int meta)
 	{
-		return meta_;
+		return meta;
 	}
 	
-	public boolean onBlockActivated(World world_, int xcoord_, int ycoord_, int zcoord_, EntityPlayer player_, int side_, float par7, float par8, float par9)
+	public boolean onBlockActivated(World world, int xcoord, int ycoord, int zcoord, EntityPlayer player, int side, float par7, float par8, float par9)
 	{
 		return false;
 	}
 	
-	public boolean shouldSideBeRendered(IBlockAccess world_, int x_, int y_, int z_, int side_)
+	public boolean shouldSideBeRendered(IBlockAccess world, int x, int y, int z, int side)
 	{
-		return side_ == 0 && this.minY > 0.0D ? true : (side_ == 1 && this.maxY < 1.0D ? true : (side_ == 2 && this.minZ > 0.0D ? true : (side_ == 3 && this.maxZ < 1.0D ? true : (side_ == 4 && this.minX > 0.0D ? true : (side_ == 5 && this.maxX < 1.0D ? true : !world_.isBlockOpaqueCube(x_, y_, z_))))));
+		return side == 0 && px.zero > 0.0D ? true : (side == 1 && px.sixteen < 1.0D ? true : (side == 2 && px.zero > 0.0D ? true : (side == 3 && px.sixteen < 1.0D ? true : (side == 4 && px.one > 0.0D ? true : (side == 5 && px.sixteen < 1.0D ? true : !world.isBlockOpaqueCube(x, y, z))))));
 	}
 	
-	public TileEntity createTileEntity(World world_, int meta_)
+	public TileEntity createTileEntity(World world, int meta)
 	{
 		return null;
 	}
 	
-	public boolean hasTileEntity(int meta_)
+	public boolean hasTileEntity(int meta)
 	{
 		return false;
 	}
 
-    public boolean isLadder(World world_, int x_, int y_, int z_, EntityLivingBase entity_)
+    public boolean isLadder(World world, int x, int y, int z, EntityLivingBase entity)
     {
         return false;
     }
@@ -86,89 +85,89 @@ public abstract class SubBlock
     
     
     /*
-    public AxisAlignedBB getSelectedBoundingBoxFromPool(World world_, int x_, int y_, int z_)
+    public AxisAlignedBB getSelectedBoundingBoxFromPool(World world, int x, int y, int z)
     {
-        return AxisAlignedBB.getAABBPool().getAABB((double)x_ + 0, (double)y_ + 0, (double)z_ + 0, (double)x_ + 1, (double)y_ + 1, (double)z_ + 1);
+        return AxisAlignedBB.getAABBPool().getAABB((double)x + 0, (double)y + 0, (double)z + 0, (double)x + 1, (double)y + 1, (double)z + 1);
     }
     */
     
-    public AxisAlignedBB getCollisionBoundingBoxFromPool(World world_, int x_, int y_, int z_)
+    public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z)
     {
-    	return AxisAlignedBB.getAABBPool().getAABB((double)x_ + 0, (double)y_ + 0, (double)z_ + 0, (double)x_ + 1, (double)y_ + 1, (double)z_ + 1);
+    	return AxisAlignedBB.getAABBPool().getAABB((double)x + 0, (double)y + 0, (double)z + 0, (double)x + 1, (double)y + 1, (double)z + 1);
     }
     
     
-    public void getCollisionBoxes(World world_, int x_, int y_, int z_, AxisAlignedBB mask_, List boxlist_, Entity entity_)
+    public void getCollisionBoxes(World world, int x, int y, int z, AxisAlignedBB mask, List boxlist, Entity entity)
     {
-        AxisAlignedBB axisalignedbb1 = this.getCollisionBoundingBoxFromPool(world_, x_, y_, z_);
+        AxisAlignedBB axisalignedbb1 = this.getCollisionBoundingBoxFromPool(world, x, y, z);
 
-        if (axisalignedbb1 != null && mask_.intersectsWith(axisalignedbb1))
+        if (axisalignedbb1 != null && mask.intersectsWith(axisalignedbb1))
         {
-            boxlist_.add(axisalignedbb1);
+            boxlist.add(axisalignedbb1);
         }
     }
     
     
     
-    public BoundSet getHitBoxesBasedOnState(IBlockAccess world_, int x_, int y_, int z_)
+    public BoundSet getHitBoxesBasedOnState(IBlockAccess world, int x, int y, int z)
     {
     	return new BoundSet(0,0,0,1,1,1);
     }
     
-	public AxisAlignedBB getWireframeBox(World world_, int x_, int y_, int z_) 
+	public AxisAlignedBB getWireframeBox(World world, int x, int y, int z) 
 	{
-		return AxisAlignedBB.getBoundingBox(x_ + 0, y_ + 0, z_ + 0, x_ + 1, y_ + 1, z_ + 1);
+		return AxisAlignedBB.getBoundingBox(x + 0, y + 0, z + 0, x + 1, y + 1, z + 1);
 	}
     
     
-	public void onBlockAdded(World world_, int x_, int y_, int z_) 
+	public void onBlockAdded(World world, int x, int y, int z) 
 	{
 		
 	}
 	
 	public double getMinX( )
 	{
-		return minX;
+		return px.one;
 	}
 	
 	public double getMaxX( )
 	{
-		return maxX;
+		return px.sixteen;
 	}
 	
 	public double getMinY( )
 	{
-		return minY;
+		return px.one;
 	}
 	
 	public double getMaxY( )
 	{
-		return maxY;
+		return px.sixteen;
 	}	
 	
 	public double getMinZ( )
 	{
-		return minZ;
+		return px.one;
 	}
 	
 	public double getMaxZ( )
 	{
-		return maxX;
+		return px.sixteen;
 	}
 	
-	public Icon getOverloadedIcon(int side_, int meta_)
+	public Icon getOverloadedIcon(int side, int meta)
 	{
 		return null;
 	}
 	
 
 		
-	public boolean isBlockSolidOnSide(World world, int x_, int y_, int z_, ForgeDirection side_)
+	public boolean isBlockSolidOnSide(World world, int x, int y, int z, ForgeDirection side)
 	{
 		return true;
 	}
 	
-    public boolean isBlockNormalCube(World world_, int x_, int y_, int z_)
+    public boolean isBlockNormalCube(World world, int x, int y, int z)
     {
     	return false;
     }

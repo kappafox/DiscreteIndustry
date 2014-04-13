@@ -13,9 +13,9 @@ import com.google.common.collect.Range;
 
 import kappafox.di.base.blocks.BlockDiscreteBlock;
 import kappafox.di.base.blocks.SubBlock;
+import kappafox.di.base.blocks.SubBlockDummy;
 import kappafox.di.base.tileentities.TileEntityDiscreteBlock;
 import kappafox.di.base.util.BoundSet;
-import kappafox.di.base.util.SubBlockDummy;
 import kappafox.di.decorative.tileentities.TileEntityLoomBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;

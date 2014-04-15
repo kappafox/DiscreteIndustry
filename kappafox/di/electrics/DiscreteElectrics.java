@@ -2,14 +2,14 @@ package kappafox.di.electrics;
 
 import ic2.api.item.Items;
 import kappafox.di.DiscreteIndustry;
+import kappafox.di.base.lib.DiscreteID;
+import kappafox.di.base.lib.IC2Data;
 import kappafox.di.base.tileentities.TileEntityDiscreteBlock;
 import kappafox.di.electrics.blocks.BlockDiscreteCable;
 import kappafox.di.electrics.blocks.items.ItemDiscreteCableBlock;
 import kappafox.di.electrics.items.ItemHorseInspector;
 import kappafox.di.electrics.renderers.DiscreteRenderManager;
 import kappafox.di.electrics.tileentities.TileEntityDiscreteCable;
-import kappafox.di.lib.DiscreteID;
-import kappafox.di.lib.IC2Data;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.item.Item;

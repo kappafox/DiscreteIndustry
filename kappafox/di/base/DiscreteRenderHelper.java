@@ -177,12 +177,24 @@ public class DiscreteRenderHelper
 	public void renderDiscreteQuad(IBlockAccess world, RenderBlocks renderer, Block block, int x, int y, int z)
 	{				
 			renderer.enableAO = true;
+
+	       
 			this.renderFaceAOYPos(world, renderer, block, x, y, z);
 	    	this.renderFaceAOZPos(world, renderer, block, x, y, z);
 	    	this.renderFaceAOZNeg(world, renderer, block, x, y, z);
 	    	this.renderFaceAOYNeg(world, renderer, block, x, y, z);
 	    	this.renderFaceAOXPos(world, renderer, block, x, y, z);
 	    	this.renderFaceAOXNeg(world, renderer, block, x, y, z);
+	    	
+		
+	    	 /*
+			int colourMultiplier = this.setupColour(world, renderer, block, x, y, z, 0);
+	        float r = (float)(colourMultiplier >> 16 & 255) / 255.0F;
+	        float g = (float)(colourMultiplier >> 8 & 255) / 255.0F;
+	        float b = (float)(colourMultiplier & 255) / 255.0F;
+	        
+	        renderer.renderStandardBlockWithAmbientOcclusion(block, x, y, z, r, g, b);
+	        */
 	    	renderer.enableAO = false;
 	}
 	
@@ -286,6 +298,10 @@ public class DiscreteRenderHelper
 		}		
 	}
 	
+	public int getColour(IBlockAccess world, RenderBlocks renderer, Block block, int x, int y, int z, int side)
+	{
+		return block.colorMultiplier(world, x, y, z);
+	}
 	
 	public void renderFaceAOXNeg(IBlockAccess world, RenderBlocks renderer, Block block, int x, int y, int z)
 	{
@@ -1099,7 +1115,6 @@ public class DiscreteRenderHelper
 	
 	public void renderFaceAOYPos(IBlockAccess world, RenderBlocks renderer, Block block, int x, int y, int z, Icon ico)
 	{
-		
         int l2 = this.setupColour(world, renderer, block, x, y, z, 1);
         float par5 = (float)(l2 >> 16 & 255) / 255.0F;
         float par6 = (float)(l2 >> 8 & 255) / 255.0F;

@@ -1,10 +1,10 @@
 package kappafox.di;
 
+import kappafox.di.base.lib.DiscreteID;
+import kappafox.di.base.lib.Library;
 import kappafox.di.base.tileentities.TileEntitySingleVariable;
 import kappafox.di.decorative.DiscreteDecorative;
 import kappafox.di.electrics.DiscreteElectrics;
-import kappafox.di.lib.DiscreteID;
-import kappafox.di.lib.Library;
 import kappafox.di.transport.DiscreteTransport;
 import net.minecraftforge.common.Configuration;
 import cpw.mods.fml.common.Mod;

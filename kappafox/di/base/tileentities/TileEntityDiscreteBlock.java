@@ -44,85 +44,87 @@ public class TileEntityDiscreteBlock extends TileEntitySubtype
 			blockSides[i] = i;
 		}
 		
+		originalID = id;
+		originalMeta = meta;
 		setSubtype(0);
 	}
 	
 	public TileEntityDiscreteBlock(int id, int meta, int sub)
 	{
 		this(id, meta);
-		setSubtype(sub);
+		super.setSubtype(sub);
 	}
 	
 
 	
-	public void setAllTextureSources(int id_, int meta_, int side_)
+	public void setAllTextureSources(int id, int meta, int side)
 	{
 		for(int i = 0; i < 6; i++)
 		{
-			this.setTextureSource(id_, meta_, side_, i);
+			this.setTextureSource(id, meta, side, i);
 		}
 	}
 	
-	public void setAllTexturesFromSource(int id_, int meta_)
+	public void setAllTexturesFromSource(int id, int meta)
 	{
 		for(int i = 0; i < 6; i++)
 		{
-			this.setTextureSource(id_, meta_, i, i);
+			this.setTextureSource(id, meta, i, i);
 		}
 	}
 		
 	//target ID, target Meta, target Side, Side actually clicked of this block
-	public void setTextureSource(int id_, int meta_, int side_, int hitside_)
+	public void setTextureSource(int id, int meta, int side, int hitside)
 	{
-		if(side_ >= 0 || side_ < blockIDs.length)
+		if(side >= 0 || side < blockIDs.length)
 		{
-			blockIDs[hitside_] = id_;
-			blockMetas[hitside_] = meta_;
-			blockSides[hitside_] = side_;
+			blockIDs[hitside] = id;
+			blockMetas[hitside] = meta;
+			blockSides[hitside] = side;
 		}
 	}
 	
-	public int getTextureSource(int side_)
+	public int getTextureSource(int side)
 	{
-		if(side_ < 0 || side_ >= blockIDs.length)
+		if(side < 0 || side >= blockIDs.length)
 		{
 			return 0;
 		}
 
-		return blockIDs[side_];
+		return blockIDs[side];
 
 
 	}
 
 	
-	public void setTextureSourceMeta(int meta_, int side_)
+	public void setTextureSourceMeta(int meta, int side)
 	{
-		blockMetas[side_] = meta_;
+		blockMetas[side] = meta;
 	}
 	
-	public int getTextureSourceMeta(int side_)
+	public int getTextureSourceMeta(int side)
 	{
-		if(side_ < 0 || side_ >= blockMetas.length)
+		if(side < 0 || side >= blockMetas.length)
 		{
 			return 0;
 		}
 		
 
-		return blockMetas[side_];	
+		return blockMetas[side];	
 
 
 		//return facadeMeta;		
 	}
 	
 	//side of this block to get from
-	public int getTextureSourceSide(int side_)
+	public int getTextureSourceSide(int side)
 	{
-		if(side_ < 0 || side_ >= blockSides.length)
+		if(side < 0 || side >= blockSides.length)
 		{
 			return 0;
 		}
 		
-		return blockSides[side_];
+		return blockSides[side];
 	}
 
 	public int getBlockColor( )
@@ -130,9 +132,9 @@ public class TileEntityDiscreteBlock extends TileEntitySubtype
 		return colour;
 	}
 	
-	public void setBlockColor(int col_)
+	public void setBlockColor(int col)
 	{
-		colour = col_;
+		colour = col;
 	}
 
 	
@@ -145,13 +147,13 @@ public class TileEntityDiscreteBlock extends TileEntitySubtype
 		return facing;
 	}
 
-	public void setFace(short facing_)
+	public void setFace(short facing)
 	{		
 		
-		//System.out.println("setFacing:" + facing_);
+		//System.out.println("setFacing:" + facing);
 		if(changeFace == true )
 		{
-			facing = facing_;	
+			facing = facing;	
 		}
 		else
 		{
@@ -167,9 +169,9 @@ public class TileEntityDiscreteBlock extends TileEntitySubtype
 		return var1;
 	}
 	
-	public void setVariable(int var_)
+	public void setVariable(int var)
 	{
-		var1 = var_;
+		var1 = var;
 	}
 	
 	public int getTextureOrientation( )
@@ -177,9 +179,9 @@ public class TileEntityDiscreteBlock extends TileEntitySubtype
 		return textureOrienation;
 	}
 	
-	public void setTextureOrientation(int orient_)
+	public void setTextureOrientation(int orient)
 	{
-		textureOrienation = orient_;
+		textureOrienation = orient;
 	}
 	
 	public short getDirection( )
@@ -187,14 +189,14 @@ public class TileEntityDiscreteBlock extends TileEntitySubtype
 		return direction;
 	}
 	
-	public void setDirection(short dir_)
+	public void setDirection(short dir)
 	{
-		direction = dir_;
+		direction = dir;
 	}
 	
-	public void setOriginalID(int id_)
+	public void setOriginalID(int id)
 	{
-		originalID = id_;
+		originalID = id;
 	}
 	
 	public int getOriginalID( )
@@ -209,52 +211,52 @@ public class TileEntityDiscreteBlock extends TileEntitySubtype
 	
 
 		
-	public void writeToNBT(NBTTagCompound nbt_)
+	public void writeToNBT(NBTTagCompound nbt)
 	{
 		
-		super.writeToNBT(nbt_);
+		super.writeToNBT(nbt);
 		
-		nbt_.setInteger("facadeBlockID", facadeBlockID);
-		nbt_.setInteger("facadeMeta", facadeMeta);
-		nbt_.setShort("facing", facing);
-		nbt_.setInteger("colour", colour);
-		nbt_.setInteger("var1", var1);
-		//nbt_.setInteger("subType", subType);
-		nbt_.setInteger("torient", textureOrienation);
-		nbt_.setShort("direction", direction);
+		nbt.setInteger("facadeBlockID", facadeBlockID);
+		nbt.setInteger("facadeMeta", facadeMeta);
+		nbt.setShort("facing", facing);
+		nbt.setInteger("colour", colour);
+		nbt.setInteger("var1", var1);
+		//nbt.setInteger("subType", subType);
+		nbt.setInteger("torient", textureOrienation);
+		nbt.setShort("direction", direction);
 		
-		nbt_.setIntArray("blockIDs", blockIDs);
-		nbt_.setIntArray("blockMetas", blockMetas);
-		nbt_.setIntArray("blockSides", blockSides);
+		nbt.setIntArray("blockIDs", blockIDs);
+		nbt.setIntArray("blockMetas", blockMetas);
+		nbt.setIntArray("blockSides", blockSides);
 		
-		nbt_.setBoolean("fullColour", fullColour);
+		nbt.setBoolean("fullColour", fullColour);
 		
-		nbt_.setInteger("originalID", originalID);
-		nbt_.setInteger("originalMeta", originalMeta);
+		nbt.setInteger("originalID", originalID);
+		nbt.setInteger("originalMeta", originalMeta);
 		
 	}
 	
-	public void readFromNBT(NBTTagCompound nbt_)
+	public void readFromNBT(NBTTagCompound nbt)
 	{
-		super.readFromNBT(nbt_);
+		super.readFromNBT(nbt);
 		
-		facadeBlockID = nbt_.getInteger("facadeBlockID");
-		facadeMeta = nbt_.getInteger("facadeMeta");
-		facing = nbt_.getShort("facing");
-		colour = nbt_.getInteger("colour");
-		var1 = nbt_.getInteger("var1");
-		//subType = nbt_.getInteger("subType");
-		textureOrienation = nbt_.getInteger("torient");
+		facadeBlockID = nbt.getInteger("facadeBlockID");
+		facadeMeta = nbt.getInteger("facadeMeta");
+		facing = nbt.getShort("facing");
+		colour = nbt.getInteger("colour");
+		var1 = nbt.getInteger("var1");
+		//subType = nbt.getInteger("subType");
+		textureOrienation = nbt.getInteger("torient");
 		
-		blockIDs = nbt_.getIntArray("blockIDs");
-		blockMetas = nbt_.getIntArray("blockMetas");
-		blockSides = nbt_.getIntArray("blockSides");
+		blockIDs = nbt.getIntArray("blockIDs");
+		blockMetas = nbt.getIntArray("blockMetas");
+		blockSides = nbt.getIntArray("blockSides");
 		
-		fullColour = nbt_.getBoolean("fullColour");
-		direction = nbt_.getShort("direction");
+		fullColour = nbt.getBoolean("fullColour");
+		direction = nbt.getShort("direction");
 		
-		originalID = nbt_.getInteger("originalID");
-		originalMeta = nbt_.getInteger("originalMeta");
+		originalID = nbt.getInteger("originalID");
+		originalMeta = nbt.getInteger("originalMeta");
 		
 		//sometimes this happens before we have a valid world object
 		if(worldObj != null)
@@ -289,9 +291,9 @@ public class TileEntityDiscreteBlock extends TileEntitySubtype
 		return fullColour;
 	}
 	
-	public void setFullColour(boolean b_)
+	public void setFullColour(boolean b)
 	{
-		fullColour = b_;
+		fullColour = b;
 	}
 	
 
@@ -299,35 +301,35 @@ public class TileEntityDiscreteBlock extends TileEntitySubtype
 
 
 	
-	protected int directionToSide(ForgeDirection dir_)
+	protected int directionToSide(ForgeDirection dir)
 	{
 		
-		if(dir_ == ForgeDirection.DOWN)
+		if(dir == ForgeDirection.DOWN)
 		{
 			return 0;
 		}
 		
-		if(dir_ == ForgeDirection.UP)
+		if(dir == ForgeDirection.UP)
 		{
 			return 1;
 		}
 		
-		if(dir_ == ForgeDirection.NORTH)
+		if(dir == ForgeDirection.NORTH)
 		{
 			return 2;
 		}
 		
-		if(dir_ == ForgeDirection.SOUTH)
+		if(dir == ForgeDirection.SOUTH)
 		{
 			return 3;
 		}
 		
-		if(dir_ == ForgeDirection.WEST)
+		if(dir == ForgeDirection.WEST)
 		{
 			return 4;
 		}
 		
-		if(dir_ == ForgeDirection.EAST)
+		if(dir == ForgeDirection.EAST)
 		{
 			return 5;
 		}

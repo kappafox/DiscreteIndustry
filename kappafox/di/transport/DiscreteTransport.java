@@ -4,7 +4,7 @@ import ic2.api.item.Items;
 import ic2.api.recipe.RecipeInputItemStack;
 import ic2.api.recipe.Recipes;
 import kappafox.di.DiscreteIndustry;
-import kappafox.di.lib.DiscreteID;
+import kappafox.di.base.lib.DiscreteID;
 import kappafox.di.transport.blocks.BlockDiscreteHopper;
 import kappafox.di.transport.blocks.items.ItemDiscreteHopperBlock;
 import kappafox.di.transport.renderers.DiscreteTransportRenderManager;

@@ -158,7 +158,7 @@ public class TileEntityDiscreteCable extends TileEntityDiscreteBlock implements 
 	public int getConductorBreakdownEnergy()
 	{
 		//System.out.println("CondBreak" + DiscreteIndustry.librarian.ic2.cableMeltEnergy[cable]);
-		return DiscreteIndustry.librarian.ic2.cableMeltEnergy[cable];
+		return DiscreteIndustry.librarian.ic2.cableMaximumCapacity[cable] + 1;
 	}
 
 	@Override

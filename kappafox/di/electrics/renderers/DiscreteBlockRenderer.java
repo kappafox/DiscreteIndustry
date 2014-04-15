@@ -33,7 +33,7 @@ public class DiscreteBlockRenderer implements ISimpleBlockRenderingHandler
 	public DiscreteBlockRenderer(int rID_)
 	{
 		renderID = rID_;
-		socketTextures[0] = new ResourceLocation("discreteindustry","textures/blocks/emptyPlugSocket.png");
+		socketTextures[0] = new ResourceLocation("discreteindustry", "textures/blocks/emptyPlugSocket.png");
 		socketTextures[1] = new ResourceLocation("discreteindustry", "textures/blocks/tinPlugSocket.png");
 		socketTextures[2] = new ResourceLocation("discreteindustry", "textures/blocks/copperPlugSocket.png");
 		socketTextures[3] = new ResourceLocation("discreteindustry", "textures/blocks/goldPlugSocket.png");

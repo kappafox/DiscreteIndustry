@@ -10,6 +10,7 @@ import java.util.List;
 
 import kappafox.di.DiscreteIndustry;
 import kappafox.di.base.tileentities.TileEntityDiscreteBlock;
+import kappafox.di.electrics.DiscreteElectrics;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -36,24 +37,24 @@ public class BlockDiscreteBlock extends Block
 	protected Icon defaultIcon;
 	
 	
-	public BlockDiscreteBlock(int id_, Material mat_, int renderID_)
+	public BlockDiscreteBlock(int id, Material mat, int renderID)
 	{
-		super(id_, mat_);
+		super(id, mat);
 		this.setCreativeTab(CreativeTabs.tabAllSearch);
 		this.setUnlocalizedName("discreteCable");
 		this.setHardness(3.0F);
 		this.setResistance(150.0F);
-		this.renderType = renderID_;
+		this.renderType = renderID;
 		this.isTileProvider = true;
 	}
 	
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister ireg_)
+	public void registerIcons(IconRegister ireg)
 	{	
 		
-		defaultIcon = ireg_.registerIcon(DiscreteIndustry.MODID + ":" + "blockDiscreteCable");
+		defaultIcon = ireg.registerIcon(DiscreteIndustry.MODID + ":" + "blockDiscreteCable");
 	
 		for(int i = 0; i < 6; i++)
 		{
@@ -67,22 +68,22 @@ public class BlockDiscreteBlock extends Block
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubBlocks(int id_, CreativeTabs tabs_, List list_)
+	public void getSubBlocks(int id, CreativeTabs tabs, List list)
 	{
-		list_.add(new ItemStack(id_, 1, 0));
+		list.add(new ItemStack(id, 1, 0));
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public Icon getIcon(int side_, int meta_)
+	public Icon getIcon(int side, int meta)
 	{
-		return icons[meta_]; 
+		return icons[meta]; 
 	}
 	
 	
 	/*
 	//@SideOnly(Side.CLIENT)
-	private boolean refreshTextures(IBlockAccess ibaccess_, int xcoord_, int ycoord_, int zcoord_, int side_)
+	private boolean refreshTextures(IBlockAccess ibaccess, int xcoord, int ycoord, int zcoord, int side)
 	{
 		
 		if(lockRefresh == true)
@@ -90,7 +91,7 @@ public class BlockDiscreteBlock extends Block
 			return true;
 		}
 		
-		TileEntityDiscreteBlock tile = (TileEntityDiscreteBlock)ibaccess_.getBlockTileEntity(xcoord_, ycoord_, zcoord_);
+		TileEntityDiscreteBlock tile = (TileEntityDiscreteBlock)ibaccess.getBlockTileEntity(xcoord, ycoord, zcoord);
 		
 		
 		if(tile != null)
@@ -99,12 +100,12 @@ public class BlockDiscreteBlock extends Block
 					
 			//higher blockids are reserved for items
 			Block inHand;
-			int item = tile.getTextureSource(side_);
+			int item = tile.getTextureSource(side);
 			try
 			{
 				inHand = Block.blocksList[item];
 			}
-			catch(Exception e_)
+			catch(Exception e)
 			{
 				return true;
 			}
@@ -119,7 +120,7 @@ public class BlockDiscreteBlock extends Block
 			{
 				for(int i = 0; i < 6; i++)
 				{
-					textures[i] = inHand.getIcon(i, tile.getTextureSourceMeta(side_));
+					textures[i] = inHand.getIcon(i, tile.getTextureSourceMeta(side));
 				}
 				
 				Icon oldFace = textures[3];
@@ -135,12 +136,12 @@ public class BlockDiscreteBlock extends Block
 	*/
 	
 	@Override
-    public Icon getBlockTexture(IBlockAccess world_, int x_, int y_, int z_, int side_)
+    public Icon getBlockTexture(IBlockAccess world, int x, int y, int z, int side)
     {
 		/*
-    	refreshTextures(ibaccess_, xcoord_, ycoord_, zcoord_, side_);
+    	refreshTextures(ibaccess, xcoord, ycoord, zcoord, side);
     	
-    	TileEntityDiscreteBlock tile = (TileEntityDiscreteBlock)ibaccess_.getBlockTileEntity(xcoord_, ycoord_, zcoord_);
+    	TileEntityDiscreteBlock tile = (TileEntityDiscreteBlock)ibaccess.getBlockTileEntity(xcoord, ycoord, zcoord);
     	
     	if(tile != null && tile.getTextureSource() == this.blockID)
     	{
@@ -148,53 +149,53 @@ public class BlockDiscreteBlock extends Block
     	}
     	else
     	{
-    		return textures[side_];
+    		return textures[side];
     	}
     	*/
 		
-    	//refreshTextures(ibaccess_, xcoord_, ycoord_, zcoord_, side_);
-    	int id = world_.getBlockId(x_, y_, z_);
-    	int meta = world_.getBlockMetadata(x_, y_, z_);
+    	//refreshTextures(ibaccess, xcoord, ycoord, zcoord, side);
+    	int id = world.getBlockId(x, y, z);
+    	int meta = world.getBlockMetadata(x, y, z);
 		
-    	TileEntityDiscreteBlock tile = (TileEntityDiscreteBlock)world_.getBlockTileEntity(x_, y_, z_);
+    	TileEntityDiscreteBlock tile = (TileEntityDiscreteBlock)world.getBlockTileEntity(x, y, z);
     	
     	if(tile != null)
     	{
     		
     		/*
-	    	if(tile.getTextureSource(side_) == id)
+	    	if(tile.getTextureSource(side) == id)
 	    	{
 	    		
-	    		System.out.println("match!" + id + "\t" + Block.blocksList[this.blockID].getIcon(side_, meta).getIconName());
+	    		System.out.println("match!" + id + "\t" + Block.blocksList[this.blockID].getIcon(side, meta).getIconName());
 	    		//return textures[0];
-	    		return Block.blocksList[this.blockID].getIcon(side_, meta);
+	    		return Block.blocksList[this.blockID].getIcon(side, meta);
 	    		
 	    	}
 	    	else
 	    	{
 	    	*/
-	    		Block target = Block.blocksList[tile.getTextureSource(side_)];
+	    		Block target = Block.blocksList[tile.getTextureSource(side)];
 	    		
-	    		if(target != null && tile.getTextureSource(side_) != 0)
+	    		if(target != null && tile.getTextureSource(side) != 0)
 	    		{
-	    			return target.getIcon(tile.getTextureSourceSide(side_), tile.getTextureSourceMeta(side_));
+	    			return target.getIcon(tile.getTextureSourceSide(side), tile.getTextureSourceMeta(side));
 	    		}
 
 
 	    	//}
     	}
-    	//return this.getIcon(side_, ibaccess_.getBlockMetadata(x_, y_, z_));
+    	//return this.getIcon(side, ibaccess.getBlockMetadata(x, y, z));
     	return textures[0];
     }
 	
 	
 	@Override
-	public void onBlockPlacedBy(World world_, int x_, int y_, int z_, EntityLivingBase player_, ItemStack istack_)
+	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack istack)
     {
 		//thankyou mojang <3
-		int magic = MathHelper.floor_double((double)(player_.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
+		int magic = MathHelper.floor_double((double)(player.rotationYaw * 4.0F / 360.0F) + 0.5D) & 3;
 		
-		TileEntityDiscreteBlock tile = (TileEntityDiscreteBlock)world_.getBlockTileEntity(x_, y_, z_);
+		TileEntityDiscreteBlock tile = (TileEntityDiscreteBlock)world.getBlockTileEntity(x, y, z);
 		
 		short dir = 3;
 	
@@ -239,12 +240,12 @@ public class BlockDiscreteBlock extends Block
     }
     
     @Override
-    public TileEntity createTileEntity(World world_, int metadata_)
+    public TileEntity createTileEntity(World world, int metadata)
     {
     	
         if(isTileProvider)
         {
-        	TileEntityDiscreteBlock tile = new TileEntityDiscreteBlock(this.blockID, metadata_);
+        	TileEntityDiscreteBlock tile = new TileEntityDiscreteBlock(DiscreteElectrics.discreteCableID, metadata);
             return tile;
         }
         return null;
@@ -282,19 +283,19 @@ public class BlockDiscreteBlock extends Block
     
     /*
 	@Override
-    public boolean onBlockActivated(World world_, int xcoord_, int ycoord_, int zcoord_, EntityPlayer player_, int side_, float par7, float par8, float par9)
+    public boolean onBlockActivated(World world, int xcoord, int ycoord, int zcoord, EntityPlayer player, int side, float par7, float par8, float par9)
     {	
 		
 		
 		//change in 1.0.2 to make blocks only change when sneaking
-		if(player_.isSneaking() == false)
+		if(player.isSneaking() == false)
 		{
 			return false;
 		}
 		
 		
 		//System.out.println("ENTRY");
-		TileEntityDiscreteBlock tile = (TileEntityDiscreteBlock)world_.getBlockTileEntity(xcoord_, ycoord_, zcoord_);
+		TileEntityDiscreteBlock tile = (TileEntityDiscreteBlock)world.getBlockTileEntity(xcoord, ycoord, zcoord);
 
 		
 		if(tile == null)
@@ -303,7 +304,7 @@ public class BlockDiscreteBlock extends Block
 			return false;
 		}
 		
-		ItemStack item = player_.inventory.getCurrentItem();
+		ItemStack item = player.inventory.getCurrentItem();
 		Block inHand = null;
 		
 		//higher blockids are reserved for items
@@ -311,7 +312,7 @@ public class BlockDiscreteBlock extends Block
 		{
 			inHand = Block.blocksList[item.itemID];
 		}
-		catch(Exception e_)
+		catch(Exception e)
 		{
 			//System.out.println("EXCEPTION");
 			return false;
@@ -332,8 +333,8 @@ public class BlockDiscreteBlock extends Block
 			
 			tile.setTextureSource(item.itemID);
 			tile.setTextureSourceMeta(item.getItemDamage());
-			tile.setFace((short)side_);
-			world_.markBlockForUpdate(xcoord_, ycoord_, zcoord_);
+			tile.setFace((short)side);
+			world.markBlockForUpdate(xcoord, ycoord, zcoord);
 			return true;
 		}
 		
@@ -348,17 +349,17 @@ public class BlockDiscreteBlock extends Block
     
 	
 	@Override
-	public int damageDropped(int meta_)
+	public int damageDropped(int meta)
 	{
-		return meta_;
+		return meta;
 	}
 	
 	
-	private boolean canUseTexture(Block target_)
+	private boolean canUseTexture(Block target)
 	{
-		if(target_ != null)
+		if(target != null)
 		{
-			if(target_.renderAsNormalBlock() && target_.blockID != this.blockID)
+			if(target.renderAsNormalBlock() && target.blockID != this.blockID)
 			{
 				return true;
 			}
@@ -368,5 +369,26 @@ public class BlockDiscreteBlock extends Block
 		
 		return false;
 	}
+	
+	
+	/*
+    @SideOnly(Side.CLIENT)
+    @Override
+    public int colorMultiplier(IBlockAccess world, int x, int y, int z)
+    {
+    	TileEntityDiscreteBlock tile = (TileEntityDiscreteBlock)world.getBlockTileEntity(x, y, z);
+    	
+		if(tile == null)
+		{
+			return 16777215;
+		}
+		else
+		{
+			if(tile.getTextureSource())
+			return Block.blocksList[tile.getTextureSource(0)].colorMultiplier(world, x, y, z);
+		}		
+        
+    }
+    */
 
 }

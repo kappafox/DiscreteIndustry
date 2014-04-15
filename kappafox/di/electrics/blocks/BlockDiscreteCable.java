@@ -10,6 +10,7 @@ import java.util.List;
 
 import kappafox.di.DiscreteIndustry;
 import kappafox.di.base.blocks.BlockDiscreteBlock;
+import kappafox.di.electrics.DiscreteElectrics;
 import kappafox.di.electrics.tileentities.TileEntityDiscreteCable;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IconRegister;
@@ -34,26 +35,26 @@ public class BlockDiscreteCable extends BlockDiscreteBlock
 	
 
 
-	public BlockDiscreteCable(int id_, Material mat_, int renderID_)
+	public BlockDiscreteCable(int id, Material mat, int renderID)
 	{
-		super(id_, mat_, renderID_);
+		super(id, mat, renderID);
 		this.setUnlocalizedName("discreteCable");
 		this.setResistance(150);
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void registerIcons(IconRegister ireg_)
+	public void registerIcons(IconRegister ireg)
 	{	
-		Icon defaultIcon = ireg_.registerIcon(DiscreteIndustry.MODID + ":" + "blockDiscreteCable");
+		Icon defaultIcon = ireg.registerIcon(DiscreteIndustry.MODID + ":" + "blockDiscreteCable");
 		this.blockIcon = defaultIcon;
 		
 		icons[0] = defaultIcon;
-		icons[1] = ireg_.registerIcon(DiscreteIndustry.MODID + ":" + "icon_blockDiscreteCableTin");
-		icons[2] = ireg_.registerIcon(DiscreteIndustry.MODID + ":" + "icon_blockDiscreteCableCopper");
-		icons[3] = ireg_.registerIcon(DiscreteIndustry.MODID + ":" + "icon_blockDiscreteCableGold");
-		icons[4] = ireg_.registerIcon(DiscreteIndustry.MODID + ":" + "icon_blockDiscreteCableGlass");
-		icons[5] = ireg_.registerIcon(DiscreteIndustry.MODID + ":" + "icon_blockDiscreteCableIron");
+		icons[1] = ireg.registerIcon(DiscreteIndustry.MODID + ":" + "icon_blockDiscreteCableTin");
+		icons[2] = ireg.registerIcon(DiscreteIndustry.MODID + ":" + "icon_blockDiscreteCableCopper");
+		icons[3] = ireg.registerIcon(DiscreteIndustry.MODID + ":" + "icon_blockDiscreteCableGold");
+		icons[4] = ireg.registerIcon(DiscreteIndustry.MODID + ":" + "icon_blockDiscreteCableGlass");
+		icons[5] = ireg.registerIcon(DiscreteIndustry.MODID + ":" + "icon_blockDiscreteCableIron");
 	
 		for(int i = 0; i < 6; i++)
 		{
@@ -66,24 +67,26 @@ public class BlockDiscreteCable extends BlockDiscreteBlock
 
 	@Override
 	@SideOnly(Side.CLIENT)
-	public void getSubBlocks(int id_, CreativeTabs tabs_, List list_)
+	public void getSubBlocks(int id, CreativeTabs tabs, List list)
 	{
 		// block id, count, meta	
 		
 		for(int i = 0; i < 6; i++)
 		{
-			list_.add(new ItemStack(id_, 1, i));
+			list.add(new ItemStack(id, 1, i));
 		}		
 	}
 	   
     @Override
-    public TileEntity createTileEntity(World world_, int meta_)
+    public TileEntity createTileEntity(World world, int meta)
     {
     	
         if(this.isTileProvider == true)
         {
-        	TileEntityDiscreteCable tile = new TileEntityDiscreteCable(meta_);
-        	tile.setMeta(meta_);
+        	TileEntityDiscreteCable tile = new TileEntityDiscreteCable(meta);
+        	tile.setAllTexturesFromSource(DiscreteElectrics.discreteCableID, meta);
+        	tile.setOriginalID(DiscreteElectrics.discreteCableID);
+        	tile.setMeta(meta);
             return tile;
         }
         return null;

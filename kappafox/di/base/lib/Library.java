@@ -1,4 +1,4 @@
-package kappafox.di.lib;
+package kappafox.di.base.lib;
 
 public class Library
 {

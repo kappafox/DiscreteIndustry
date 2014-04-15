@@ -21,6 +21,8 @@ import ic2.api.item.Items;
 
 public class IC2Data
 {
+	
+	private IC2Data instance;
 	public final double[] cableLoss;
 	public final int[] cableInsulationMeltEnergy;
 	public final int[] cableInsulationAbsorbEnergy;
@@ -36,7 +38,7 @@ public class IC2Data
 	
 	private static final String IC2_TILE_ENTITY_CABLE_NAME = "ic2.core.block.wiring.TileEntityCable";
 	
-	public IC2Data( )
+	private IC2Data( )
 	{
 		
 		cableMaximumCapacity = new int[6];
@@ -125,6 +127,16 @@ public class IC2Data
 				System.out.println(e);
 			}		
 		}
+	}
+	
+	public static IC2Data getInstance( )
+	{
+		if(instance == null)
+		{
+			instance = new IC2Data();
+		}
+		
+		return instance;
 	}
 }
 

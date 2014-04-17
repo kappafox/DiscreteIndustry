@@ -1,6 +1,7 @@
 package kappafox.di;
 
 import kappafox.di.base.lib.DiscreteID;
+import kappafox.di.base.lib.IC2Data;
 import kappafox.di.base.lib.Library;
 import kappafox.di.base.tileentities.TileEntitySingleVariable;
 import kappafox.di.decorative.DiscreteDecorative;
@@ -61,7 +62,8 @@ public class DiscreteIndustry
 	public void preInitialisation(FMLPreInitializationEvent event_)
 	{
 		//grab the id database
-		DiscreteID ids = DiscreteIndustry.librarian.dibi;
+		librarian.preInit();
+		//DiscreteID ids = DiscreteIndustry.librarian.dibi;
 		
 		
 		
@@ -81,9 +83,7 @@ public class DiscreteIndustry
 	public void load(FMLInitializationEvent event_ )
 	{
 		
-		//setupRenders();
-		
-		//Blocks
+		librarian.init();
 		registerBlocks();
 
 		
@@ -100,14 +100,12 @@ public class DiscreteIndustry
 		
 	}
 	
-	private void registerBlocks( )
-	{
-
-	}
+	private void registerBlocks( ){}
 	
 	@EventHandler
 	public void postInitialisation(FMLPostInitializationEvent event_)
 	{
+		librarian.postInit();
 		this.reflection();
 	}
 	

@@ -22,12 +22,14 @@ import ic2.api.item.Items;
 public class IC2Data
 {
 	
-	private IC2Data instance;
-	public final double[] cableLoss;
-	public final int[] cableInsulationMeltEnergy;
-	public final int[] cableInsulationAbsorbEnergy;
-	public final int[] cableMaximumCapacity;
-	public final String[] cableName;
+	private static IC2Data instance;
+	
+	//cable array index are not related to the IC2 cable types!
+	public static double[] cableLoss;
+	public static int[] cableInsulationMeltEnergy;
+	public static int[] cableInsulationAbsorbEnergy;
+	public static int[] cableMaximumCapacity;
+	public static String[] cableName;
 	
 	//these cable types are those used internally by IC2
 	private static final short IC2_CABLE_TIN = 13;
@@ -36,9 +38,14 @@ public class IC2Data
 	private static final short IC2_CABLE_GLASS = 9;
 	private static final short IC2_CABLE_HV = 6;
 	
-	private static final String IC2_TILE_ENTITY_CABLE_NAME = "ic2.core.block.wiring.TileEntityCable";
+	private static final String IC2_TILEENTITYCABLE_NAME = "ic2.core.block.wiring.TileEntityCable";
 	
 	private IC2Data( )
+	{
+
+	}
+	
+	public static void initialise( )
 	{
 		
 		cableMaximumCapacity = new int[6];
@@ -58,7 +65,7 @@ public class IC2Data
 		
 		try
 		{
-			c = Class.forName(IC2_TILE_ENTITY_CABLE_NAME);
+			c = Class.forName(IC2_TILEENTITYCABLE_NAME);
 			o = c.newInstance();
 			
 			getConductionLoss = c.getDeclaredMethod("getConductionLoss");
@@ -126,7 +133,7 @@ public class IC2Data
 			{
 				System.out.println(e);
 			}		
-		}
+		}		
 	}
 	
 	public static IC2Data getInstance( )

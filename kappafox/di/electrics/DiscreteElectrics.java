@@ -87,7 +87,7 @@ public class DiscreteElectrics
 	private void registerBlocks( )
 	{
 		//grab the IC2 name stuff first
-		IC2Data ic2 = DiscreteIndustry.librarian.ic2;
+		//IC2Data ic2 = DiscreteIndustry.librarian.ic2;
 		
 		//initialise all our block objects
 		discreteCableBlock = new BlockDiscreteCable(discreteCableID, Material.anvil, discreteCableModelID);
@@ -98,12 +98,12 @@ public class DiscreteElectrics
 		//And finally for meta blocks add the subblocks
 		
 		String prefix = "Discrete ";
-		LanguageRegistry.addName(new ItemStack(discreteCableBlock, 1, 0), prefix + ic2.cableName[0]);
-		LanguageRegistry.addName(new ItemStack(discreteCableBlock, 1, 1), prefix + ic2.cableName[1]);
-		LanguageRegistry.addName(new ItemStack(discreteCableBlock, 1, 2), prefix + ic2.cableName[2]);
-		LanguageRegistry.addName(new ItemStack(discreteCableBlock, 1, 3), prefix + ic2.cableName[3]);
-		LanguageRegistry.addName(new ItemStack(discreteCableBlock, 1, 4), prefix + ic2.cableName[4]);
-		LanguageRegistry.addName(new ItemStack(discreteCableBlock, 1, 5), prefix + ic2.cableName[5]);
+		LanguageRegistry.addName(new ItemStack(discreteCableBlock, 1, 0), prefix + IC2Data.cableName[0]);
+		LanguageRegistry.addName(new ItemStack(discreteCableBlock, 1, 1), prefix + IC2Data.cableName[1]);
+		LanguageRegistry.addName(new ItemStack(discreteCableBlock, 1, 2), prefix + IC2Data.cableName[2]);
+		LanguageRegistry.addName(new ItemStack(discreteCableBlock, 1, 3), prefix + IC2Data.cableName[3]);
+		LanguageRegistry.addName(new ItemStack(discreteCableBlock, 1, 4), prefix + IC2Data.cableName[4]);
+		LanguageRegistry.addName(new ItemStack(discreteCableBlock, 1, 5), prefix + IC2Data.cableName[5]);
 	}
 	
 	private void registerRenderers( )

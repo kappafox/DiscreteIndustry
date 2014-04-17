@@ -5,6 +5,7 @@ import ic2.api.energy.event.EnergyTileUnloadEvent;
 import ic2.api.energy.tile.IEnergyConductor;
 import ic2.api.tile.IWrenchable;
 import kappafox.di.DiscreteIndustry;
+import kappafox.di.base.lib.IC2Data;
 import kappafox.di.base.tileentities.TileEntityDiscreteBlock;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -127,7 +128,7 @@ public class TileEntityDiscreteCable extends TileEntityDiscreteBlock implements 
 	@Override
 	public double getConductionLoss()
 	{
-		return DiscreteIndustry.librarian.ic2.cableLoss[cable];
+		return IC2Data.cableLoss[cable];
 	}
 	
 	public boolean getConnection(int side_)
@@ -144,21 +145,21 @@ public class TileEntityDiscreteCable extends TileEntityDiscreteBlock implements 
 	public int getInsulationEnergyAbsorption()
 	{
 		//System.out.println("InsBreak");
-		return DiscreteIndustry.librarian.ic2.cableInsulationAbsorbEnergy[cable];
+		return IC2Data.cableInsulationAbsorbEnergy[cable];
 	}
 
 	@Override
 	public int getInsulationBreakdownEnergy()
 	{
 		//System.out.println("InsBreak" + DiscreteIndustry.librarian.ic2.cableInsulationMeltEnergy[cable]);
-		return DiscreteIndustry.librarian.ic2.cableInsulationMeltEnergy[cable];
+		return IC2Data.cableInsulationMeltEnergy[cable];
 	}
 
 	@Override
 	public int getConductorBreakdownEnergy()
 	{
 		//System.out.println("CondBreak" + DiscreteIndustry.librarian.ic2.cableMeltEnergy[cable]);
-		return DiscreteIndustry.librarian.ic2.cableMaximumCapacity[cable] + 1;
+		return IC2Data.cableMaximumCapacity[cable] + 1;
 	}
 
 	@Override

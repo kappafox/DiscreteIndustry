@@ -126,10 +126,11 @@ public class StripRenderer implements ISimpleBlockRenderingHandler
 		DiscreteRenderHelper drh = new DiscreteRenderHelper();
 		drh.renderDiscreteQuad(world_, renderer_, block_, x_, y_, z_);
 		
+		//GL11.glDisable(GL11.GL_BLEND);
 		//int stripPosition = tile.getSideStripPosition();
 		
         //if it was 0, it would be on the same plane as the face of the block. This is to prevent the graphical glitch
-        double zOffset = 0.0005;
+        double zOffset = 0.0;//0.0005;
         
         //SOUTH Texture +Z 3
         if(block_.shouldSideBeRendered(world_, x_, y_, z_ + 1, 3) == true && tile.isStripHidden(3) == false)
@@ -257,7 +258,7 @@ public class StripRenderer implements ISimpleBlockRenderingHandler
 			*/
         }
    
-
+        //GL11.glEnable(GL11.GL_BLEND);
         renderer_.clearOverrideBlockTexture();
         this.bindTexture(TextureMap.locationBlocksTexture);
         return true;

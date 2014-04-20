@@ -2,8 +2,11 @@ package kappafox.di;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
+import java.util.HashMap;
 
+import kappafox.di.base.network.PacketDiscreteSync;
 import kappafox.di.decorative.tileentities.TileEntityLoomBlock;
+import kappafox.di.transport.DiscreteTransportPacketHandler;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import net.minecraft.server.MinecraftServer;
@@ -14,23 +17,41 @@ import cpw.mods.fml.common.network.Player;
 
 public class DiscretePacketHandler implements IPacketHandler
 {
-
-	@Override
-	public void onPacketData(INetworkManager manager_, Packet250CustomPayload packet_, Player player_) 
+	
+	public static final short MODID_BASE = 0;
+	public static final short MODID_DECORATIVE = 1;
+	public static final short MODID_ELECTRICS = 2;
+	public static final short MODID_TRANSPORT = 3;
+	
+	private HashMap<Short, IPacketHandler> subHandler;
+	
+	public DiscretePacketHandler( )
 	{
-
-	      
-		//"DD_FLAG_SYNC"
-		if(packet_.channel.equals("DD_FLAG_SYNC"))
+		subHandler = new HashMap<Short, IPacketHandler>();
+		
+		subHandler.put((short)3, new DiscreteTransportPacketHandler());
+	}
+	@Override
+	public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player) 
+	{
+		if(packet instanceof PacketDiscreteSync && packet.channel.equals("DI_GENERIC_SYNC"))
 		{
-			this.handleLoomSync(manager_, packet_, player_);
+			PacketDiscreteSync p = (PacketDiscreteSync)packet;
+			subHandler.get(p.module).onPacketData(manager, packet, player);
 		}
-		//System.out.println("Got Custom Packet!");
+		else
+		{
+			//"DD_FLAG_SYNC"
+			if(packet.channel.equals("DD_FLAG_SYNC"))
+			{
+				this.handleLoomSync(manager, packet, player);
+			}
+		}
 	}
 	
-	private void handleLoomSync(INetworkManager manager_, Packet250CustomPayload packet_, Player player_)
+	private void handleLoomSync(INetworkManager manager, Packet250CustomPayload packet, Player player)
 	{
-	    DataInputStream inputStream = new DataInputStream(new ByteArrayInputStream(packet_.data));
+	    DataInputStream inputStream = new DataInputStream(new ByteArrayInputStream(packet.data));
 		byte type = 15;
 		int colour = 0;
 		int x = 0;

@@ -137,7 +137,7 @@ public class SubBlockStrut extends SubBlock
 					
 					
 					world_.markBlockForUpdate(xcoord_, ycoord_, zcoord_);
-					return true;
+					return false;
 				}
 			}
 		}

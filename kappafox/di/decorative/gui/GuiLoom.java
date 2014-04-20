@@ -4,6 +4,7 @@ package kappafox.di.decorative.gui;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 
+import kappafox.di.base.network.PacketDiscreteSync;
 import kappafox.di.decorative.tileentities.TileEntityLoomBlock;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.Tessellator;

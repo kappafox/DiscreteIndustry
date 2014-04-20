@@ -23,7 +23,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 
 @Mod(modid = DiscreteIndustry.MODID, name = DiscreteIndustry.NAME, version = DiscreteIndustry.VERSION, dependencies = DiscreteIndustry.DEPENDENCIES)
-@NetworkMod(clientSideRequired = true, serverSideRequired = false, channels = {"DD_FLAG_SYNC"}, packetHandler = DiscretePacketHandler.class)
+@NetworkMod(clientSideRequired = true, serverSideRequired = false, channels = {"DD_FLAG_SYNC", "DI_GENERIC_SYNC"}, packetHandler = DiscretePacketHandler.class)
 
 public class DiscreteIndustry
 {

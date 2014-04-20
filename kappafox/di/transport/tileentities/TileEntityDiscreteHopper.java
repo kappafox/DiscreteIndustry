@@ -1,11 +1,14 @@
 package kappafox.di.transport.tileentities;
 
 import net.minecraft.block.BlockHopper;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
+import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.tileentity.Hopper;
 import net.minecraft.tileentity.TileEntityHopper;
 import net.minecraft.util.Facing;
 
@@ -15,6 +18,8 @@ public class TileEntityDiscreteHopper extends TileEntityHopper implements IInven
 	private int TRANSFER_COUNT = 64;
 	
 	private int transferCooldown = -1;
+	private boolean extractFromAbove;
+	private short redstoneState = 0;
 	private ItemStack[] items = new ItemStack[15];
 	
 	public TileEntityDiscreteHopper( )
@@ -28,6 +33,26 @@ public class TileEntityDiscreteHopper extends TileEntityHopper implements IInven
 		items = new ItemStack[size_];
 	}
 	
+	
+	public boolean getExtractFromAbove( )
+	{
+		//System.out.println(xCoord + ":" + yCoord + ":" + zCoord + "\t" + extractFromAbove);
+		return extractFromAbove;
+	}
+	
+	
+	public void toggleExtractFromAbove( )
+	{
+		if(extractFromAbove)
+		{
+			extractFromAbove = false;
+		}
+		else
+		{
+			extractFromAbove = true;
+		}
+		//System.out.println("POST" + "\t" + xCoord + ":" + yCoord + ":" + zCoord + "\t" + extractFromAbove);
+	}
 	
     /**
      * Returns the number of slots in the inventory.
@@ -167,7 +192,18 @@ public class TileEntityDiscreteHopper extends TileEntityHopper implements IInven
         {
             if (!this.isCoolingDown()/* && BlockHopper.getIsBlockNotPoweredFromMetadata(this.getBlockMetadata())*/)
             {
-                //boolean flag = this.insertItemToInventory() | suckItemsIntoHopper(this);
+            	
+            	if(this.redstoneState == 1)
+            	{
+            		this.setTransferCooldown(COOLDOWN);
+            		return false;
+            	}
+            	
+            	if(this.extractFromAbove == true)
+            	{
+            		super.suckItemsIntoHopper(this);
+            	}
+
             	boolean flag = this.insertItemToInventory();
                 if (flag)
                 {
@@ -185,9 +221,7 @@ public class TileEntityDiscreteHopper extends TileEntityHopper implements IInven
         }
     }
     
-    /**
-     * Inserts one item from the hopper into the inventory the hopper is pointing at.
-     */
+
     private boolean insertItemToInventory()
     {
     	IInventory iinventory = this.getOutputInventory();
@@ -230,6 +264,7 @@ public class TileEntityDiscreteHopper extends TileEntityHopper implements IInven
         return getInventoryAtLocation(this.getWorldObj(), (double)(this.xCoord + Facing.offsetsXForSide[i]), (double)(this.yCoord + Facing.offsetsYForSide[i]), (double)(this.zCoord + Facing.offsetsZForSide[i]));
     }
     
+  
     
     public void openChest(){}
 
@@ -264,13 +299,15 @@ public class TileEntityDiscreteHopper extends TileEntityHopper implements IInven
     }
     
     @Override
-    public void readFromNBT(NBTTagCompound par1NBTTagCompound)
+    public void readFromNBT(NBTTagCompound tag)
     {
-        super.readFromNBT(par1NBTTagCompound);
-        NBTTagList nbttaglist = par1NBTTagCompound.getTagList("Inventory");
+        super.readFromNBT(tag);
+        NBTTagList nbttaglist = tag.getTagList("Inventory");
         items = new ItemStack[this.getSizeInventory()];
 
-        this.transferCooldown = par1NBTTagCompound.getInteger("TransferCooldown");
+        this.transferCooldown = tag.getInteger("TransferCooldown");
+        this.redstoneState = tag.getShort("redstoneState");
+        this.extractFromAbove = tag.getBoolean("extractFromAbove");
 
         for (int i = 0; i < nbttaglist.tagCount(); ++i)
         {
@@ -284,13 +321,10 @@ public class TileEntityDiscreteHopper extends TileEntityHopper implements IInven
         }
     }
 
-    /**
-     * Writes a tile entity to NBT.
-     */
     @Override
-    public void writeToNBT(NBTTagCompound par1NBTTagCompound)
+    public void writeToNBT(NBTTagCompound tag)
     {
-        super.writeToNBT(par1NBTTagCompound);
+        super.writeToNBT(tag);
         NBTTagList nbttaglist = new NBTTagList();
 
         for (int i = 0; i < items.length; ++i)
@@ -304,8 +338,10 @@ public class TileEntityDiscreteHopper extends TileEntityHopper implements IInven
             }
         }
 
-        par1NBTTagCompound.setTag("Inventory", nbttaglist);
-        par1NBTTagCompound.setInteger("TransferCooldown", this.transferCooldown);
+        tag.setTag("Inventory", nbttaglist);
+        tag.setBoolean("extractFromAbove", extractFromAbove);
+        tag.setShort("redstoneState", redstoneState);
+        tag.setInteger("TransferCooldown", this.transferCooldown);
 
     }
 }

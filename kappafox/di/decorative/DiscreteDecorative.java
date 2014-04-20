@@ -154,6 +154,9 @@ public class DiscreteDecorative
 		LanguageRegistry.addName(new ItemStack(decorBlock, 1, 872), "4x4 Strut");
 		LanguageRegistry.addName(new ItemStack(decorBlock, 1, 873), "6x6 Strut");
 		
+		//881-890 Simple shapes
+		LanguageRegistry.addName(new ItemStack(decorBlock, 1, 881), "Discrete Slab");
+		
 		
 		//Tests
 		LanguageRegistry.addName(new ItemStack(decorBlock, 1, 805), "Flag Yolo Test");		
@@ -220,6 +223,9 @@ public class DiscreteDecorative
 		ItemStack swordRest2 = new ItemStack(decorBlock, 2, 821);
 		ItemStack swordRack2 = new ItemStack(decorBlock, 2, 822);
 		
+		//Shapes
+		ItemStack slab6 = new ItemStack(decorBlock, 6, 881);
+		
 		
 
 		
@@ -250,6 +256,9 @@ public class DiscreteDecorative
 		//Stairs
 		GameRegistry.addRecipe(new ShapedOreRecipe(discreteStairs4, new Object[]{ "X  ", "XX ", "XXX", 'X', frameDiscreteCable}));		
 		GameRegistry.addRecipe(new ShapelessOreRecipe(discreteSmallStairs, new Object[]{discreteStairs}));
+		
+		//Slab
+		GameRegistry.addRecipe(new ShapedOreRecipe(slab6, new Object[]{ "XXX", "   ", "   ", 'X', frameDiscreteCable}));		
 		
 		GameRegistry.addRecipe(new ShapedOreRecipe(yellowDiagonalHazard, new Object[]{ "X  ", " Z ", "  Y", 'X', "dyeBlack", 'Y', "dyeYellow", 'Z', frameDiscreteCable}));
 		GameRegistry.addRecipe(new ShapedOreRecipe(yellowDiagonalHazard, new Object[]{ "  X", " Z ", "Y  ", 'X', "dyeBlack", 'Y', "dyeYellow", 'Z', frameDiscreteCable}));

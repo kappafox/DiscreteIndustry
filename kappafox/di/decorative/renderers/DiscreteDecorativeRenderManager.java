@@ -63,14 +63,10 @@ public class DiscreteDecorativeRenderManager implements ISimpleBlockRenderingHan
 			
 			if(tile != null)
 			{
-				//temp till all old block renderers are converted over
-				if(BlockDecor.RANGE_LADDER.contains(tile.getSubtype()) || BlockDecor.RANGE_RACK.contains(tile.getSubtype()) || BlockDecor.RANGE_STRUT.contains(tile.getSubtype()) || BlockDecor.RANGE_STAIRS.contains(tile.getSubtype()))
-				{
-					return HANDLER_DECOR_BLOCK.renderWorldBlock(world, x, y, z, block, modelID, renderer);
-				}
+				return HANDLER_DECOR_BLOCK.renderWorldBlock(world, x, y, z, block, modelID, renderer);
 			}
 
-			return decorRenderer.renderWorldBlock(world, x, y, z, block, modelID, renderer);	
+			//return decorRenderer.renderWorldBlock(world, x, y, z, block, modelID, renderer);	
 		}
 		
 		

@@ -7,6 +7,7 @@ import kappafox.di.base.blocks.SubBlock;
 import kappafox.di.base.tileentities.TileEntityDiscreteBlock;
 import kappafox.di.base.tileentities.TileEntitySubtype;
 import kappafox.di.base.util.BoundSet;
+import kappafox.di.base.util.PointSet;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -211,18 +212,18 @@ public class SubBlockLadder extends SubBlock
         	switch(direction)
         	{
             	case 2:
-            		return new BoundSet(px.zero, px.zero, px.zero, px.sixteen, px.sixteen, px.two);		
+            		return new PointSet(px.zero, px.zero, px.zero, px.sixteen, px.sixteen, px.two);		
             	case 3:
-            		return new BoundSet(px.zero, px.zero, px.fourteen, px.sixteen, px.sixteen, + px.sixteen);
+            		return new PointSet(px.zero, px.zero, px.fourteen, px.sixteen, px.sixteen, + px.sixteen);
             	case 4:
-            		return new BoundSet(px.zero, px.zero, px.zero, px.two, px.sixteen, px.sixteen);
+            		return new PointSet(px.zero, px.zero, px.zero, px.two, px.sixteen, px.sixteen);
             	case 5:
-            		return new BoundSet(px.fourteen, px.zero, px.zero, px.sixteen, px.sixteen, px.sixteen);
+            		return new PointSet(px.fourteen, px.zero, px.zero, px.sixteen, px.sixteen, px.sixteen);
         	}
         	
     	}
     	
-    	return new BoundSet(0,0,0,1,1,1);
+    	return new PointSet(0,0,0,1,1,1);
     }
     
     @Override

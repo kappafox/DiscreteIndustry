@@ -39,7 +39,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class BlockDecor extends BlockDiscreteBlock
 {
-	private static final short SUB_BLOCKS = 7;
+	private static final short SUB_BLOCKS = 8;
 	private static SubBlock[] blocks;
 	
 	public static final short ID_LADDER_FOOTHOLD = 800;
@@ -60,13 +60,13 @@ public class BlockDecor extends BlockDiscreteBlock
 	public static final short ID_STRUT_4X4 = 872;
 	public static final short ID_STRUT_6X6 = 873;
 	
-	
-	//        Range<Integer> r = Range.closed(851, 860);
-	
+	public static final short ID_SHAPE_SLAB = 881;
+
 	public static final Range<Integer> RANGE_LADDER = Range.closed(800, 820);
 	public static final Range<Integer> RANGE_RACK = Range.closed(821, 840);
 	public static final Range<Integer> RANGE_STAIRS = Range.closed(861, 870);
 	public static final Range<Integer> RANGE_STRUT = Range.closed(871, 880);
+	public static final Range<Integer> RANGE_SHAPE = Range.closed(881, 890);
 	
 	@SideOnly(Side.CLIENT)
 	private int rid;
@@ -89,6 +89,7 @@ public class BlockDecor extends BlockDiscreteBlock
 		blocks[4] = new SubBlockSwordRack();
 		blocks[5] = new SubBlockStairs();
 		blocks[6] = new SubBlockStrut();
+		blocks[7] = new SubBlockShape();
 		
 		if(FMLCommonHandler.instance().getEffectiveSide().isClient() == true)
 		{
@@ -150,6 +151,11 @@ public class BlockDecor extends BlockDiscreteBlock
 			if(RANGE_STRUT.contains(meta_))
 			{
 				return blocks[6].getOverloadedIcon(side_, meta_);
+			}
+			
+			if(RANGE_SHAPE.contains(meta_))
+			{
+				return blocks[7].getOverloadedIcon(side_, meta_);
 			}
 		}
 		else
@@ -323,7 +329,8 @@ public class BlockDecor extends BlockDiscreteBlock
     	
     	if(dim != null)
     	{
-    		this.setBlockBounds(dim.x1, dim.x2, dim.y1, dim.y2, dim.z1, dim.z2);
+    		//this.setBlockBounds(dim.x1, dim.x2, dim.y1, dim.y2, dim.z1, dim.z2);
+    		this.setBlockBounds(dim.x1, dim.y1, dim.z1, dim.x2, dim.y2, dim.z2);
     	}
     	else
     	{

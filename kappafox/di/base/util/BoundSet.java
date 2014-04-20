@@ -1,5 +1,7 @@
 package kappafox.di.base.util;
 
+import net.minecraft.util.AxisAlignedBB;
+
 public class BoundSet 
 {
 	public float x1;
@@ -27,5 +29,10 @@ public class BoundSet
 	public BoundSet(double x1_, double x2_, double y1_, double y2_, double z1_, double z2_)
 	{
 		this((float)x1_, (float)x2_, (float)y1_, (float)y2_, (float)z1_, (float)z2_);
+	}
+	
+	public AxisAlignedBB toAABB( )
+	{
+		return AxisAlignedBB.getBoundingBox(x1, y1, z1, x2, y2, z2);
 	}
 }

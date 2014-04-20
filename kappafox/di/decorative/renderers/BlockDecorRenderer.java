@@ -18,6 +18,7 @@ public class BlockDecorRenderer extends BlockRenderingHandler
 	private static SubRendererWeaponRack SUB_RENDERER_WEAPON_RACK;
 	private static SubRendererStrut SUB_RENDERER_STRUT;
 	private static SubRendererStairs SUB_RENDERER_STAIRS;
+	private static SubRendererShape SUB_RENDERER_SHAPE;
 	
 	public BlockDecorRenderer( )
 	{
@@ -27,6 +28,7 @@ public class BlockDecorRenderer extends BlockRenderingHandler
 		 SUB_RENDERER_WEAPON_RACK = new SubRendererWeaponRack();
 		 SUB_RENDERER_STRUT = new SubRendererStrut();
 		 SUB_RENDERER_STAIRS = new SubRendererStairs();
+		 SUB_RENDERER_SHAPE = new SubRendererShape();
 		 
 		 
 		 this.mapSubBlockRenderers();
@@ -65,6 +67,7 @@ public class BlockDecorRenderer extends BlockRenderingHandler
 		super.registerHandlerRange(BlockDecor.RANGE_RACK.lowerEndpoint(), BlockDecor.RANGE_RACK.upperEndpoint(), SUB_RENDERER_WEAPON_RACK);
 		super.registerHandlerRange(BlockDecor.RANGE_STRUT.lowerEndpoint(), BlockDecor.RANGE_STRUT.upperEndpoint(), SUB_RENDERER_STRUT);
 		super.registerHandlerRange(BlockDecor.RANGE_STAIRS.lowerEndpoint(), BlockDecor.RANGE_STAIRS.upperEndpoint(), SUB_RENDERER_STAIRS);
+		super.registerHandlerRange(BlockDecor.RANGE_SHAPE.lowerEndpoint(), BlockDecor.RANGE_SHAPE.upperEndpoint(), SUB_RENDERER_SHAPE);
 	}
 	
 	

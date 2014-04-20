@@ -5,6 +5,7 @@ import java.util.List;
 import kappafox.di.DiscreteIndustry;
 import kappafox.di.base.util.BoundSet;
 import kappafox.di.base.util.PixelSet;
+import kappafox.di.base.util.PointSet;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -111,7 +112,7 @@ public abstract class SubBlock
     
     public BoundSet getHitBoxesBasedOnState(IBlockAccess world, int x, int y, int z)
     {
-    	return new BoundSet(0,0,0,1,1,1);
+    	return new PointSet(0,0,0,1,1,1);
     }
     
 	public AxisAlignedBB getWireframeBox(World world, int x, int y, int z) 
@@ -157,7 +158,7 @@ public abstract class SubBlock
 	
 	public Icon getOverloadedIcon(int side, int meta)
 	{
-		return null;
+		return getIcon(side, meta);
 	}
 	
 

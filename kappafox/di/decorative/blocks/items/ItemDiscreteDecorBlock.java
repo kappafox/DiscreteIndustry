@@ -203,6 +203,11 @@ public class ItemDiscreteDecorBlock extends ItemBlock
 				return "6x6 Strut";
 			}
 			
+			case 881:
+			{
+				return "Discrete Slab";
+			}
+			
 			case 888:
 			{
 				return "Test Item";
@@ -246,6 +251,9 @@ public class ItemDiscreteDecorBlock extends ItemBlock
         itemList.add(new ItemStack(id, 1, 871));	//2x2
         itemList.add(new ItemStack(id, 1, 872));	//4x4
         itemList.add(new ItemStack(id, 1, 873));	//6x6
+        
+        //Shapes
+        itemList.add(new ItemStack(id, 1, 881));	//Slab
         
         //itemList.add(new ItemStack(id, 1, 888));
     }
@@ -531,53 +539,7 @@ public class ItemDiscreteDecorBlock extends ItemBlock
 	        
 	        tile = t;        	
         }
-        
-        /*
-        //Sword Racks
-        if(meta >= 821 && meta <= 840)
-        {
-        	
-        	/*
-        	TileEntitySwordRack t = null;
-        	
-        	switch(meta)
-        	{
-        		case 821:
-        			t = new TileEntitySwordRack(1);
-        			break;
-        		
-        		case 822:
-        			t = new TileEntitySwordRack(6);
-        			break;
-        			
-        		default:
-        			t = new TileEntitySwordRack();
-        			
-        	}
-        	
-        	t.setVariable(tMeta);
-        	t.setSubType(meta);
-        	t.setFullColour(true);
-        	t.setAllTexturesFromSource(this.getBlockID(), 4);
 
-        	tile = subs[this.getSubIndex(meta)].getTileEntity(meta, orient, -1, this.getBlockID(), meta, hitx, hity);
-        }
-        else
-        {
-	        TileEntityDiscreteBlock t = new TileEntityDiscreteBlock(this.getBlockID(), j1, damage);
-	        t.setAllTexturesFromSource(this.getBlockID(), meta);
-	        
-	        t.setVariable(orient);
-	        t.setDirection((short)orient);
-	        t.setTextureOrientation(orient);
-        	t.setFullColour(true);
-        	t.setOriginalID(this.getBlockID());
-        	t.setSubType(meta);
-	        
-	        tile = t;
-        }
-        
-        */
         if(world.isRemote == false && tile != null)
         {
             world.setBlockTileEntity(x, y, z, tile);
@@ -722,6 +684,13 @@ public class ItemDiscreteDecorBlock extends ItemBlock
     	{
     		return 6;
     	}
+    	
+    	if(damage >= 881 && damage <= 882)
+    	{
+    		return 7;
+    	}
+    	
+    	
     	
     	return 0;
     }

@@ -143,6 +143,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 
 	private boolean renderWorldTestBlock2(IBlockAccess world_, int x_, int y_, int z_, Block block_, int modelID_, RenderBlocks renderer_, int meta) 
 	{
+		/*
 		renderer_.setRenderBounds(0.0F, 0.0F, 0.0F, 1.0F, 1.0F, 1.0F);
 		renderer_.renderStandardBlock(block_, x_, y_, z_);
 		
@@ -239,7 +240,7 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 		
 	    tessellator.draw();
 		GL11.glPopMatrix();
-		*/
+
 		
 		//renderer_.setRenderBounds(0.5, 0.5, 0.5, 0.6, 0.6, 0.6);
 		//renderer_.renderStandardBlock(block_, x_, y_, z_);
@@ -247,7 +248,8 @@ public class DecorRenderer implements ISimpleBlockRenderingHandler
 		
 		this.bindTexture(TextureMap.locationBlocksTexture);
 		tessellator.startDrawingQuads();
-
+		
+		*/
 		return true;
 	}
 

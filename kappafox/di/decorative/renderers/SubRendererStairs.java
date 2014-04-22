@@ -132,6 +132,7 @@ public class SubRendererStairs extends SubBlockRenderingHandler
 		float x1 = px.zero;
 		float x2 = px.four;
 		
+		/*
 		if(ori == 1)
 		{
 			float f = y1;
@@ -142,13 +143,14 @@ public class SubRendererStairs extends SubBlockRenderingHandler
 			y2 = y4;
 			y4 = f;
 		}
+		*/
 		
 		renderer.setRenderBounds(px.zero, y1, px.zero, px.sixteen, y2, px.sixteen);
 		drh.renderDiscreteQuad(world, renderer, block, x, y, z);
 		
 
 
-		
+		System.out.println(dir);
 		
 		switch(dir)
 		{

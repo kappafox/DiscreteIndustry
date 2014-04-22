@@ -100,12 +100,6 @@ public class IC2Data
 				cableLoss[4] = (Double)getConductionLoss.invoke(o);					//glass
 				ctype.set(o, IC2_CABLE_HV);
 				cableLoss[5] = (Double)getConductionLoss.invoke(o);					//4xIns HV
-				
-				
-				for(Double d : cableLoss)
-				{
-					System.out.println("\t\t\t" + d);
-				}
 
 				for(int i = 0; i < 6; i++)
 				{

@@ -203,9 +203,11 @@ public class DiscreteDecorative
 		ItemStack fixture = new ItemStack(decorBlock, 1, 0);
 		ItemStack strut22 = new ItemStack(decorBlock, 1, 871);
 		ItemStack strut44 = new ItemStack(decorBlock, 1, 872);
+		ItemStack strut444 = new ItemStack(decorBlock, 4, 872);
 		ItemStack strut448 = new ItemStack(decorBlock, 8, 872);
 		ItemStack strut66 = new ItemStack(decorBlock, 1, 873);
-		ItemStack discreteStairs4 = new ItemStack(decorBlock, 4, 861);
+		ItemStack strut664 = new ItemStack(decorBlock, 4, 873);
+		ItemStack discreteStairs8 = new ItemStack(decorBlock, 8, 861);
 		ItemStack discreteStairs = new ItemStack(decorBlock, 1, 861);
 		ItemStack discreteSmallStairs = new ItemStack(decorBlock, 1, 862);
 		
@@ -247,14 +249,21 @@ public class DiscreteDecorative
 		GameRegistry.addRecipe(new ShapedOreRecipe(strut448, new Object[]{ " X ", "XYX", " X ", 'X', Item.stick, 'Y', frameDiscreteCable,}));
 		GameRegistry.addRecipe(new ShapelessOreRecipe(strut44, new Object[]{fixture}));
 		
-		Recipes.compressor.addRecipe(new RecipeInputItemStack(strut44), null, strut22);
-		Recipes.compressor.addRecipe(new RecipeInputItemStack(strut66), null, strut44);
 		
-		Recipes.extractor.addRecipe(new RecipeInputItemStack(strut44), null, strut66);
-		Recipes.extractor.addRecipe(new RecipeInputItemStack(strut22), null, strut44);
+		//Struts
+		GameRegistry.addRecipe(new ShapelessOreRecipe(strut664, new Object[]{strut44, strut44, strut44, strut44}));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(strut22, new Object[]{strut44}));
+		
+		GameRegistry.addRecipe(new ShapelessOreRecipe(strut444, new Object[]{strut22, strut22, strut22, strut22}));
+		GameRegistry.addRecipe(new ShapelessOreRecipe(strut44, new Object[]{strut66}));
+		//Recipes.compressor.addRecipe(new RecipeInputItemStack(strut44), null, strut22);
+		//Recipes.compressor.addRecipe(new RecipeInputItemStack(strut66), null, strut44);
+		
+		//Recipes.extractor.addRecipe(new RecipeInputItemStack(strut44), null, strut66);
+		//Recipes.extractor.addRecipe(new RecipeInputItemStack(strut22), null, strut44);
 		
 		//Stairs
-		GameRegistry.addRecipe(new ShapedOreRecipe(discreteStairs4, new Object[]{ "X  ", "XX ", "XXX", 'X', frameDiscreteCable}));		
+		GameRegistry.addRecipe(new ShapedOreRecipe(discreteStairs8, new Object[]{ "X  ", "XX ", "XXX", 'X', frameDiscreteCable}));		
 		GameRegistry.addRecipe(new ShapelessOreRecipe(discreteSmallStairs, new Object[]{discreteStairs}));
 		
 		//Slab

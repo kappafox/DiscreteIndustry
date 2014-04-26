@@ -27,11 +27,13 @@ public class DiscreteTransport
 	//blocks
 	//public static Block discreteCableBlock;
 	public static Block discreteHopperBlock;
+	public static Block discreteTransportBlock;
 	
 	
 	//ids
 	//private int discreteCableID;
 	private int discreteHopperID;
+	private int discreteTransportMetaBlockID;
 
 	
 	//Render IDS
@@ -39,6 +41,7 @@ public class DiscreteTransport
 	
 	//Model IDS
 	public static int hopperRenderID;
+	public static int transportBlockRenderID;
 	
 	//public static int discreteCableRenderID;
 	
@@ -48,16 +51,17 @@ public class DiscreteTransport
 		
 	}
 	
-	public void preInitialisation(FMLPreInitializationEvent event_, Configuration config_)
+	public void preInitialisation(FMLPreInitializationEvent event, Configuration config)
 	{
 
 		//grab the id database
 		DiscreteID ids = DiscreteIndustry.librarian.dibi;
 		
-		discreteHopperID = config_.getBlock("DiscreteHoppers", ids.discreteHopper).getInt(ids.discreteHopper);
+		discreteHopperID = config.getBlock("DiscreteHoppers", ids.discreteHopper).getInt(ids.discreteHopper);
+		discreteTransportMetaBlockID = config.getBlock("DiscreteTransportBlock", ids.discreteTransportMetaBlock).getInt(ids.discreteTransportMetaBlock);
 	}
 	
-	public void load(FMLInitializationEvent event_)
+	public void load(FMLInitializationEvent event)
 	{
 		//Renderers
 		registerRenderers();
@@ -73,10 +77,6 @@ public class DiscreteTransport
 		//register tile entities
 		GameRegistry.registerTileEntity(TileEntityDiscreteHopper.class, "Discrete Hopper");
 		GameRegistry.registerTileEntity(TileEntityDiscreteDuct.class, "Discrete Duct");
-		
-
-				
-		
 	}
 
 
@@ -86,6 +86,7 @@ public class DiscreteTransport
 	{
 		
 		discreteHopperBlock = new BlockDiscreteHopper(discreteHopperID, Material.rock, hopperRenderID);
+		//discreteTransportBlock = new BlockDiscreteTransport(discreteTransportMetaBlockID, Material.wood);
 		
 		GameRegistry.registerBlock(discreteHopperBlock, ItemDiscreteHopperBlock.class, DiscreteIndustry.MODID + "hopperBlock");
 		
@@ -99,9 +100,11 @@ public class DiscreteTransport
 
 		renderID = RenderingRegistry.getNextAvailableRenderId();
 		hopperRenderID = RenderingRegistry.getNextAvailableRenderId();
+		transportBlockRenderID = RenderingRegistry.getNextAvailableRenderId();
 		
 		DiscreteTransportRenderManager manager = new DiscreteTransportRenderManager(renderID);
-		RenderingRegistry.registerBlockHandler(hopperRenderID, manager);	
+		RenderingRegistry.registerBlockHandler(hopperRenderID, manager);
+		RenderingRegistry.registerBlockHandler(transportBlockRenderID, manager);
 
 	}
 

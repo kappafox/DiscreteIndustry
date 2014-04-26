@@ -6,6 +6,7 @@ public class DiscreteID
 	public final int discreteHopper;
 	public final int discreteDecor;
 	public final int discreteHazard;
+	public final int discreteTransportMetaBlock;
 	public final int itemDiscreteItem;
 	
 	public DiscreteID( )
@@ -14,6 +15,7 @@ public class DiscreteID
 		discreteHopper = 811;
 		discreteDecor = 812;
 		discreteHazard = 813;
+		discreteTransportMetaBlock = 814;
 		itemDiscreteItem = 28880;
 	}
 }

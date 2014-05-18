@@ -1,11 +1,75 @@
 package kappafox.di.base;
 
+import org.lwjgl.opengl.GL11;
+
 import net.minecraftforge.common.ForgeDirection;
+import kappafox.di.base.util.Point;
 import kappafox.di.base.util.PointSet;
 
 public class TranslationHelper
 {
 	
+	public Point translate(ForgeDirection from, ForgeDirection to, Point point)
+	{
+		PointSet p = new PointSet(point.x, point.y, point.z, point.x + 0.5F, point.y + 0.5F, point.z + 0.5F);
+		
+		PointSet t = this.translate(from, to, p);
+		
+		point.x = t.x1;
+		point.y = t.y1;
+		point.z = t.z1;
+		
+		return point;
+	}
+	
+	//you must call your own supporting methods to use this! no pop/push or translation here
+	//this method WILL correct offsets that come from rotation, you must account for this
+	public void rotateTessellator(ForgeDirection from, ForgeDirection to, boolean correct)
+	{
+		switch(to)
+		{
+			
+			case NORTH:
+			{
+				GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);
+				break;
+			}
+			case SOUTH:
+			{
+				if(correct == true)
+				{
+					GL11.glTranslated(-0.5, 0, -0.5);
+				}
+
+				break;
+			}
+			
+			case EAST:
+			{
+				GL11.glRotatef(90.0F, 0.0F, 1.0F, 0.0F);
+				if(correct == true)
+				{
+					GL11.glTranslated(0, 0, -0.5);
+				}
+				break;
+			}
+			
+			case WEST:
+			{
+				GL11.glRotatef(-90.0F, 0.0F, 1.0F, 0.0F);
+				if(correct == true)
+				{
+					GL11.glTranslated(-0.5, 0, 0);
+				}
+				break;
+			}
+			
+			default:
+			{
+				break;
+			}
+		}
+	}
 	
 	public PointSet translate(ForgeDirection from, ForgeDirection to, PointSet points)
 	{
@@ -53,9 +117,15 @@ public class TranslationHelper
 			case SOUTH:
 			{
 				float myz1 = points.z1;
+				float myx1 = points.x1;
+				float myx2 = points.x2;
 				
 				points.z1 = 1 - points.z2;
 				points.z2 = 1 - myz1;
+				
+				points.x1 = 1 - myx2;
+				points.x2 = 1 - myx1;
+				
 				break;
 			}
 			
@@ -78,8 +148,8 @@ public class TranslationHelper
 				
 				points.x1 = points.z1;
 				points.x2 = points.z2;
-				points.z1 = myx1;
-				points.z2 = myx2;
+				points.z1 = 1 - myx2;
+				points.z2 = 1 - myx1;
 				break;
 			}
 		}

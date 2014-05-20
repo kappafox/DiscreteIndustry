@@ -24,26 +24,20 @@ public abstract class SubBlock
 	
 	protected static Icon DEFAULT_ICON;
 	
-	
-	//public abstract boolean isDiscrete();
 	public void registerIcons(IconRegister ireg)
 	{
 		DEFAULT_ICON = ireg.registerIcon(DiscreteIndustry.MODID + ":" + "blockDiscreteCable");
 	}
 	
 	public abstract Icon getIcon(int side, int meta);
-	//public abstract boolean onBlockActivated(World world, int xcoord, int ycoord, int zcoord, EntityPlayer player, int side, float par7, float par8, float par9);
 	public abstract Icon getBlockTexture(IBlockAccess world, int x, int y, int z, int side);
-	//public abstract void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack istack);
-	//public abstract TileEntity createTileEntity(World world, int meta);
-	//public abstract boolean hasTileEntity(int meta);
-	//public abstract boolean shouldSideBeRendered(IBlockAccess block, int x, int y, int z, int side);
 	
 	
     public void breakBlock(World world, int x, int y, int z, int id, int meta)
     {
     	
     }
+    
 	public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack istack)
 	{
 		
@@ -56,7 +50,13 @@ public abstract class SubBlock
 	
 	public boolean onBlockActivated(World world, int xcoord, int ycoord, int zcoord, EntityPlayer player, int side, float par7, float par8, float par9)
 	{
+		//player.openGui(DiscreteIndustry.instance, 1, world, xcoord, ycoord, zcoord);
 		return false;
+	}
+	
+	public void onBlockClicked(World world, int x, int y, int z, EntityPlayer player, float hitx, float hity, float hitz)
+	{
+		
 	}
 	
 	public boolean shouldSideBeRendered(IBlockAccess world, int x, int y, int z, int side)
@@ -170,4 +170,9 @@ public abstract class SubBlock
     {
     	return false;
     }
+
+	public Icon getSpecialIcon(int index, int meta)
+	{
+		return this.getIcon(0, meta);
+	}
 }

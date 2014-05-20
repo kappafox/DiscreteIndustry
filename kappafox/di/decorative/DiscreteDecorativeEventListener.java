@@ -37,17 +37,10 @@ public class DiscreteDecorativeEventListener
 			int meta = world.getBlockMetadata(e_.x, e_.y, e_.z);
 			
 			
-			if(id == DiscreteDecorative.decorBlockID)
+			//Ladders, Fixtures/Struts, Weapon Racks, anything that uses a single texture for all sides
+			if(disc.isFullColour() == true)
 			{
-				//Ladders, Fixtures/Struts, Weapon Racks, anything that uses a single texture for all sides
-				if(disc.isFullColour() == true)
-				{
-					disc.setAllTextureSources(e_.referencedBlockId, e_.referencedMeta, e_.referencedSide);
-				}
-				else
-				{
-					disc.setTextureSource(e_.referencedBlockId, e_.referencedMeta, e_.referencedSide, e_.side);
-				}
+				disc.setAllTextureSources(e_.referencedBlockId, e_.referencedMeta, e_.referencedSide);
 			}
 			else
 			{

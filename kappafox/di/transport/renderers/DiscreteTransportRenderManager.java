@@ -1,5 +1,6 @@
 package kappafox.di.transport.renderers;
 
+import kappafox.di.base.BlockRenderingHandler;
 import kappafox.di.transport.DiscreteTransport;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
@@ -13,32 +14,46 @@ public class DiscreteTransportRenderManager implements ISimpleBlockRenderingHand
 	private ISimpleBlockRenderingHandler ductRenderer;
 	private ISimpleBlockRenderingHandler hopperRenderer;
 	
-	public DiscreteTransportRenderManager(int rID_)
+	private static BlockRenderingHandler HANDLER_TRANSPORT_BLOCK;
+	
+	public DiscreteTransportRenderManager(int rID)
 	{
-		//renderID = rID_;
-		hopperRenderer = new HopperRenderer(rID_);
-		//plugSocket = new PlugSocketRenderer(renderID);
+		//renderID = rID;
+		hopperRenderer = new HopperRenderer(rID);
+		
+		HANDLER_TRANSPORT_BLOCK = new BlockDiscreteTransportRenderer();
 	}
 	
 	@Override
-	public void renderInventoryBlock(Block block_, int meta_, int modelID_, RenderBlocks renderer_)
+	public void renderInventoryBlock(Block block, int meta, int modelID, RenderBlocks renderer)
 	{
 		
-		if(modelID_ == DiscreteTransport.hopperRenderID)
+		if(modelID == DiscreteTransport.hopperRenderID)
 		{
-			hopperRenderer.renderInventoryBlock(block_, meta_, modelID_, renderer_);
+			hopperRenderer.renderInventoryBlock(block, meta, modelID, renderer);
+		}
+		
+		if(modelID == DiscreteTransport.transportBlockRenderID)
+		{
+			HANDLER_TRANSPORT_BLOCK.renderInventoryBlock(block, meta, modelID, renderer);
 		}
 		
 	}
 
 	@Override
-	public boolean renderWorldBlock(IBlockAccess world_, int x_, int y_, int z_, Block block_, int modelID_, RenderBlocks renderer_)
+	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelID, RenderBlocks renderer)
 	{
 		
-		if(modelID_ == DiscreteTransport.hopperRenderID)
+		if(modelID == DiscreteTransport.hopperRenderID)
 		{
-			return hopperRenderer.renderWorldBlock(world_, x_, y_, z_, block_, modelID_, renderer_);
+			return hopperRenderer.renderWorldBlock(world, x, y, z, block, modelID, renderer);
 		}
+		
+		if(modelID == DiscreteTransport.transportBlockRenderID)
+		{
+			return HANDLER_TRANSPORT_BLOCK.renderWorldBlock(world, x, y, z, block, modelID, renderer);
+		}
+		
 		return true;
 	}
 

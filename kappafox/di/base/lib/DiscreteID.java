@@ -8,6 +8,7 @@ public class DiscreteID
 	public final int discreteHazard;
 	public final int discreteTransportMetaBlock;
 	public final int itemDiscreteItem;
+	public final int itemDiscreteTransport;
 	
 	public DiscreteID( )
 	{
@@ -17,5 +18,6 @@ public class DiscreteID
 		discreteHazard = 813;
 		discreteTransportMetaBlock = 814;
 		itemDiscreteItem = 28880;
+		itemDiscreteTransport = 28881;
 	}
 }

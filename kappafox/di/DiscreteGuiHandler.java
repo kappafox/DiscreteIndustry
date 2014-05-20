@@ -84,8 +84,11 @@ public class DiscreteGuiHandler implements IGuiHandler
         //Loom
         if(id_ == 1)
         {
-	    	TileEntityLoomBlock tile = (TileEntityLoomBlock)world_.getBlockTileEntity(x_, y_, z_);
-        	return new GuiLoom(player_.inventory, tile);
+        	if(world_.getBlockTileEntity(x_, y_, z_) instanceof TileEntityLoomBlock)
+        	{
+		    	TileEntityLoomBlock tile = (TileEntityLoomBlock)world_.getBlockTileEntity(x_, y_, z_);
+	        	return new GuiLoom(player_.inventory, tile);
+        	}
         }	
         
         //Sword Rack

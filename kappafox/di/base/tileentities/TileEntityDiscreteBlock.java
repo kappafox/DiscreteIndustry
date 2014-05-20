@@ -147,13 +147,13 @@ public class TileEntityDiscreteBlock extends TileEntitySubtype
 		return facing;
 	}
 
-	public void setFace(short facing)
+	public void setFace(short face)
 	{		
 		
 		//System.out.println("setFacing:" + facing);
 		if(changeFace == true )
 		{
-			facing = facing;	
+			facing = face;	
 		}
 		else
 		{

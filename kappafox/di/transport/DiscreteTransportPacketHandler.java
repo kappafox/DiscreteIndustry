@@ -35,7 +35,6 @@ public class DiscreteTransportPacketHandler implements IPacketHandler
 			}
 		}
 	}
-	
 	private void toggleHopperExtract(PacketDiscreteSync packet, Player player)
 	{
 	    DataInputStream inputStream = new DataInputStream(new ByteArrayInputStream(packet.data));
@@ -57,10 +56,8 @@ public class DiscreteTransportPacketHandler implements IPacketHandler
 			System.out.println(e_);
 		}
 
-		System.out.println("YOLO");
 		if(FMLCommonHandler.instance().getEffectiveSide().isServer() == true)
 		{
-			System.out.println("YOLO2");
 			World w = MinecraftServer.getServer().worldServerForDimension(d);
 			
 			TileEntityDiscreteHopper tile = (TileEntityDiscreteHopper)w.getBlockTileEntity(x, y, z);

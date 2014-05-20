@@ -4,45 +4,47 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-import kappafox.di.base.network.PacketCrafter;
 import kappafox.di.base.tileentities.TileEntityDiscreteBlock;
 import kappafox.di.base.tileentities.TileEntitySubtype;
 import kappafox.di.base.util.BoundSet;
-import cpw.mods.fml.common.FMLCommonHandler;
+import kappafox.di.decorative.tileentities.TileEntityLoomBlock;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.Icon;
 import net.minecraft.util.MovingObjectPosition;
-import net.minecraft.util.Vec3;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 
-public class BaseBlockDiscreteSubtype extends BlockDiscreteBlock
+public abstract class BaseBlockSubtype extends Block
 {
+	
 	protected HashMap<Integer, SubBlock> blocks;	
 	protected int renderID;
 	
-	public BaseBlockDiscreteSubtype(int id, Material mat, int rID)
+	public BaseBlockSubtype(int id, Material mat)
 	{
-		super(id, mat, rID);
-		renderID = rID;
+		super(id, mat);
+		
 		blocks = new HashMap<Integer, SubBlock>();
 	}
 	
+	public BaseBlockSubtype(int id, Material mat, int rID)
+	{
+		this(id, mat);
+		renderID = rID;
+	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
@@ -65,22 +67,7 @@ public class BaseBlockDiscreteSubtype extends BlockDiscreteBlock
 	@SideOnly(Side.CLIENT)
 	public Icon getIcon(int side, int meta)
 	{
-		if(blocks.containsKey(meta))
-		{
-			return blocks.get(meta).getIcon(side, meta);
-		}
-		
 		return Block.stone.getIcon(0, 0);
-	}
-	
-	public Icon getSpecialIcon(int index, int meta)
-	{
-		if(blocks.containsKey(meta))
-		{
-			return blocks.get(meta).getSpecialIcon(index, meta);
-		}
-		
-		return this.getIcon(0, meta);
 	}
 	
 	@Override
@@ -333,7 +320,7 @@ public class BaseBlockDiscreteSubtype extends BlockDiscreteBlock
         int id = idPicked(world, x, y, z);        
         TileEntity t = world.getBlockTileEntity(x, y, z);
         
-        if (Item.itemsList[id] == null)
+        if (id == 0 || Item.itemsList[id] == null)
         {
             return null;
         }
@@ -352,42 +339,5 @@ public class BaseBlockDiscreteSubtype extends BlockDiscreteBlock
         
         return new ItemStack(id, 1, getDamageValue(world, x, y, z));
     }
-    
-    @Override
-    public void onBlockClicked(World world, int x, int y, int z, EntityPlayer player)
-    {
-    	int meta = world.getBlockMetadata(x, y, z);
-    	
-		if(blocks.containsKey(meta))
-		{
-			if(FMLCommonHandler.instance().getEffectiveSide().isClient() == true)
-			{
-				Vec3 v = Minecraft.getMinecraft().objectMouseOver.hitVec;
-				
-		        float hitx = (float)v.xCoord - (float)x;
-		        float hity = (float)v.yCoord - (float)y;
-		        float hitz = (float)v.zCoord - (float)z;
-		        
-				blocks.get(meta).onBlockClicked(world, x, y, z, player, hitx, hity, hitz);
-				
-				int side = Minecraft.getMinecraft().objectMouseOver.sideHit;
-				//gotta do a custom packet for the server
-				//PacketCrafter.onBlockClicked(this.blockID, x, y, z, player.dimension, player, side, hitx, hity, hitz);
-			}
-		}
-    }
-    
-    //this is a CUSTOM method, you must call this yourself from the serverside and provide the hitvectors
-    public void onBlockClicked(World world, int x, int y, int z, EntityPlayer player, int side, float hitx, float hity, float hitz)
-    {
-    	int meta = world.getBlockMetadata(x, y, z);
-    	
-		if(blocks.containsKey(meta))
-		{
-			if(FMLCommonHandler.instance().getEffectiveSide().isServer() == true)
-			{
-				blocks.get(meta).onBlockClicked(world, x, y, z, player, hitx, hity, hitz);
-			}
-		}
-    }
+
 }

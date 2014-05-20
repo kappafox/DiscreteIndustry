@@ -5,6 +5,7 @@ import java.io.DataInputStream;
 import java.util.HashMap;
 
 import kappafox.di.base.network.PacketDiscreteSync;
+import kappafox.di.base.network.ServerSideBlockFunctions;
 import kappafox.di.decorative.tileentities.TileEntityLoomBlock;
 import kappafox.di.transport.DiscreteTransportPacketHandler;
 import net.minecraft.network.INetworkManager;
@@ -37,7 +38,15 @@ public class DiscretePacketHandler implements IPacketHandler
 		if(packet instanceof PacketDiscreteSync && packet.channel.equals("DI_GENERIC_SYNC"))
 		{
 			PacketDiscreteSync p = (PacketDiscreteSync)packet;
-			subHandler.get(p.module).onPacketData(manager, packet, player);
+			
+			if(p.module == 0)
+			{
+				this.handlePacket(player, p);
+			}
+			else
+			{
+				subHandler.get(p.module).onPacketData(manager, packet, player);
+			}
 		}
 		else
 		{
@@ -49,6 +58,54 @@ public class DiscretePacketHandler implements IPacketHandler
 		}
 	}
 	
+	private void handlePacket(Player player, PacketDiscreteSync packet)
+	{
+		/*
+		System.out.println(packet.type);
+		if(packet.type == 1 || packet.type == 2)
+		{
+		    DataInputStream inputStream = new DataInputStream(new ByteArrayInputStream(packet.data));
+		    int id = 0;
+			int x = 0;
+			int y = 0;
+			int z = 0;
+			int d = 0;
+			int side = 0;
+			float hitx = 0;
+			float hity = 0;
+			float hitz = 0;
+			
+			try
+			{
+				id = inputStream.readInt();			
+				x = inputStream.readInt();			
+				y = inputStream.readInt();			
+				z = inputStream.readInt();			
+				d = inputStream.readByte();	
+				side = inputStream.readByte();		
+				hitx = inputStream.readFloat();		
+				hity = inputStream.readFloat();		
+				hitz = inputStream.readFloat();		
+				
+			}
+			catch(Exception e_)
+			{
+				System.out.println(e_);
+			}
+			
+			if(packet.type == 1)
+			{
+				System.out.println("OnBlockActivated");
+				ServerSideBlockFunctions.onBlockActivated(id, x, y, z, d, player, side, hitx, hity, hitz);
+			}
+			else
+			{
+				System.out.println("OnBlockClicked");
+				ServerSideBlockFunctions.onBlockClicked(id, x, y, z, d, player, side, hitx, hity, hitz);
+			}
+		}
+		*/
+	}
 	private void handleLoomSync(INetworkManager manager, Packet250CustomPayload packet, Player player)
 	{
 	    DataInputStream inputStream = new DataInputStream(new ByteArrayInputStream(packet.data));

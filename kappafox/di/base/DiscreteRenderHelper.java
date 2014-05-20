@@ -9,11 +9,13 @@ import kappafox.di.base.util.TextureOffset;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockGrass;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.entity.RenderItem;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.item.Item;
@@ -35,8 +37,21 @@ public class DiscreteRenderHelper
 	
     private static final ResourceLocation RES_ITEM_GLINT = new ResourceLocation("textures/misc/enchanteditemglint.png");
     
+    private static final RenderItem renderItem = new RenderItem();
+    private static final FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
     
     
+    
+    //Rendering, setting and translating
+    public void renderDiscreteQuadWithColourMultiplier(IBlockAccess world, RenderBlocks renderer, Block block, int x, int y, int z, PointSet bounds, ForgeDirection fdirection)
+    {
+    	if(bounds == null)
+    	{
+    		this.renderDiscreteQuadWithColourMultiplier(world, renderer, block, x, y, z);
+    	}
+    	
+    	this.renderDiscreteQuadWithColourMultiplier(world, renderer, block, x, y, z, this.translate(ForgeDirection.NORTH, fdirection, bounds));
+    }
     
     //Combination method for setting bounds and rendering simple
     public void renderDiscreteQuadWithColourMultiplier(IBlockAccess world, RenderBlocks renderer, Block block, int x, int y, int z, PointSet bounds)
@@ -163,6 +178,16 @@ public class DiscreteRenderHelper
 			renderer.enableAO = false;
 	}
 	
+    //Rendering, setting and translating
+    public void renderDiscreteQuad(IBlockAccess world, RenderBlocks renderer, Block block, int x, int y, int z, PointSet bounds, ForgeDirection fdirection)
+    {
+    	if(bounds == null)
+    	{
+    		this.renderDiscreteQuad(world, renderer, block, x, y, z);
+    	}
+    	
+    	this.renderDiscreteQuad(world, renderer, block, x, y, z, this.translate(ForgeDirection.NORTH, fdirection, bounds));
+    }
 	
 	public void renderDiscreteQuad(IBlockAccess world, RenderBlocks renderer, Block block, int x, int y, int z, PointSet bounds)
 	{
@@ -1495,14 +1520,14 @@ public class DiscreteRenderHelper
 		GL11.glScaled(1.0, 1.0, 1.0);
 	}
 	
-    public static void renderItemAsBlock(Tessellator tess, ItemStack istack, boolean effects, float par7)
+    public static void renderItemAsBlock(Tessellator tess, ItemStack istack, boolean effects, float thickness)
     {
 
     	Item item = istack.getItem();
     	Icon icon = item.getIcon(istack, 0);
     	
     	//pass 0
-    	renderItemAsBlockSimple(tess, icon, par7);
+    	renderItemAsBlockSimple(tess, icon, thickness);
     	
 		if(item.requiresMultipleRenderPasses())
 		{
@@ -1510,7 +1535,7 @@ public class DiscreteRenderHelper
             for(int x = 1; x < istack.getItem().getRenderPasses(istack.getItemDamage()); x++)
             {
             	icon2 = item.getIcon(istack, x);
-            	renderItemAsBlockSimple(tess, icon2, par7);
+            	renderItemAsBlockSimple(tess, icon2, thickness);
             }		
 		}
 		
@@ -1525,15 +1550,15 @@ public class DiscreteRenderHelper
         }
     }
     
-    public static void renderItemAsBlockSimple(Tessellator tess, Icon ico, float par7)
+    public static void renderItemAsBlockSimple(Tessellator tess, Icon ico, float thickness)
     {
     	if(ico != null)
     	{
-    		ItemRenderer.renderItemIn2D(tess, ico.getMinU(), ico.getMinV(), ico.getMaxU(), ico.getMaxV(), ico.getIconWidth(), ico.getIconHeight(), par7);
+    		ItemRenderer.renderItemIn2D(tess, ico.getMinU(), ico.getMinV(), ico.getMaxU(), ico.getMaxV(), ico.getIconWidth(), ico.getIconHeight(), thickness);
     	}
     }
     
-    public static void renderItemIn2D(Tessellator tess, float minu, float minv, float maxu, float maxv, int iconWidth, int iconHeight, float par7)
+    public static void renderItemIn2D(Tessellator tess, float minu, float minv, float maxu, float maxv, int iconWidth, int iconHeight, float thickness)
     {
     	//Z
         tess.startDrawingQuads();
@@ -1549,10 +1574,10 @@ public class DiscreteRenderHelper
         tess.startDrawingQuads();
         tess.setColorOpaque_F(0.8F, 0.8F, 0.8F);
         tess.setNormal(0.0F, 0.0F, -1.0F);
-        tess.addVertexWithUV(0.0D, 1.0D, (double)(0.0F - par7), (double)minu, (double)minv);
-        tess.addVertexWithUV(1.0D, 1.0D, (double)(0.0F - par7), (double)maxu, (double)minv);
-        tess.addVertexWithUV(1.0D, 0.0D, (double)(0.0F - par7), (double)maxu, (double)maxv);
-        tess.addVertexWithUV(0.0D, 0.0D, (double)(0.0F - par7), (double)minu, (double)maxv);
+        tess.addVertexWithUV(0.0D, 1.0D, (double)(0.0F - thickness), (double)minu, (double)minv);
+        tess.addVertexWithUV(1.0D, 1.0D, (double)(0.0F - thickness), (double)maxu, (double)minv);
+        tess.addVertexWithUV(1.0D, 0.0D, (double)(0.0F - thickness), (double)maxu, (double)maxv);
+        tess.addVertexWithUV(0.0D, 0.0D, (double)(0.0F - thickness), (double)minu, (double)maxv);
         tess.draw();
         float f5 = 0.5F * (minu - maxu) / (float)iconWidth;
         float f6 = 0.5F * (maxv - minv) / (float)iconHeight;
@@ -1568,10 +1593,10 @@ public class DiscreteRenderHelper
         {
             f7 = (float)k / (float)iconWidth;
             f8 = minu + (maxu - minu) * f7 - f5;
-            tess.addVertexWithUV((double)f7, 0.0D, (double)(0.0F - par7), (double)f8, (double)maxv);
+            tess.addVertexWithUV((double)f7, 0.0D, (double)(0.0F - thickness), (double)f8, (double)maxv);
             tess.addVertexWithUV((double)f7, 0.0D, 0.0D, (double)f8, (double)maxv);
             tess.addVertexWithUV((double)f7, 1.0D, 0.0D, (double)f8, (double)minv);
-            tess.addVertexWithUV((double)f7, 1.0D, (double)(0.0F - par7), (double)f8, (double)minv);
+            tess.addVertexWithUV((double)f7, 1.0D, (double)(0.0F - thickness), (double)f8, (double)minv);
         }
 
         tess.draw();
@@ -1587,10 +1612,10 @@ public class DiscreteRenderHelper
             f7 = (float)k / (float)iconWidth;
             f8 = minu + (maxu - minu) * f7 - f5;
             f9 = f7 + 1.0F / (float)iconWidth;
-            tess.addVertexWithUV((double)f9, 1.0D, (double)(0.0F - par7), (double)f8, (double)minv);
+            tess.addVertexWithUV((double)f9, 1.0D, (double)(0.0F - thickness), (double)f8, (double)minv);
             tess.addVertexWithUV((double)f9, 1.0D, 0.0D, (double)f8, (double)minv);
             tess.addVertexWithUV((double)f9, 0.0D, 0.0D, (double)f8, (double)maxv);
-            tess.addVertexWithUV((double)f9, 0.0D, (double)(0.0F - par7), (double)f8, (double)maxv);
+            tess.addVertexWithUV((double)f9, 0.0D, (double)(0.0F - thickness), (double)f8, (double)maxv);
         }
 
         tess.draw();
@@ -1607,8 +1632,8 @@ public class DiscreteRenderHelper
             f9 = f7 + 1.0F / (float)iconHeight;
             tess.addVertexWithUV(0.0D, (double)f9, 0.0D, (double)minu, (double)f8);
             tess.addVertexWithUV(1.0D, (double)f9, 0.0D, (double)maxu, (double)f8);
-            tess.addVertexWithUV(1.0D, (double)f9, (double)(0.0F - par7), (double)maxu, (double)f8);
-            tess.addVertexWithUV(0.0D, (double)f9, (double)(0.0F - par7), (double)minu, (double)f8);
+            tess.addVertexWithUV(1.0D, (double)f9, (double)(0.0F - thickness), (double)maxu, (double)f8);
+            tess.addVertexWithUV(0.0D, (double)f9, (double)(0.0F - thickness), (double)minu, (double)f8);
         }
 
         tess.draw();
@@ -1624,8 +1649,8 @@ public class DiscreteRenderHelper
             f8 = maxv + (minv - maxv) * f7 - f6;
             tess.addVertexWithUV(1.0D, (double)f7, 0.0D, (double)maxu, (double)f8);
             tess.addVertexWithUV(0.0D, (double)f7, 0.0D, (double)minu, (double)f8);
-            tess.addVertexWithUV(0.0D, (double)f7, (double)(0.0F - par7), (double)minu, (double)f8);
-            tess.addVertexWithUV(1.0D, (double)f7, (double)(0.0F - par7), (double)maxu, (double)f8);
+            tess.addVertexWithUV(0.0D, (double)f7, (double)(0.0F - thickness), (double)minu, (double)f8);
+            tess.addVertexWithUV(1.0D, (double)f7, (double)(0.0F - thickness), (double)maxu, (double)f8);
         }
 
         tess.draw();
@@ -1823,6 +1848,30 @@ public class DiscreteRenderHelper
     	ps.z2 = ps.z2 + shift;
     	
     	return ps;
+    }
+    
+    //This is just a wrapper method.
+    //All tessellator calls, translations, rotations and scale are up to you to implement!
+    public static void renderItemFlatInWorld(ItemStack istack)
+    {
+    	renderItem.renderItemIntoGUI(istack.getItem().getFontRenderer(istack), textureManager, istack, 0, 0);
+    }
+    
+    //This is just a wrapper method.
+    //All tessellator calls, translations, rotations and scale are up to you to implement!
+    public static void renderTextInWorld(String text, int xoffset, int yoffset, int colour, boolean dropShadow)
+    {
+    	fontRenderer.drawString(text, xoffset, yoffset, colour, dropShadow);
+    }
+    
+    //This is just a wrapper method.
+    //All tessellator calls, translations, rotations and scale are up to you to implement!
+    public static void renderTextInWorldCentered(String text, int xoffset, int yoffset, int colour, boolean dropShadow, float parentWidth)
+    {
+    	int length = -(fontRenderer.getStringWidth(text) / 2);
+    	length = length + (int)((parentWidth / 2.0F));
+    	
+    	fontRenderer.drawString(text, length + xoffset, yoffset, colour, dropShadow);
     }
 
 }

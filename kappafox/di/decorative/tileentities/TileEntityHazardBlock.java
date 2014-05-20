@@ -100,7 +100,6 @@ public class TileEntityHazardBlock extends TileEntity implements IWrenchable
 		int meta = this.worldObj.getBlockMetadata(this.xCoord, this.yCoord, this.zCoord);
 		if(meta == 0 || meta == 2)
 		{
-			System.out.println("2");
 			this.setFace(1 - this.getFacing());
 		}
 		

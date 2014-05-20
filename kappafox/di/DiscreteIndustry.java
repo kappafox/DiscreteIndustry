@@ -1,12 +1,15 @@
 package kappafox.di;
 
+
 import kappafox.di.base.lib.DiscreteID;
 import kappafox.di.base.lib.IC2Data;
 import kappafox.di.base.lib.Library;
+import kappafox.di.base.network.PacketDiscreteSync;
 import kappafox.di.base.tileentities.TileEntitySingleVariable;
 import kappafox.di.decorative.DiscreteDecorative;
 import kappafox.di.electrics.DiscreteElectrics;
 import kappafox.di.transport.DiscreteTransport;
+import net.minecraft.network.packet.Packet;
 import net.minecraftforge.common.Configuration;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -68,8 +71,9 @@ public class DiscreteIndustry
 		
 		
 		Configuration config = new Configuration(event_.getSuggestedConfigurationFile());	//grab the config file or create it
-		config.load();		
-		
+		config.load();
+	
+		Packet.addIdClassMapping(88, true, true, PacketDiscreteSync.class);
 		
 
 		electrics.preInitialisation(event_, config);

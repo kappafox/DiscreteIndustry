@@ -163,12 +163,6 @@ public class TileEntityDiscreteDuct extends TileEntity
 				connections[i] = false;
 			}
 		}
-		
-		for(int i = 0; i < connections.length; i++)
-		{
-			System.out.println(i + ":PACKET:" + connections[i]);
-		}
-		
 		//sometimes this happens before we have a valid world object
 		if(worldObj != null)
 		{

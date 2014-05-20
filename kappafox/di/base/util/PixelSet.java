@@ -43,6 +43,7 @@ public class PixelSet
 	public static final double dsixteen = 16.0 * done;
 	
 	public static final float half = one / 2.0F;
+	public static final float quarter = one / 4.0F;
 	
 	private PixelSet( )
 	{

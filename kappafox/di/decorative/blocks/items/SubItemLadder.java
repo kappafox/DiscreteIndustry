@@ -19,9 +19,7 @@ public class SubItemLadder implements SubItem
 		
 		tile.setAllTexturesFromSource(blockID, type);
 		tile.setOriginalID(blockID);
-		
-		System.out.println(tile.getDirection());
-		
+
 		return tile;
 	}
 

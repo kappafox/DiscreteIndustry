@@ -77,7 +77,8 @@ public class TileEntityStorageRackRenderer extends TileEntitySpecialRenderer
 	    GL11.glScalef(scale, scale, scale);		//shrinks the block down to the correct size
 	    GL11.glScalef(1.0F, 1.0F, 0.01F);	//flattens the object by scaling Z to nothing
 
-		DiscreteRenderHelper.renderItemFlatInWorld(content);		
+		DiscreteRenderHelper.renderItemFlatInWorld(content);
+		GL11.glEnable(GL11.GL_LIGHTING);
 	}
 	
 	private void drawText(ForgeDirection direction, float scale, ItemStack content, int number)
@@ -129,6 +130,7 @@ public class TileEntityStorageRackRenderer extends TileEntitySpecialRenderer
 	    GL11.glScalef(scale, scale, scale);		//shrinks the text down to the correct size
 
 	    DiscreteRenderHelper.renderTextInWorld(count, 0, 0, 16777215, false);
+		GL11.glEnable(GL11.GL_LIGHTING);
 	}
 	
 	private void renderStorageRackQuad(TileEntityStorageRack tile, double x, double y, double z, float animationMultiplier)

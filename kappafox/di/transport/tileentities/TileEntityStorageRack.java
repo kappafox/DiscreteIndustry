@@ -24,7 +24,7 @@ public class TileEntityStorageRack extends TileEntityDiscreteBlock implements IS
 	
 	private int[] amounts;
 	
-	private long clicked = 0;
+	private long clicked[];
 	private boolean canUpdate = false;
 	
 	private static final int DOUBLE_CLICK_DELAY = 1000;	
@@ -99,6 +99,7 @@ public class TileEntityStorageRack extends TileEntityDiscreteBlock implements IS
 		amounts = new int[slots];
 		insertionSlots = new ItemStack[slots];
 		extractionSlots = new ItemStack[slots];
+		clicked = new long[slots];
 	}
 	
 	@Override
@@ -221,8 +222,6 @@ public class TileEntityStorageRack extends TileEntityDiscreteBlock implements IS
 			extractionSlots[slot].stackSize += reserve;
 			amounts[slot] -= reserve;
 		}
-		
-		//this.worldObj.markBlockForUpdate(this.xCoord, this.yCoord, this.zCoord);
 		return true;
 	}
 	
@@ -235,33 +234,35 @@ public class TileEntityStorageRack extends TileEntityDiscreteBlock implements IS
 		return max - count;
 	}
 	
-	public boolean isWaitingForDoubleClick( )
+	public boolean isWaitingForDoubleClick(int slot)
 	{
-		if(clicked != 0)
+		if(slot < storageUnits.length)
 		{
-			return true;
+			if(clicked[slot] != 0)
+			{
+				return true;
+			}
 		}
-		
 		return false;
 	}
 
-	public boolean shouldTakeAllFromInventory( )
+	public boolean shouldTakeAllFromInventory(int slot)
 	{
-		if(clicked == 0)
+		if(clicked[slot] == 0)
 		{
-			clicked = System.currentTimeMillis();
+			clicked[slot] = System.currentTimeMillis();
 		}
 		else
 		{
 			long currentTime = System.currentTimeMillis();
 			
-			if(currentTime - clicked < DOUBLE_CLICK_DELAY)
+			if(currentTime - clicked[slot] < DOUBLE_CLICK_DELAY)
 			{
-				clicked = 0;
+				clicked[slot] = 0;
 				return true;
 			}
 			
-			clicked = 0;
+			clicked[slot] = 0;
 		}
 		
 		return false;

@@ -105,11 +105,11 @@ public class SubBlockStorageRack extends SubBlock
 				
 				int box = this.getSlotIndex(t.getSize(), t.getDirection(), hitx, hity, hitz);
 				
-				if(t.isWaitingForDoubleClick())
+				if(t.isWaitingForDoubleClick(box))
 				{
-					boolean all = t.shouldTakeAllFromInventory();
+					boolean all = t.shouldTakeAllFromInventory(box);
 					
-					if(all == true)
+					if(all == true && t.hasContainer(box) && t.isContainerEmpty(box) == false)
 					{
 						for(int i = 0; i < player.inventory.getSizeInventory(); i++)
 						{
@@ -156,11 +156,12 @@ public class SubBlockStorageRack extends SubBlock
 					//try insert
 					if(inhand != null)
 					{
-						//t.dumpDebugStats(0);
 						boolean result = this.tryAddStackToContainer(t, player, x, y, z, box, inhand);
-						//world.markBlockForUpdate(x, y, z);
-						//t.dumpDebugStats(0);
 						return result;
+					}
+					else
+					{
+						t.shouldTakeAllFromInventory(box);
 					}
 					
 				}
@@ -417,16 +418,12 @@ public class SubBlockStorageRack extends SubBlock
 	
 	private boolean tryAddStackToContainer(TileEntityStorageRack tile, EntityPlayer player, int x, int y, int z, int slot, ItemStack inhand)
 	{
-		//if(SideHelper.onServer())
-		//{
-			if(tile.hasContainer(slot) == true && tile.willContainerAccept(slot, inhand))
-			{
-				inhand.stackSize = tile.addItemToContainer(slot, inhand, true).stackSize;
-				tile.shouldTakeAllFromInventory();
-				return true;
-			}
-		//}
-		
+		if(tile.hasContainer(slot) == true && tile.willContainerAccept(slot, inhand))
+		{
+			inhand.stackSize = tile.addItemToContainer(slot, inhand, true).stackSize;
+			tile.shouldTakeAllFromInventory(slot);
+			return true;
+		}
 		return true;
 	}
 	

@@ -27,14 +27,13 @@ public class TileEntityStorageRack extends TileEntityDiscreteBlock implements IS
 	private long clicked = 0;
 	private boolean canUpdate = false;
 	
-	private static final int DOUBLE_CLICK_DELAY = 1000;
-	
+	private static final int DOUBLE_CLICK_DELAY = 1000;	
 	private static short MAX_STACK_SIZE = 64;
 	
 	
-	//private static final int[] EXTRACTION_SLOT_NUMBERS = {4,5,6,7};
-	//private static final int[] INSERTION_SLOT_NUMBERS = {0,1,2,3};
-	//private static final int[] ALL_SLOTS = {0,1,2,3,4,5,6,7};
+	private boolean unifyContents = true;
+	private boolean sticky = false;
+	private boolean leaveLast = true;
 	
 	private ItemStack lastItemAdded = null;
 	
@@ -906,6 +905,10 @@ public class TileEntityStorageRack extends TileEntityDiscreteBlock implements IS
             	extractionSlots[b0] = ItemStack.loadItemStackFromNBT(nbttagcompound1);
             }
         }
+        
+        unifyContents = tag.getBoolean("unifyContents");
+        sticky = tag.getBoolean("sticky");
+        leaveLast = tag.getBoolean("leaveLast");
     }
 
     @Override
@@ -954,6 +957,9 @@ public class TileEntityStorageRack extends TileEntityDiscreteBlock implements IS
         tag.setTag("extractionSlots", eslots);
         tag.setTag("accessSlots", nbttaglist2);
         tag.setTag("Containers", nbttaglist);
+        tag.setBoolean("unifyContents", unifyContents);
+        tag.setBoolean("sticky", sticky);
+        tag.setBoolean("leaveLast", leaveLast);
         tag.setInteger("slots", storageUnits.length);
         tag.setIntArray("amounts", amounts);
     }

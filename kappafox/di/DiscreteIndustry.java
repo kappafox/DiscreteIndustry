@@ -47,6 +47,7 @@ public class DiscreteIndustry
 	
 	
 	public static Class<?> GTWrench = null;
+	public static Class<?> BCWrench = null;
 	
 
 	
@@ -120,6 +121,15 @@ public class DiscreteIndustry
 		try
 		{
 			GTWrench = Class.forName("gregtechmod.api.items.GT_Wrench_Item");
+		}
+		catch(Exception e_)
+		{
+			
+		}
+		
+		try
+		{
+			BCWrench = Class.forName("buildcraft.api.tools.IToolWrench");
 		}
 		catch(Exception e_)
 		{

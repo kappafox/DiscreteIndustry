@@ -130,7 +130,6 @@ public class SubBlockStorageRack extends SubBlock
 						{
 		                    ((EntityPlayerMP)player).sendContainerToPlayer(player.inventoryContainer);
 						}
-						//world.markBlockForUpdate(x, y, z);
 						return true;
 					}
 				}

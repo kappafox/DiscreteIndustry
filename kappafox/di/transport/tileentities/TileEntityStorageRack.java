@@ -401,13 +401,20 @@ public class TileEntityStorageRack extends TileEntityDiscreteBlock implements IS
 					int total = amounts[slot] + this.getInsertionSlotCount(slot) + this.getExtractionSlotCount(slot);
 					if(con.hasTagCompound() == true)
 					{
-						con.getTagCompound().setInteger("ContainerAmount", total);
+						if(this.getContainerContentCount(slot) > 0)
+						{
+							con.getTagCompound().setInteger("ContainerAmount", total);
+						}
+						else
+						{
+							con.setTagCompound(null);
+						}
 					}
+					
 					storageUnits[slot] = null;
 					insertionSlots[slot] = null;
 					extractionSlots[slot] = null;
 					amounts[slot] = 0;
-					
 
 					this.updateTileEntity();
 					return con;
@@ -453,8 +460,16 @@ public class TileEntityStorageRack extends TileEntityDiscreteBlock implements IS
 			int stackSize = 64;
 			if(this.hasContainer(slot) && this.isContainerEmpty(slot) == false)
 			{
-				ItemStack content = ItemStack.loadItemStackFromNBT(storageUnits[slot].getTagCompound());
-				stackSize = content.getMaxStackSize();
+				if(this.getContainerContentCount(slot) > 0)
+				{
+					ItemStack content = ItemStack.loadItemStackFromNBT(storageUnits[slot].getTagCompound());
+					stackSize = content.getMaxStackSize();
+				}
+				else
+				{
+					this.emptyContainer(slot);
+					return null;
+				}
 			}
 			else
 			{
@@ -565,10 +580,19 @@ public class TileEntityStorageRack extends TileEntityDiscreteBlock implements IS
 	{
 		if(slot < storageUnits.length)
 		{
-			storageUnits[slot].setTagCompound(null);
-			extractionSlots[slot] = null;
-			insertionSlots[slot] = null;
-			amounts[slot] = 0;
+			if(sticky == false)
+			{
+				storageUnits[slot].setTagCompound(null);
+				extractionSlots[slot] = null;
+				insertionSlots[slot] = null;
+				amounts[slot] = 0;
+			}
+			else
+			{
+				amounts[slot] = 0;
+				insertionSlots[slot].stackSize = 0;
+				extractionSlots[slot].stackSize = 0;
+			}
 			
 			this.updateTileEntity();
 		}			
@@ -910,6 +934,8 @@ public class TileEntityStorageRack extends TileEntityDiscreteBlock implements IS
         unifyContents = tag.getBoolean("unifyContents");
         sticky = tag.getBoolean("sticky");
         leaveLast = tag.getBoolean("leaveLast");
+        
+        clicked = new long[size];
     }
 
     @Override
@@ -1208,6 +1234,17 @@ public class TileEntityStorageRack extends TileEntityDiscreteBlock implements IS
 		*/
 		
 		return true;
+	}
+
+	public boolean getSticky()
+	{
+		return sticky;
+	}
+
+	public void toggleSticky( )
+	{
+		sticky = (!sticky);
+		this.updateTileEntity();
 	}
 
 }

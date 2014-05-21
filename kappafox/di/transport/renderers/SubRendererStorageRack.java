@@ -76,6 +76,11 @@ public class SubRendererStorageRack extends SubBlockRenderingHandler
 	private static final PointSet PART_STORAGERACK_QUAD_BOX_BOTTOMRIGHT_FRONT = new PointSet(px.eight + px.half, px.one, px.fourteen, px.fifteen, px.eight + px.half, px.fourteen);
 	private static final PointSet PART_STORAGERACK_QUAD_BOX_BOTTOMRIGHT_BACK = new PointSet(px.eight + px.half, px.one, px.one, px.fifteen, px.eight + px.half, px.one);
 	
+	private static final PointSet PART_STORAGERACK_STICKY_CENTER = new PointSet(px.seven + px.half, px.seven + px.half, px.fifteen, px.eight + px.half, px.eight + px.half, px.fifteen + 0.001F);
+	private static final PointSet PART_STORAGERACK_STICKY_TOPLEFT = new PointSet(px.one, px.fourteen, px.fourteen, px.two, px.fifteen, px.fourteen + 0.001F);
+	private static final PointSet PART_STORAGERACK_STICKY_TOPRIGHT = new PointSet(px.fourteen, px.fourteen, px.fourteen, px.fifteen, px.fifteen, px.fourteen + 0.001F);
+	private static final PointSet PART_STORAGERACK_STICKY_BOTTOMLEFT = new PointSet(px.one, px.one, px.fourteen, px.two, px.two, px.fourteen + 0.001F);
+	private static final PointSet PART_STORAGERACK_STICKY_BOTTOMRIGHT = new PointSet(px.fourteen, px.one, px.fourteen, px.fifteen, px.two, px.fourteen + 0.001F);
 	@Override
 	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelID, RenderBlocks renderer)
 	{
@@ -277,6 +282,29 @@ public class SubRendererStorageRack extends SubBlockRenderingHandler
 		
 		renderer.clearOverrideBlockTexture();
 		
+		boolean sticky = t.getSticky();
+		
+		if(t.getSize() > 1)
+		{
+			if(sticky)
+			{
+				renderer.setOverrideBlockTexture(b.getSpecialIcon(1, 0));
+				drh.renderDiscreteQuadWithColourMultiplier(world, renderer, block, x, y, z, PART_STORAGERACK_STICKY_CENTER, T);
+				renderer.clearOverrideBlockTexture();
+			}
+		}
+		else
+		{
+			if(sticky)
+			{
+				renderer.setOverrideBlockTexture(b.getSpecialIcon(1, 0));
+				drh.renderDiscreteQuadWithColourMultiplier(world, renderer, block, x, y, z, PART_STORAGERACK_STICKY_TOPLEFT, T);
+				drh.renderDiscreteQuadWithColourMultiplier(world, renderer, block, x, y, z, PART_STORAGERACK_STICKY_TOPRIGHT, T);
+				drh.renderDiscreteQuadWithColourMultiplier(world, renderer, block, x, y, z, PART_STORAGERACK_STICKY_BOTTOMLEFT, T);
+				drh.renderDiscreteQuadWithColourMultiplier(world, renderer, block, x, y, z, PART_STORAGERACK_STICKY_BOTTOMRIGHT, T);
+				renderer.clearOverrideBlockTexture();
+			}
+		}
 	}
 	
 	private boolean renderWorldStorageRackDual(IBlockAccess world, int x, int y, int z, Block block, TileEntitySubtype tile, RenderBlocks renderer, int type)

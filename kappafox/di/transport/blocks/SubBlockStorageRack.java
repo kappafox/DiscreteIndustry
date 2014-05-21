@@ -19,6 +19,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeDirection;
 import kappafox.di.DiscreteIndustry;
 import kappafox.di.base.blocks.SubBlock;
+import kappafox.di.base.compat.ToolHelper;
 import kappafox.di.base.network.PacketCrafter;
 import kappafox.di.base.tileentities.TileEntitySubtype;
 import kappafox.di.base.util.SideHelper;
@@ -34,6 +35,7 @@ public class SubBlockStorageRack extends SubBlock
     private static Icon ICON_STORAGERACK_EDGE;
     private static Icon ICON_STORAGERACK_SIDE;
     private static Icon ICON_STORAGERACK_TOP;
+    private static Icon ICON_STORAGERACK_STICKY;
     
     public SubBlockStorageRack( )
     {
@@ -73,6 +75,7 @@ public class SubBlockStorageRack extends SubBlock
 		ICON_STORAGERACK_EDGE = ireg.registerIcon(DiscreteIndustry.MODID + ":" + "blockStorageRack_Edge");
 		ICON_STORAGERACK_SIDE = ireg.registerIcon(DiscreteIndustry.MODID + ":" + "blockStorageRack_side");
 		ICON_STORAGERACK_TOP = ireg.registerIcon(DiscreteIndustry.MODID + ":" + "blockStorageRack_top");
+		ICON_STORAGERACK_STICKY = ireg.registerIcon(DiscreteIndustry.MODID + ":" + "blockStorageRack_sticky");
 	}
 	
 	@Override
@@ -83,6 +86,11 @@ public class SubBlockStorageRack extends SubBlock
 			case 0:
 			{
 				return ICON_STORAGERACK_EDGE;
+			}
+			
+			case 1:
+			{
+				return ICON_STORAGERACK_STICKY;
 			}
 		}
 		
@@ -103,34 +111,46 @@ public class SubBlockStorageRack extends SubBlock
 				TileEntityStorageRack t = (TileEntityStorageRack)tile;
 				ItemStack inhand = player.getCurrentEquippedItem();
 				
+				if(ToolHelper.isWrench(inhand))
+				{
+					if(player.isSneaking())
+					{
+						t.toggleSticky();
+					}
+					return false;
+				}
+				
 				int box = this.getSlotIndex(t.getSize(), t.getDirection(), hitx, hity, hitz);
 				
-				if(t.isWaitingForDoubleClick(box))
+				if(player.isSneaking() == false)
 				{
-					boolean all = t.shouldTakeAllFromInventory(box);
-					
-					if(all == true && t.hasContainer(box) && t.isContainerEmpty(box) == false)
+					if(t.isWaitingForDoubleClick(box))
 					{
-						for(int i = 0; i < player.inventory.getSizeInventory(); i++)
+						boolean all = t.shouldTakeAllFromInventory(box);
+						
+						if(all == true && t.hasContainer(box) && t.isContainerEmpty(box) == false)
 						{
-							if(t.willContainerAccept(box, player.inventory.getStackInSlot(i)))
+							for(int i = 0; i < player.inventory.getSizeInventory(); i++)
 							{
-								ItemStack result = t.addItemToContainer(box, player.inventory.getStackInSlot(i), true);
-								if(result.stackSize < 1)
+								if(t.willContainerAccept(box, player.inventory.getStackInSlot(i)))
 								{
-									result = null;
+									ItemStack result = t.addItemToContainer(box, player.inventory.getStackInSlot(i), true);
+									if(result.stackSize < 1)
+									{
+										result = null;
+									}
+									player.inventory.setInventorySlotContents(i, result);
+									
 								}
-								player.inventory.setInventorySlotContents(i, result);
-								
 							}
+							
+							
+							if(player instanceof EntityPlayerMP)
+							{
+			                    ((EntityPlayerMP)player).sendContainerToPlayer(player.inventoryContainer);
+							}
+							return true;
 						}
-						
-						
-						if(player instanceof EntityPlayerMP)
-						{
-		                    ((EntityPlayerMP)player).sendContainerToPlayer(player.inventoryContainer);
-						}
-						return true;
 					}
 				}
 	
@@ -355,8 +375,8 @@ public class SubBlockStorageRack extends SubBlock
 				if(t.hasContainer(subbox))
 				{
 					//does it have items?
-					if(t.getContainerContentCount(subbox) > 0)
-					{
+					//if(t.getContainerContentCount(subbox) > 0)
+					//{
 						boolean fullStack = true;
 						if(player.isSneaking())
 						{
@@ -377,7 +397,7 @@ public class SubBlockStorageRack extends SubBlock
 								world.playSoundAtEntity(player, "random.pop", 0.2F, ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
 							}
 						}
-					}
+					//}
 				}
 			}
 			world.markBlockForUpdate(x, y, z);

@@ -314,18 +314,21 @@ public class ItemDiscreteTransportBlock extends ItemBlock
     		case 100:
     		{
     			tooltip.add("Accepts 1 Storage Unit");
+    			tooltip.add("Obscurator Compatible");
     			break;
     		}
     		
     		case 101:
     		{
     			tooltip.add("Accepts 2 Storage Units");
+    			tooltip.add("Obscurator Compatible");
     			break;
     		}
     		
     		case 102:
     		{
     			tooltip.add("Accepts 4 Storage Units");
+    			tooltip.add("Obscurator Compatible");
     			break;
     		}
     	}

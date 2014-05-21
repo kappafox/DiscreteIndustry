@@ -83,6 +83,16 @@ public class TileEntityStorageRack extends TileEntityDiscreteBlock implements IS
 		return 0;
 	}
 	
+	public int getMax(int slot)
+	{
+		if(this.hasContainer(slot))
+		{
+			return getMaxCapacity(storageUnits[slot].getItemDamage());
+		}
+		
+		return 0;
+	}
+	
 	public TileEntityStorageRack(int slots)
 	{
 		super();

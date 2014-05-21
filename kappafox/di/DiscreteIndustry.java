@@ -15,6 +15,7 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
@@ -101,6 +102,7 @@ public class DiscreteIndustry
 		//register tile entities
 		GameRegistry.registerTileEntity(TileEntitySingleVariable.class, "SVTE");
 		
+		FMLInterModComms.sendMessage("Waila", "register", "kappafox.di.base.compat.DiscreteWailaProvider.callbackRegister");
 		
 	}
 	

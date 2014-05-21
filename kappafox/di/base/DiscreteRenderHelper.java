@@ -1854,7 +1854,7 @@ public class DiscreteRenderHelper
     //All tessellator calls, translations, rotations and scale are up to you to implement!
     public static void renderItemFlatInWorld(ItemStack istack)
     {
-    	renderItem.renderItemIntoGUI(istack.getItem().getFontRenderer(istack), textureManager, istack, 0, 0);
+    	renderItem.renderItemAndEffectIntoGUI(istack.getItem().getFontRenderer(istack), textureManager, istack, 0, 0);
     }
     
     //This is just a wrapper method.

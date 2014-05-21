@@ -303,10 +303,18 @@ public class TileEntityStorageRack extends TileEntityDiscreteBlock implements IS
 			{
 				ItemStack t = ItemStack.loadItemStackFromNBT(storageUnits[slot].getTagCompound());
 				
-				ItemStack t2 = ItemStack.copyItemStack(t);
-				t2.stackSize = 1;
-				
-				return t2;
+				if(t != null)
+				{
+					ItemStack t2 = ItemStack.copyItemStack(t);
+					t2.stackSize = 1;
+					
+					return t2;
+				}
+				else
+				{
+					//busted itemstack? clear it?
+					this.emptyContainer(slot);
+				}
 			}
 		}
 		
@@ -360,6 +368,7 @@ public class TileEntityStorageRack extends TileEntityDiscreteBlock implements IS
 				}
 				
 				//this.onInventoryChanged();
+				this.updateExtraSlots(slot);
 				this.updateTileEntity();
 				return true;
 			}
@@ -550,6 +559,8 @@ public class TileEntityStorageRack extends TileEntityDiscreteBlock implements IS
 			extractionSlots[slot] = null;
 			insertionSlots[slot] = null;
 			amounts[slot] = 0;
+			
+			this.updateTileEntity();
 		}			
 	}
 	
@@ -1018,7 +1029,8 @@ public class TileEntityStorageRack extends TileEntityDiscreteBlock implements IS
 						insertionSlots[slot] = istack;
 					}
 					
-					this.updateInsertionSlot(slot);
+					this.updateExtraSlots(slot);
+					this.updateTileEntity();
 				}
 			}
 			else
@@ -1030,7 +1042,8 @@ public class TileEntityStorageRack extends TileEntityDiscreteBlock implements IS
 						extractionSlots[slot - storageUnits.length] = istack;
 					}
 					
-					this.updateExtractionSlot(slot);
+					this.updateExtraSlots(slot);
+					this.updateTileEntity();
 				}
 			}
 		}

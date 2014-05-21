@@ -229,81 +229,112 @@ public class SubBlockStorageRack extends SubBlock
 	   //super.breakBlock(world, x, y, z, id, meta);
     }
 	
-	private void spawnItemIntoWorld(World world, int x, int y, int z, EntityPlayer player, ItemStack istack)
+	
+	private int hitVectorsToSide(float hitx, float hity, float hitz)
 	{
-        int side = Minecraft.getMinecraft().objectMouseOver.sideHit;
-        
-        float fx = x;
-        float fy = y;
-        float fz = z;
-        
-        float velx = 0;
-        float vely = 0;
-        float velz = 0;
-        
-		fy += 0.5F;	//middle of block in the y axis
+		int side = 0;
 		
-        float offsetMinor = 0.9F;
-        float offsetMajor = 0.9F;
-        
-        switch(side)
-        {
-        	case 0:
-        	{
-        		fy -= 1;
-        		break;
-        	}
-        	
-        	case 1:
-        	{
-        		fy += 1;
-        		break;
-        	}
-        	
-        	//North
-        	case 2:
-        	{
-        		fx += 0.5F;
-        		break;
-        	}
-        	
-        	//South
-        	case 3:
-        	{
-        		fz += 1.2F;
-        		fx += 0.5F;
-        		velz = 0.1F;
-        		break;
-        	}
-        	
-        	case 4:
-        	{
-        		//fx = -0.2F;
-        		fz += 0.5F;
-        		break;
-        	}
-        	
-        	case 5:
-        	{
-        		fz += 0.5F;
-        		fx += 1.2F;
-        		velx = 0.1F;
-        		break;
-        	}
-        }
-        
-        
-        EntityItem ent = new EntityItem(world, (double)((float)fx), (double)((float)fy), (double)((float)fz), istack);
-
-        if (istack.hasTagCompound())
-        {
-            ent.getEntityItem().setTagCompound((NBTTagCompound)istack.getTagCompound().copy());
-        }
-
-        
-        ent.delayBeforeCanPickup = 0;
-        ent.setVelocity(velx, vely, velz);
-        world.spawnEntityInWorld(ent);
+		if(hitz == 0.0F)
+		{
+			side = 2;
+		}
+		
+		if(hitz == 1.0F)
+		{
+			side = 3;
+		}
+		
+		if(hitx == 0.0F)
+		{
+			side = 4;
+		}
+		
+		if(hitx == 1.0F)
+		{
+			side = 5;
+		}
+		
+		return side;
+	}
+	private void spawnItemIntoWorld(World world, int x, int y, int z, EntityPlayer player, ItemStack istack, int side)
+	{
+		if(SideHelper.onServer())
+		{
+	        float fx = x;
+	        float fy = y;
+	        float fz = z;
+	        
+	        float velx = 0;
+	        float vely = 0;
+	        float velz = 0;
+	        
+			fy += 0.5F;	//middle of block in the y axis
+			
+	        float offsetMinor = 0.9F;
+	        float offsetMajor = 0.9F;
+	        
+	        switch(side)
+	        {
+	        	case 0:
+	        	{
+	        		fy -= 1;
+	        		break;
+	        	}
+	        	
+	        	case 1:
+	        	{
+	        		fy += 1;
+	        		break;
+	        	}
+	        	
+	        	//North
+	        	case 2:
+	        	{
+	        		fx += 0.5F;
+	        		break;
+	        	}
+	        	
+	        	//South
+	        	case 3:
+	        	{
+	        		fz += 1.2F;
+	        		fx += 0.5F;
+	        		velz = 0.1F;
+	        		break;
+	        	}
+	        	
+	        	case 4:
+	        	{
+	        		//fx = -0.2F;
+	        		fz += 0.5F;
+	        		break;
+	        	}
+	        	
+	        	case 5:
+	        	{
+	        		fz += 0.5F;
+	        		fx += 1.2F;
+	        		velx = 0.1F;
+	        		break;
+	        	}
+	        }
+	        
+	        
+	        EntityItem ent = new EntityItem(world, (double)((float)fx), (double)((float)fy), (double)((float)fz), istack);
+	
+	        if (istack.hasTagCompound())
+	        {
+	            ent.getEntityItem().setTagCompound((NBTTagCompound)istack.getTagCompound().copy());
+	        }
+	
+	        
+	        ent.delayBeforeCanPickup = 0;
+	        //ent.setVelocity(velx, vely, velz);
+	        ent.motionX = velx;
+	        ent.motionY = vely;
+	        ent.motionZ = velz;
+	        world.spawnEntityInWorld(ent);
+		}
 		
 	}
 
@@ -339,7 +370,7 @@ public class SubBlockStorageRack extends SubBlock
 							
 							if(success == false)
 							{
-								this.spawnItemIntoWorld(world, x, y, z, player, get);
+								this.spawnItemIntoWorld(world, x, y, z, player, get, this.hitVectorsToSide(hitx, hity, hitz));
 							}
 							else
 							{
@@ -416,7 +447,7 @@ public class SubBlockStorageRack extends SubBlock
 			//inventory full or not possible to add
 			if(success == false && con != null)
 			{
-				this.spawnItemIntoWorld(world, x, y, z, player, con);
+				this.spawnItemIntoWorld(world, x, y, z, player, con, tile.getDirection());
 			}
 			else
 			{

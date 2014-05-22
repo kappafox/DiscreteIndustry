@@ -3,6 +3,7 @@ package kappafox.di.decorative.blocks;
 import ic2.api.item.Items;
 import kappafox.di.DiscreteIndustry;
 import kappafox.di.base.blocks.SubBlock;
+import kappafox.di.base.compat.ToolHelper;
 import kappafox.di.decorative.tileentities.TileEntityFixtureBlock;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.entity.player.EntityPlayer;
@@ -59,17 +60,8 @@ public class SubBlockStrut extends SubBlock
 			
 			if(FMLCommonHandler.instance().getEffectiveSide().isServer() == true)
 			{
-				
-				boolean isGTWrench = false;
-				if(DiscreteIndustry.GTWrench != null)
-				{
-					if(inhand.getItem().getClass().getName().equalsIgnoreCase(DiscreteIndustry.GTWrench.getName()));
-					{
-						isGTWrench = true;
-					}
-				}
-			
-				if(isGTWrench || inhand.getDisplayName().equalsIgnoreCase(wrench.getDisplayName()) || inhand.getDisplayName().equalsIgnoreCase(ewrench.getDisplayName()))
+
+				if(ToolHelper.isWrench(inhand))
 				{			
 					
 					if(side_ != 0 && side_ != 1)

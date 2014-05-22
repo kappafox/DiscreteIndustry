@@ -531,6 +531,34 @@ public class TileEntityStorageRack extends TileEntityDiscreteBlock implements IS
 							result.stackSize = amounts[slot];
 							
 							amounts[slot] = 0;
+							
+							if(result.stackSize < result.getMaxStackSize())
+							{
+								if(this.getExtractionSlotCount(slot) > 0)
+								{
+									int spaceLeft = result.getMaxStackSize() - result.stackSize;
+									
+									if(this.getExtractionSlotCount(slot) > spaceLeft)
+									{
+										extractionSlots[slot].stackSize -= spaceLeft;
+										result.stackSize += spaceLeft;
+									}
+									else
+									{
+										if(this.getExtractionSlotCount(slot) <= spaceLeft)
+										{
+											extractionSlots[slot].stackSize -= spaceLeft;
+											result.stackSize += spaceLeft;
+											
+											if(this.getContainerContentCount(slot) < 1)
+											{
+												this.emptyContainer(slot);
+											}
+										}
+									}
+								}
+							}
+							
 							this.updateExtraSlots(slot);
 							this.updateTileEntity();
 							return result;

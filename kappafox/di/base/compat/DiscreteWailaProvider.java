@@ -2,10 +2,16 @@ package kappafox.di.base.compat;
 
 import java.util.List;
 
+import kappafox.di.base.TranslationHelper;
+import kappafox.di.base.util.SideHelper;
 import kappafox.di.transport.DiscreteTransport;
 import kappafox.di.transport.blocks.BlockDiscreteTransport;
 import kappafox.di.transport.tileentities.TileEntityStorageRack;
+import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.Vec3;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
@@ -29,37 +35,125 @@ public class DiscreteWailaProvider implements IWailaDataProvider
 	@Override
 	public List<String> getWailaBody(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config)
 	{
-		if(accessor.getTileEntity() instanceof TileEntityStorageRack)
+		if(SideHelper.onClient())
 		{
-			TileEntityStorageRack tile = (TileEntityStorageRack)accessor.getTileEntity();
-			
-			for(int i = 0; i < tile.getSize(); i++)
+			if(accessor.getTileEntity() instanceof TileEntityStorageRack)
 			{
-				String result = "";
+				TileEntityStorageRack tile = (TileEntityStorageRack)accessor.getTileEntity();
 				
-				ItemStack content = tile.getContainerContent(i);
 				
-				if(content != null)
+				switch(tile.getSize())
 				{
-					result += content.getDisplayName();
+					case 1:
+					{
+						int slot = 0;
+						if(tile.hasContainer(slot))
+						{
+							
+							if(tile.isContainerEmpty(slot) == false)
+							{
+								currenttip.add("" + tile.getContainerContent(slot).getDisplayName());
+								currenttip.add("" + tile.getContainerContentCount(slot) + "/" + tile.getMax(slot));
+							}
+							else
+							{
+								currenttip.add("Empty");
+							}
+						}
+						else
+						{
+							currenttip.add("Empty");
+						}
+						break;
+					}
+					
+					case 2:
+					{
+						
+						MovingObjectPosition mop = accessor.getPosition();
+						float hity = (float)mop.hitVec.yCoord - mop.blockY;
+						
+						int half = 0;
+						
+						if(hity < 0.5)
+						{
+							half = 1;
+						}
+
+						if(tile.hasContainer(half))
+						{
+							
+							if(tile.isContainerEmpty(half) == false)
+							{
+								currenttip.add("Slot " + half + " : "  + tile.getContainerContent(half).getDisplayName());
+								currenttip.add("" + tile.getContainerContentCount(half) + "/" + tile.getMax(half));
+							}
+							else
+							{
+								currenttip.add("Empty");
+							}
+						}
+						else
+						{
+							currenttip.add("Empty");
+						}
+						break;
+					}
+					
+					case 4:
+					{
+						
+						MovingObjectPosition mop = accessor.getPosition();
+						
+						float hitx = (float)mop.hitVec.xCoord - mop.blockX;
+						float hity = (float)mop.hitVec.yCoord - mop.blockY;
+						float hitz = (float)mop.hitVec.zCoord - mop.blockZ;
+						//int quadrant = TranslationHelper.getHitQuadrant(mop.sideHit, hitx, hity, hitz);
+						
+						float[] t = TranslationHelper.normaliseHitVector(mop.sideHit, hitx, hity, hitz);
+						int quadrant = TranslationHelper.getHitQuadrant(3, t[0], t[1], t[2]);
+						
+						if(tile.hasContainer(quadrant))
+						{
+							
+							if(tile.isContainerEmpty(quadrant) == false)
+							{
+								currenttip.add("Slot " + quadrant + " : "  + (EnumChatFormatting.GOLD + tile.getContainerContent(quadrant).getDisplayName()));
+								currenttip.add("" + tile.getContainerContentCount(quadrant) + "/" + tile.getMax(quadrant));
+							}
+							else
+							{
+								currenttip.add("Empty");
+							}
+						}
+						else
+						{
+							currenttip.add("Empty");
+						}
+						break;
+					}
 				}
-				else
-				{
-					result += "Empty";
-				}
-				
-				currenttip.add(result);
-				currenttip.add(" " + tile.getContainerContentCount(i) + "/" + tile.getMax(i) + " Units");
-				
 			}
+			
 		}
-		
 		return currenttip;
 	}
 
 	@Override
 	public List<String> getWailaTail(ItemStack itemStack, List<String> currenttip, IWailaDataAccessor accessor, IWailaConfigHandler config)
 	{
+		if(SideHelper.onClient())
+		{
+			if(accessor.getTileEntity() instanceof TileEntityStorageRack)
+			{
+				TileEntityStorageRack tile = (TileEntityStorageRack)accessor.getTileEntity();
+				
+				if(tile.getSticky())
+				{
+					currenttip.add(EnumChatFormatting.DARK_GREEN + "Sticky Enabled");
+				}
+			}
+		}
 		return currenttip;
 	}
 	
@@ -68,6 +162,7 @@ public class DiscreteWailaProvider implements IWailaDataProvider
 		registrar.addConfig("WailaDemo", "wailademo.showbody", "Show Body");
 		//registrar.registerHeadProvider(new DiscreteWailaProvider(), BlockDiscreteTransport.class);
 		registrar.registerBodyProvider(new DiscreteWailaProvider(), BlockDiscreteTransport.class);
+		registrar.registerTailProvider(new DiscreteWailaProvider(), BlockDiscreteTransport.class);
 	}
 
 }

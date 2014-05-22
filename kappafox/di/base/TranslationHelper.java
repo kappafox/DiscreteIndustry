@@ -2,6 +2,7 @@ package kappafox.di.base;
 
 import org.lwjgl.opengl.GL11;
 
+import net.minecraft.util.Vec3;
 import net.minecraftforge.common.ForgeDirection;
 import kappafox.di.base.util.Point;
 import kappafox.di.base.util.PointSet;
@@ -155,5 +156,75 @@ public class TranslationHelper
 		}
 		
 		return points;
+	}
+	
+	public static float[] normaliseHitVector(int facing, Vec3 vec)
+	{
+		return normaliseHitVector(facing, (float)vec.xCoord, (float)vec.yCoord, (float)vec.zCoord);
+	}
+	
+	public static float[] normaliseHitVector(int facing, float hitx, float hity, float hitz)
+	{
+		float[] normalised = {hitx, hity, hitz};
+		
+		switch(facing)
+		{
+			//South
+			case 2:
+			{
+				normalised[0] = 1 - hitx;
+				normalised[2] = 1;
+				break;
+			}
+			
+			//West
+			case 5:
+			{
+				normalised[0] = 1 - hitz;
+				normalised[2] = 1;
+				break;
+			}
+			
+			//East
+			case 4:
+			{
+				normalised[0] = hitz;
+				normalised[2] = 1;
+				break;
+			}
+			
+			
+		}
+		
+		return normalised;
+	}
+	
+	public static int getHitQuadrant(int facing, Vec3 vec)
+	{
+		return getHitQuadrant(facing, (float)vec.xCoord, (float)vec.yCoord, (float)vec.zCoord);
+	}
+	
+	public static int getHitQuadrant(int facing, float hitx, float hity, float hitz)
+	{
+		float[] normalised = normaliseHitVector(facing, hitx, hity, hitz);
+		
+		if(hitx < 0.5)
+		{
+			if(hity > 0.5)
+			{
+				return 0;
+			}
+			
+			return 2;
+		}
+		else
+		{
+			if(hity > 0.5)
+			{
+				return 1;
+			}
+			
+			return 3;
+		}
 	}
 }

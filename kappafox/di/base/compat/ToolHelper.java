@@ -42,8 +42,8 @@ public class ToolHelper
 
 					if(DiscreteIndustry.BCWrench.isAssignableFrom(i.getClass()))
 					{
-						System.out.println(DiscreteIndustry.BCWrench.getClass());
-						System.out.println(i.getClass());
+						//System.out.println(DiscreteIndustry.BCWrench.getClass());
+						//System.out.println(i.getClass());
 						return true;
 					}
 				}

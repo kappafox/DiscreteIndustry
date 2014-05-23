@@ -24,6 +24,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.Icon;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.client.ForgeHooksClient;
 import net.minecraftforge.common.ForgeDirection;
 
 import org.lwjgl.opengl.GL11;
@@ -33,11 +34,11 @@ public class DiscreteRenderHelper
 	private static Tessellator tessellator = Tessellator.instance;
 	private static TextureManager textureManager = Minecraft.getMinecraft().getTextureManager();
 	
-	private static final TranslationHelper translator = new TranslationHelper();
-	
+	private static final TranslationHelper translator = new TranslationHelper();	
     private static final ResourceLocation RES_ITEM_GLINT = new ResourceLocation("textures/misc/enchanteditemglint.png");
     
     private static final RenderItem renderItem = new RenderItem();
+    private static final RenderBlocks renderer = new RenderBlocks();
     private static final FontRenderer fontRenderer = Minecraft.getMinecraft().fontRenderer;
     
     

@@ -65,15 +65,11 @@ public class TileEntityStorageRackRenderer extends TileEntitySpecialRenderer
 	{
 		GL11.glDisable(GL11.GL_LIGHTING);
 		
-	    GL11.glScalef(1.0F, 1.0F, -1.0F);	//stops the item appearing inside out
-	    
+	    GL11.glScalef(1.0F, 1.0F, -1.0F);	//stops the item appearing inside out	    
 	    GL11.glRotatef(180.0F, 0.0F, 0.0F, 1.0F);	//rotates the item so it's not upside down
 	    
 	    translator.rotateTessellator(ForgeDirection.NORTH, direction, true);
 	    
-
-	    //GL11.glRotatef(180.0F, 0.0F, 1.0F, 0.0F);    
-
 	    GL11.glScalef(scale, scale, scale);		//shrinks the block down to the correct size
 	    GL11.glScalef(1.0F, 1.0F, 0.01F);	//flattens the object by scaling Z to nothing
 

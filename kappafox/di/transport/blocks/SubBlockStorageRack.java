@@ -116,8 +116,8 @@ public class SubBlockStorageRack extends SubBlock
 					if(player.isSneaking())
 					{
 						t.toggleSticky();
+						return false;
 					}
-					return false;
 				}
 				
 				int box = this.getSlotIndex(t.getSize(), t.getDirection(), hitx, hity, hitz);
@@ -168,7 +168,6 @@ public class SubBlockStorageRack extends SubBlock
 
 							boolean result = this.tryInsertContainer(t, player, x, y, z, box, inhand);
 							world.markBlockForUpdate(x, y, z);
-
 							return result;
 						}
 					}
@@ -426,24 +425,19 @@ public class SubBlockStorageRack extends SubBlock
 	
 	private boolean tryInsertContainer(TileEntityStorageRack tile, EntityPlayer player, int x, int y, int z, int slot, ItemStack inhand)
 	{	
-		if(tile.hasContainer(slot) == false)
+		if(tile.addContainer(slot, inhand.copy()) == true)
 		{
-			tile.addContainer(slot, inhand.copy());
 			player.getCurrentEquippedItem().stackSize = player.getCurrentEquippedItem().stackSize - 1;
 			return true;
 		}
 		
-		return true;
+		return false;
 	}
 	
 	private boolean tryAddStackToContainer(TileEntityStorageRack tile, EntityPlayer player, int x, int y, int z, int slot, ItemStack inhand)
 	{
-		if(tile.hasContainer(slot) == true && tile.willContainerAccept(slot, inhand))
-		{
-			inhand.stackSize = tile.addItemToContainer(slot, inhand, true).stackSize;
-			tile.shouldTakeAllFromInventory(slot);
-			return true;
-		}
+		inhand.stackSize = tile.addItemToContainer(slot, inhand, true).stackSize;
+		tile.shouldTakeAllFromInventory(slot);
 		return true;
 	}
 	

@@ -22,21 +22,28 @@ public class ToolHelper
 			if(FMLCommonHandler.instance().getEffectiveSide().isServer() == true)
 			{
 				
-				boolean isGTWrench = false;
+				Item i = item.getItem();
+				
 				if(DiscreteIndustry.GTWrench != null)
 				{
-					if(item.getItem().getClass().getName().equalsIgnoreCase(DiscreteIndustry.GTWrench.getName()));
+					/*
+					if(DiscreteIndustry.GTWrench.isAssignableFrom(i.getClass()));
 					{
+						System.out.println(DiscreteIndustry.GTWrench.getClass());
+						System.out.println(i.getClass());
 						return true;
 					}
+					*/
 				}
+
 				
 				if(DiscreteIndustry.BCWrench != null)
 				{
-					Item i = item.getItem();
+
 					if(DiscreteIndustry.BCWrench.isAssignableFrom(i.getClass()))
 					{
-						//System.out.println("yo!");
+						System.out.println(DiscreteIndustry.BCWrench.getClass());
+						System.out.println(i.getClass());
 						return true;
 					}
 				}

@@ -52,8 +52,8 @@ public class DiscreteWailaProvider implements IWailaDataProvider
 							
 							if(tile.isContainerEmpty(slot) == false)
 							{
-								currenttip.add("" + tile.getContainerContent(slot).getDisplayName());
-								currenttip.add("" + tile.getContainerContentCount(slot) + "/" + tile.getMax(slot));
+								currenttip.add("Slot " + 0 + " : "  + (EnumChatFormatting.GOLD + tile.getContainerContent(0).getDisplayName()));
+								currenttip.add("" + tile.getContainerContentCount(0) + "/" + tile.getMax(0));
 							}
 							else
 							{
@@ -85,7 +85,7 @@ public class DiscreteWailaProvider implements IWailaDataProvider
 							
 							if(tile.isContainerEmpty(half) == false)
 							{
-								currenttip.add("Slot " + half + " : "  + tile.getContainerContent(half).getDisplayName());
+								currenttip.add("Slot " + half + " : "  + (EnumChatFormatting.GOLD + tile.getContainerContent(half).getDisplayName()));
 								currenttip.add("" + tile.getContainerContentCount(half) + "/" + tile.getMax(half));
 							}
 							else

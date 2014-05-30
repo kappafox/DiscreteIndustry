@@ -76,11 +76,11 @@ public class SubRendererStorageRack extends SubBlockRenderingHandler
 	private static final PointSet PART_STORAGERACK_QUAD_BOX_BOTTOMRIGHT_FRONT = new PointSet(px.eight + px.half, px.one, px.fourteen, px.fifteen, px.eight + px.half, px.fourteen);
 	private static final PointSet PART_STORAGERACK_QUAD_BOX_BOTTOMRIGHT_BACK = new PointSet(px.eight + px.half, px.one, px.one, px.fifteen, px.eight + px.half, px.one);
 	
-	private static final PointSet PART_STORAGERACK_STICKY_CENTER = new PointSet(px.seven + px.half, px.seven + px.half, px.fifteen, px.eight + px.half, px.eight + px.half, px.fifteen + 0.001F);
-	private static final PointSet PART_STORAGERACK_STICKY_TOPLEFT = new PointSet(px.one, px.fourteen, px.fourteen, px.two, px.fifteen, px.fourteen + 0.001F);
-	private static final PointSet PART_STORAGERACK_STICKY_TOPRIGHT = new PointSet(px.fourteen, px.fourteen, px.fourteen, px.fifteen, px.fifteen, px.fourteen + 0.001F);
-	private static final PointSet PART_STORAGERACK_STICKY_BOTTOMLEFT = new PointSet(px.one, px.one, px.fourteen, px.two, px.two, px.fourteen + 0.001F);
-	private static final PointSet PART_STORAGERACK_STICKY_BOTTOMRIGHT = new PointSet(px.fourteen, px.one, px.fourteen, px.fifteen, px.two, px.fourteen + 0.001F);
+	private static final PointSet PART_STORAGERACK_STICKY_CENTER = new PointSet(px.seven + px.half, px.seven + px.half, px.fifteen, px.eight + px.half, px.eight + px.half, px.fifteen + 0.005F);
+	private static final PointSet PART_STORAGERACK_STICKY_TOPLEFT = new PointSet(px.one, px.fourteen, px.fourteen, px.two, px.fifteen, px.fourteen + 0.005F);
+	private static final PointSet PART_STORAGERACK_STICKY_TOPRIGHT = new PointSet(px.fourteen, px.fourteen, px.fourteen, px.fifteen, px.fifteen, px.fourteen + 0.005F);
+	private static final PointSet PART_STORAGERACK_STICKY_BOTTOMLEFT = new PointSet(px.one, px.one, px.fourteen, px.two, px.two, px.fourteen + 0.005F);
+	private static final PointSet PART_STORAGERACK_STICKY_BOTTOMRIGHT = new PointSet(px.fourteen, px.one, px.fourteen, px.fifteen, px.two, px.fourteen + 0.005F);
 	@Override
 	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelID, RenderBlocks renderer)
 	{

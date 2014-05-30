@@ -9,7 +9,7 @@ public class SubItemLadder implements SubItem
 {
 
 	@Override
-	public TileEntity getTileEntity(int type, int dir, int var1, int blockID, int blockMeta, int side, float hitx, float hity)
+	public TileEntity getTileEntity(int type, int dir, int var1, int blockID, int blockMeta, int side, float hitx, float hity, float hitz) 
 	{
 		TileEntityDiscreteBlock tile = new TileEntityDiscreteBlock();
 		

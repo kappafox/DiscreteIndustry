@@ -278,151 +278,7 @@ public class ItemDiscreteDecorBlock extends ItemBlock
         	return this.OnItemUseOverloaded(item, player, world, x, y, z, side, hitx, hity, hitz, meta);
         }
         
-		if(meta == 0 || meta == 3)
-		{
-			return super.onItemUse(item, player, world, x, y, z, side, hitx, hity, hitz);
-		}
-		
-		int tMeta = 0;
-		int ox = x;
-		int oy = y;
-		int oz = z;
-		
-        if (id == Block.snow.blockID && (world.getBlockMetadata(x, y, z) & 7) < 1)
-        {
-            side = 1;
-        }
-        else if (id != Block.vine.blockID && id != Block.tallGrass.blockID && id != Block.deadBush.blockID
-                && (Block.blocksList[id] == null || !Block.blocksList[id].isBlockReplaceable(world, x, y, z)))
-        {
-            if (side == 0)
-            {
-                --y;
-                
-                direction = this.directionFromYaw(player);
-                switch(direction)
-                {
-                	case 0:
-                		tMeta = 3;
-                		break;
-                		
-                	case 1:
-                		tMeta = 4;
-                		break;
-                		
-                	case 2:
-                		tMeta = 2;
-                		break;
-                		
-                	case 3:
-                		tMeta = 5;
-                		break;
-                }
-            }
-
-            if (side == 1)
-            {
-                ++y;
-                
-                direction = this.directionFromYaw(player);
-                switch(direction)
-                {
-                	case 0:
-                		tMeta = 3;
-                		break;
-                		
-                	case 1:
-                		tMeta = 4;
-                		break;
-                		
-                	case 2:
-                		tMeta = 2;
-                		break;
-                		
-                	case 3:
-                		tMeta = 5;
-                		break;
-                }
-            }
-
-            if (side == 2)
-            {
-                --z;
-                tMeta = 3;
-            }
-
-            if (side == 3)
-            {
-                ++z;
-                tMeta = 2;
-            }
-
-            if (side == 4)
-            {
-                --x;
-                tMeta = 5;
-            }
-
-            if (side == 5)
-            {
-                ++x;
-                tMeta = 4;
-            }
-        }
-
-        if (item.stackSize == 0)
-        {
-            return false;
-        }
-        else if (!player.canPlayerEdit(x, y, z, side, item))
-        {
-            return false;
-        }
-        else if (y == 255 && Block.blocksList[this.getBlockID()].blockMaterial.isSolid())
-        {
-            return false;
-        }
-
-        Block block = Block.blocksList[this.getBlockID()];
-        int j1 = this.getMetadata(item.getItemDamage());        
-        int k1 = Block.blocksList[this.getBlockID()].onBlockPlaced(world, x, y, z, side, hitx, hity, hitz, j1);
-
-        if (placeBlockAt(item, player, world, x, y, z, side, hitx, hity, hitz, k1))
-        {
-            world.playSoundEffect((double)((float)x + 0.5F), (double)((float)y + 0.5F), (double)((float)z + 0.5F), block.stepSound.getPlaceSound(), (block.stepSound.getVolume() + 1.0F) / 2.0F, block.stepSound.getPitch() * 0.8F);
-            --item.stackSize;
-        }
-        
-        /*
-        TileEntitySwordRack tile = null;
-        
-        if(meta == 4)
-        {
-        	TileEntitySwordRack t = new TileEntitySwordRack(6);
-        	t.setVariable(tMeta);
-        	t.setSubType(4);
-        	t.setTextureOrientation(tMeta);
-
-	        for(int i = 0; i < 6; i++)
-	        {
-	        	t.setTextureSource(this.getBlockID(), meta, i, i);
-	        }
-	        
-        	tile = t;
-        }
-        
-        
-        
-        if(world.isRemote == false)
-        {
-            world.setBlockTileEntity(x, y, z, tile);
-            world.markBlockForUpdate(x, y, z);
-        }
-        */
-        
-        
-
-        return true;
+		return super.onItemUse(item, player, world, x, y, z, side, hitx, hity, hitz);
     }
 	
 	
@@ -434,10 +290,7 @@ public class ItemDiscreteDecorBlock extends ItemBlock
        
         int direction;		
 		int orient = 0;
-		int ox = x;
-		int oy = y;
-		int oz = z;
-		
+
         if(id == Block.snow.blockID && (world.getBlockMetadata(x, y, z) & 7) < 1)
         {
             side = 1;
@@ -522,7 +375,7 @@ public class ItemDiscreteDecorBlock extends ItemBlock
         
         if(subindex != -1)
         {
-        	tile = subs[this.getSubIndex(meta)].getTileEntity(meta, orient, -1, this.getBlockID(), meta, side, hitx, hity);
+        	tile = subs[this.getSubIndex(meta)].getTileEntity(meta, orient, -1, this.getBlockID(), meta, side, hitx, hity, hitz);
         }
         else
         {

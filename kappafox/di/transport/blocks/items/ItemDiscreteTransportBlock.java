@@ -275,7 +275,7 @@ public class ItemDiscreteTransportBlock extends ItemBlock
         
         if(subindex != -1)
         {
-        	tile = subs[this.getSubIndex(meta)].getTileEntity(meta, orient, -1, this.getBlockID(), meta, side, hitx, hity);
+        	tile = subs[this.getSubIndex(meta)].getTileEntity(meta, orient, -1, this.getBlockID(), meta, side, hitx, hity, hitz);
         }
         else
         {

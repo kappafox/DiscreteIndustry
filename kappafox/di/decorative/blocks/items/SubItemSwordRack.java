@@ -8,23 +8,23 @@ public class SubItemSwordRack implements SubItem
 {
 
 	@Override
-	public TileEntity getTileEntity(int type_, int dir_, int var1_, int blockID_, int blockMeta_, int side_, float hitx_, float hity_) 
+	public TileEntity getTileEntity(int type, int dir, int var1, int blockID, int blockMeta, int side, float hitx, float hity, float hitz) 
 	{
-		TileEntitySwordRack tile = new TileEntitySwordRack(this.getInventorySlots(type_));
+		TileEntitySwordRack tile = new TileEntitySwordRack(this.getInventorySlots(type));
 		
 		tile.setFullColour(true);
-		tile.setSubtype(type_);
-		tile.setDirection((short)dir_);
+		tile.setSubtype(type);
+		tile.setDirection((short)dir);
 		
-		tile.setAllTexturesFromSource(blockID_, type_);
-		tile.setOriginalID(blockID_);
+		tile.setAllTexturesFromSource(blockID, type);
+		tile.setOriginalID(blockID);
 		
 		return tile;
 	}
 	
-	private int getInventorySlots(int type_)
+	private int getInventorySlots(int type)
 	{
-    	switch(type_)
+    	switch(type)
     	{
     		case 821:	//Sword Rest
     			return 1;

@@ -105,7 +105,7 @@ public class TileEntityStorageRack extends TileEntityDiscreteBlock implements IS
 	@Override
 	public boolean canUpdate( )
 	{
-		return false;
+		return true;
 	}
 	
 	
@@ -113,6 +113,7 @@ public class TileEntityStorageRack extends TileEntityDiscreteBlock implements IS
 	@Override
 	public void updateEntity( )
 	{
+		/*
 		System.out.println("update!");
 		if(SideHelper.onServer())
 		{
@@ -140,8 +141,21 @@ public class TileEntityStorageRack extends TileEntityDiscreteBlock implements IS
 				cooldown--;
 			//}
 		}
+		*/
 		
-		//this.dumpDebugStats(0);
+		/*
+		if(SideHelper.onServer())
+		{
+			System.out.print("SERVER:");
+			this.dumpDebugStats(0);
+		}
+		else
+		{
+			System.out.print("CLIENT:");
+			this.dumpDebugStats(0);
+		}
+		*/
+
 	}
 	
 	private boolean updateInsertionSlot(int slot)
@@ -205,13 +219,13 @@ public class TileEntityStorageRack extends TileEntityDiscreteBlock implements IS
 		//space in the extraction slot
 		int space = storageUnits[slot].getMaxStackSize() - this.getExtractionSlotCount(slot);
 		
-		/*
+
 		if(extractionSlots[slot] == null)
 		{
 			extractionSlots[slot] = this.getContainerContent(slot).copy();
 			extractionSlots[slot].stackSize = 0;
 		}
-		*/
+
 		if(space <= reserve)
 		{
 			amounts[slot] -= space;
@@ -1072,7 +1086,7 @@ public class TileEntityStorageRack extends TileEntityDiscreteBlock implements IS
 	@Override
 	public void setInventorySlotContents(int slot, ItemStack istack)
 	{
-
+		//System.out.println("setInventorySlotContents:" + istack.stackSize);
 		if(SideHelper.onServer())
 		{
 			if(slot < storageUnits.length)
@@ -1102,19 +1116,32 @@ public class TileEntityStorageRack extends TileEntityDiscreteBlock implements IS
 					
 					this.updateExtraSlots(slot);
 					this.updateTileEntity();
+
 				}
 			}
 			else
 			{
 				if(slot >= storageUnits.length)
 				{
-					if(istack != null && this.hasContainer(slot))
+					if(this.hasContainer(slot - storageUnits.length))
 					{
-						extractionSlots[slot - storageUnits.length] = istack;
+						if(istack == null)
+						{
+							extractionSlots[slot - storageUnits.length].stackSize = 0;
+							
+							if(this.getContainerContentCount(slot - storageUnits.length) <= 0)
+							{
+								this.emptyContainer(slot);
+							}
+						}
+						else
+						{
+							extractionSlots[slot - storageUnits.length] = istack;	
+						}
+
 					}
-					
 					this.updateExtraSlots(slot);
-					this.updateTileEntity();
+					this.updateTileEntity();			
 				}
 			}
 		}
@@ -1217,20 +1244,6 @@ public class TileEntityStorageRack extends TileEntityDiscreteBlock implements IS
 		}
 		
 		return null;
-		/*
-		ArrayList<Integer> slots = new ArrayList<Integer>();
-		
-		for(int i = 0; i < storageUnits.length; i++)
-		{
-			if(this.hasContainer(i))
-			{
-				slots.add(i);
-			}
-		}
-		
-		int[] result = slots.toArray();
-		return slots.toArray();
-		*/
 	}
 
 	@Override

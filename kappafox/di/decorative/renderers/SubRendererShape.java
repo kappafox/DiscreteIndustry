@@ -6,6 +6,7 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.RenderBlocks;
 import net.minecraft.world.IBlockAccess;
 import kappafox.di.base.SubBlockRenderingHandler;
+import kappafox.di.base.tileentities.TileEntityDiscreteBlock;
 import kappafox.di.base.tileentities.TileEntitySubtype;
 import kappafox.di.base.util.PointSet;
 import kappafox.di.decorative.blocks.BlockDecor;
@@ -13,7 +14,8 @@ import kappafox.di.decorative.blocks.BlockDecor;
 public class SubRendererShape extends SubBlockRenderingHandler
 {
 
-	private static final PointSet PART_SHAPE_SLAB = new PointSet(px.zero, px.zero, px.zero, px.sixteen, px.eight, px.sixteen);
+	private static final PointSet PART_SHAPE_SLAB_LOWER = new PointSet(px.zero, px.zero, px.zero, px.sixteen, px.eight, px.sixteen);
+	private static final PointSet PART_SHAPE_SLAB_UPPER = new PointSet(px.zero, px.eight, px.zero, px.sixteen, px.sixteen, px.sixteen);
 	
 	@Override
 	public boolean renderWorldBlock(IBlockAccess world, int x, int y, int z, Block block, int modelID, RenderBlocks renderer)
@@ -52,12 +54,25 @@ public class SubRendererShape extends SubBlockRenderingHandler
 	
 	private void renderInventoryDiscreteSlabBlock(Block block, int subtype, int modelID, RenderBlocks renderer)
 	{
-		drh.tessellateInventoryBlock(renderer, block, subtype, PART_SHAPE_SLAB);
+		drh.tessellateInventoryBlock(renderer, block, subtype, PART_SHAPE_SLAB_LOWER);
 	}
 
 	public boolean renderWorldDiscreteSlabBlock(IBlockAccess world, int x, int y, int z, Block block, TileEntitySubtype tile, RenderBlocks renderer, int type)
 	{
-		drh.renderDiscreteQuad(world, renderer, block, x, y, z, PART_SHAPE_SLAB);
+		TileEntityDiscreteBlock t = (TileEntityDiscreteBlock)tile;
+		
+		if(t != null)
+		{
+			if(t.getVariable() == 1)
+			{
+				drh.renderDiscreteQuad(world, renderer, block, x, y, z, PART_SHAPE_SLAB_UPPER);
+			}
+			else
+			{
+				drh.renderDiscreteQuad(world, renderer, block, x, y, z, PART_SHAPE_SLAB_LOWER);
+			}
+		}
+
 		return true;
 	}
 

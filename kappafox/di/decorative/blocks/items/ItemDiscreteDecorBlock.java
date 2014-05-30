@@ -7,6 +7,7 @@ import com.google.common.collect.Ranges;
 
 import kappafox.di.base.items.SubItem;
 import kappafox.di.base.tileentities.TileEntityDiscreteBlock;
+import kappafox.di.decorative.blocks.BlockDecor;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,7 +27,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 public class ItemDiscreteDecorBlock extends ItemBlock
 {
 	
-	private static SubItem[] subs = new SubItem[3];
+	private static SubItem[] subs = new SubItem[4];
 	
 	public ItemDiscreteDecorBlock(int id)
 	{
@@ -37,7 +38,7 @@ public class ItemDiscreteDecorBlock extends ItemBlock
 		subs[0] = new SubItemSwordRack();
 		subs[1] = new SubItemDiscreteStairs();
 		subs[2] = new SubItemFixture();
-		//subs[3] = new SubItemLadder();
+		subs[3] = new SubItemShape();
 	}
 	
 	public String getUnlocalizedName(ItemStack istack)
@@ -506,6 +507,11 @@ public class ItemDiscreteDecorBlock extends ItemBlock
     	if(type >= 871 && type <= 880)
     	{
     		return 2;
+    	}
+    	
+    	if(type >= BlockDecor.RANGE_SHAPE.lowerEndpoint() && type <= BlockDecor.RANGE_SHAPE.upperEndpoint())
+    	{
+    		return 3;
     	}
     	
         

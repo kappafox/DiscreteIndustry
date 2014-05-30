@@ -18,7 +18,8 @@ import kappafox.di.base.util.PointSet;
 public class SubBlockShape extends SubBlock
 {
 	
-	private static final PointSet SLAB = new PointSet(px.zero, px.zero, px.zero, px.sixteen, px.eight, px.sixteen);
+	private static final PointSet SLAB_LOWER = new PointSet(px.zero, px.zero, px.zero, px.sixteen, px.eight, px.sixteen);
+	private static final PointSet SLAB_UPPER = new PointSet(px.zero, px.eight, px.zero, px.sixteen, px.sixteen, px.sixteen);
 	
 	@Override
 	public Icon getIcon(int side, int meta)
@@ -34,7 +35,17 @@ public class SubBlockShape extends SubBlock
 	
     public AxisAlignedBB getCollisionBoundingBoxFromPool(World world, int x, int y, int z)
     {
-    	return AxisAlignedBB.getAABBPool().getAABB(x + SLAB.x1,  y + SLAB.y1, z + SLAB.z1, x + SLAB.x2,  y + SLAB.y2, z + SLAB.z2);
+    	TileEntityDiscreteBlock tile = (TileEntityDiscreteBlock)world.getBlockTileEntity(x, y, z);
+    	
+    	if(tile != null)
+    	{
+    		if(tile.getVariable() == 1)
+    		{
+    			return AxisAlignedBB.getAABBPool().getAABB(x + SLAB_UPPER.x1,  y + SLAB_UPPER.y1, z + SLAB_UPPER.z1, x + SLAB_UPPER.x2,  y + SLAB_UPPER.y2, z + SLAB_UPPER.z2);
+    		}
+    	}
+    		
+    	return AxisAlignedBB.getAABBPool().getAABB(x + SLAB_LOWER.x1,  y + SLAB_LOWER.y1, z + SLAB_LOWER.z1, x + SLAB_LOWER.x2,  y + SLAB_LOWER.y2, z + SLAB_LOWER.z2);
     }
     
     
@@ -52,12 +63,32 @@ public class SubBlockShape extends SubBlock
     
     public BoundSet getHitBoxesBasedOnState(IBlockAccess world, int x, int y, int z)
     {
-    	return SLAB;
+    	TileEntityDiscreteBlock tile = (TileEntityDiscreteBlock)world.getBlockTileEntity(x, y, z);
+    	
+    	if(tile != null)
+    	{
+    		if(tile.getVariable() == 1)
+    		{
+    			return SLAB_UPPER;
+    		}
+    	}
+    	
+    	return SLAB_LOWER;
     }
     
 	public AxisAlignedBB getWireframeBox(World world, int x, int y, int z) 
 	{
-   	 	return AxisAlignedBB.getAABBPool().getAABB(x + SLAB.x1,  y + SLAB.y1, z + SLAB.z1, x + SLAB.x2,  y + SLAB.y2, z + SLAB.z2);
+    	TileEntityDiscreteBlock tile = (TileEntityDiscreteBlock)world.getBlockTileEntity(x, y, z);
+    	
+    	if(tile != null)
+    	{
+    		if(tile.getVariable() == 1)
+    		{
+    			return AxisAlignedBB.getAABBPool().getAABB(x + SLAB_UPPER.x1,  y + SLAB_UPPER.y1, z + SLAB_UPPER.z1, x + SLAB_UPPER.x2,  y + SLAB_UPPER.y2, z + SLAB_UPPER.z2);
+    		}
+    	}
+    	
+   	 	return AxisAlignedBB.getAABBPool().getAABB(x + SLAB_LOWER.x1,  y + SLAB_LOWER.y1, z + SLAB_LOWER.z1, x + SLAB_LOWER.x2,  y + SLAB_LOWER.y2, z + SLAB_LOWER.z2);
 	}
 	
 	@Override

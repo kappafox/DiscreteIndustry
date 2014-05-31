@@ -224,10 +224,14 @@ public class DiscreteRenderHelper
 	    	renderer.enableAO = false;
 	}
 	
-	
 	public void renderDiscreteQuadWithTextureOffsets(IBlockAccess world, RenderBlocks renderer, Block block, int x, int y, int z, TextureOffset off)
+	{
+		this.renderDiscreteQuadWithTextureOffsetsAO(world, renderer, block, x, y, z, off, true);
+	}
+	
+	public void renderDiscreteQuadWithTextureOffsetsAO(IBlockAccess world, RenderBlocks renderer, Block block, int x, int y, int z, TextureOffset off, boolean AO)
 	{				
-			renderer.enableAO = true;
+			renderer.enableAO = AO;
 			
 			AdjustableIcon aico;
 	    	
@@ -236,11 +240,26 @@ public class DiscreteRenderHelper
 	    		aico = new AdjustableIcon(renderer.getBlockIcon(block, world, x, y, z, 0));
 	    		aico.offsetU(off.getOffsetU(0));
 	    		aico.offsetV(off.getOffsetV(0));
-	    		this.renderFaceAOYNeg(world, renderer, block, x, y, z, aico);
+	    		
+	    		if(AO)
+	    		{
+	    			this.renderFaceAOYNeg(world, renderer, block, x, y, z, aico);
+	    		}
+	    		else
+	    		{
+	    			this.renderFaceYNeg(world, renderer, block, x, y, z, aico);
+	    		}
 	    	}	
 	    	else
 	    	{
-	    		this.renderFaceAOYNeg(world, renderer, block, x, y, z);
+	    		if(AO)
+	    		{
+	    			this.renderFaceAOYNeg(world, renderer, block, x, y, z);
+	    		}
+	    		else
+	    		{
+	    			this.renderFaceYNeg(world, renderer, block, x, y, z, null);
+	    		}
 	    	}
 	    	
 	    	if(off.hasOffset(1))
@@ -248,11 +267,27 @@ public class DiscreteRenderHelper
 	    		aico = new AdjustableIcon(renderer.getBlockIcon(block, world, x, y, z, 1));
 	    		aico.offsetU(off.getOffsetU(1));
 	    		aico.offsetV(off.getOffsetV(1));
-	    		this.renderFaceAOYPos(world, renderer, block, x, y, z, aico);
+	    		
+	    		
+	    		if(AO)
+	    		{
+	    			this.renderFaceAOYPos(world, renderer, block, x, y, z, aico);
+	    		}
+	    		else
+	    		{
+	    			this.renderFaceYPos(world, renderer, block, x, y, z, aico);
+	    		}
 	    	}	
 	    	else
 	    	{
-	    		this.renderFaceAOYPos(world, renderer, block, x, y, z);
+	    		if(AO)
+	    		{
+	    			this.renderFaceAOYPos(world, renderer, block, x, y, z);
+	    		}
+	    		else
+	    		{
+	    			this.renderFaceYPos(world, renderer, block, x, y, z, null);
+	    		}   		
 	    	}
 	    	
 	    	if(off.hasOffset(2))
@@ -260,11 +295,26 @@ public class DiscreteRenderHelper
 	    		aico = new AdjustableIcon(renderer.getBlockIcon(block, world, x, y, z, 2));
 	    		aico.offsetU(off.getOffsetU(2));
 	    		aico.offsetV(off.getOffsetV(2));
-		    	this.renderFaceAOZNeg(world, renderer, block, x, y, z, aico);
+	    		
+	    		if(AO)
+	    		{
+	    			this.renderFaceAOZNeg(world, renderer, block, x, y, z, aico);
+	    		}
+	    		else
+	    		{
+	    			this.renderFaceZNeg(world, renderer, block, x, y, z, aico);
+	    		}
 	    	}	
 	    	else
 	    	{
-		    	this.renderFaceAOZNeg(world, renderer, block, x, y, z);
+	    		if(AO)
+	    		{
+	    			this.renderFaceAOZNeg(world, renderer, block, x, y, z);
+	    		}
+	    		else
+	    		{
+	    			this.renderFaceZNeg(world, renderer, block, x, y, z, null);
+	    		}
 	    	}
 	    	
 	    	if(off.hasOffset(3))
@@ -272,11 +322,26 @@ public class DiscreteRenderHelper
 	    		aico = new AdjustableIcon(renderer.getBlockIcon(block, world, x, y, z, 3));
 	    		aico.offsetU(off.getOffsetU(3));
 	    		aico.offsetV(off.getOffsetV(3));
-		    	this.renderFaceAOZPos(world, renderer, block, x, y, z, aico);
+	    		
+	    		if(AO)
+	    		{
+	    			this.renderFaceAOZPos(world, renderer, block, x, y, z, aico);
+	    		}
+	    		else
+	    		{
+	    			this.renderFaceZPos(world, renderer, block, x, y, z, aico);
+	    		}
 	    	}	
 	    	else
 	    	{
-		    	this.renderFaceAOZPos(world, renderer, block, x, y, z);
+	    		if(AO)
+	    		{
+	    			this.renderFaceAOZPos(world, renderer, block, x, y, z);
+	    		}
+	    		else
+	    		{
+	    			this.renderFaceZPos(world, renderer, block, x, y, z, null);
+	    		}
 	    	}
 	    	
 	    	
@@ -285,11 +350,26 @@ public class DiscreteRenderHelper
 	    		aico = new AdjustableIcon(renderer.getBlockIcon(block, world, x, y, z, 4));
 	    		aico.offsetU(off.getOffsetU(4));
 	    		aico.offsetV(off.getOffsetV(4));
-	    		this.renderFaceAOXNeg(world, renderer, block, x, y, z, aico);
+	    		
+	    		if(AO)
+	    		{
+	    			this.renderFaceAOXNeg(world, renderer, block, x, y, z, aico);
+	    		}
+	    		else
+	    		{
+	    			this.renderFaceXNeg(world, renderer, block, x, y, z, aico);
+	    		}
 	    	}	
 	    	else
 	    	{
-	    		this.renderFaceAOXNeg(world, renderer, block, x, y, z);
+	    		if(AO)
+	    		{
+	    			this.renderFaceAOXNeg(world, renderer, block, x, y, z);
+	    		}
+	    		else
+	    		{
+	    			this.renderFaceXNeg(world, renderer, block, x, y, z, null);
+	    		}
 	    	}
 	    	
 	    	
@@ -298,11 +378,26 @@ public class DiscreteRenderHelper
 	    		aico = new AdjustableIcon(renderer.getBlockIcon(block, world, x, y, z, 5));
 	    		aico.offsetU(off.getOffsetU(5));
 	    		aico.offsetV(off.getOffsetV(5));
-	    		this.renderFaceAOXPos(world, renderer, block, x, y, z, aico);
+	    		
+	    		if(AO)
+	    		{
+	    			this.renderFaceAOXPos(world, renderer, block, x, y, z, aico);
+	    		}
+	    		else
+	    		{
+	    			this.renderFaceXPos(world, renderer, block, x, y, z, aico);
+	    		}
 	    	}	
 	    	else
 	    	{
-	    		this.renderFaceAOXPos(world, renderer, block, x, y, z);
+	    		if(AO)
+	    		{
+	    			this.renderFaceAOXPos(world, renderer, block, x, y, z);
+	    		}
+	    		else
+	    		{
+	    			this.renderFaceXPos(world, renderer, block, x, y, z, null);
+	    		}
 	    	}
 
 	    	renderer.enableAO = false;
@@ -1873,6 +1968,170 @@ public class DiscreteRenderHelper
     	length = length + (int)((parentWidth / 2.0F));
     	
     	fontRenderer.drawString(text, length + xoffset, yoffset, colour, dropShadow);
+    }
+    
+    //these functions are pass throughs to the renderer functions, but setup the lighting and colour for you without needing a whole block render
+    public void renderFaceYNeg(IBlockAccess world, RenderBlocks renderer, Block block, int x, int y, int z, Icon icon)
+    {
+        int blockColour = block.colorMultiplier(world, x, y, z);
+        int brightness = block.getMixedBrightnessForBlock(world, x, y, z);
+        float[] rgb = this.colourMultiplerToRGBWithLight(blockColour, 0);
+        
+        if(icon == null)
+        {
+        	icon = renderer.getBlockIcon(block, world, x, y, z, 0);
+        }
+
+        if (renderer.renderAllFaces || block.shouldSideBeRendered(world, x, y - 1, z, 0))
+        {
+            tessellator.setBrightness(renderer.renderMinY > 0.0D ? brightness : block.getMixedBrightnessForBlock(world, x, y - 1, z));
+            tessellator.setColorOpaque_F(rgb[0], rgb[1], rgb[2]);
+            renderer.renderFaceYNeg(block, (double)x, (double)y, (double)z, icon);
+        }
+    }
+    
+    public void renderFaceYPos(IBlockAccess world, RenderBlocks renderer, Block block, int x, int y, int z, Icon icon)
+    {
+        int blockColour = block.colorMultiplier(world, x, y, z);
+        int brightness = block.getMixedBrightnessForBlock(world, x, y, z);
+        float[] rgb = this.colourMultiplerToRGBWithLight(blockColour, 1);
+        if(icon == null)
+        {
+        	icon = renderer.getBlockIcon(block, world, x, y, z, 1);
+        }
+        
+        if (renderer.renderAllFaces || block.shouldSideBeRendered(world, x, y + 1, z, 1))
+        {
+            tessellator.setBrightness(renderer.renderMaxY > 0.0D ? brightness : block.getMixedBrightnessForBlock(world, x, y + 1, z));
+            tessellator.setColorOpaque_F(rgb[0], rgb[1], rgb[2]);
+            renderer.renderFaceYPos(block, (double)x, (double)y, (double)z, icon);
+        }
+    }
+    
+    public void renderFaceZNeg(IBlockAccess world, RenderBlocks renderer, Block block, int x, int y, int z, Icon icon)
+    {
+        int blockColour = block.colorMultiplier(world, x, y, z);
+        int brightness = block.getMixedBrightnessForBlock(world, x, y, z);
+        float[] rgb = this.colourMultiplerToRGBWithLight(blockColour, 2);
+
+        if(icon == null)
+        {
+        	icon = renderer.getBlockIcon(block, world, x, y, z, 2);
+        }
+
+        if (renderer.renderAllFaces || block.shouldSideBeRendered(renderer.blockAccess, x, y, z - 1, 2))
+        {
+            tessellator.setBrightness(renderer.renderMinZ > 0.0D ? brightness : block.getMixedBrightnessForBlock(renderer.blockAccess, x, y, z - 1));
+            tessellator.setColorOpaque_F(rgb[0], rgb[1], rgb[2]);
+            renderer.renderFaceZNeg(block, (double)x, (double)y, (double)z, icon);
+        }
+    }
+    
+    public void renderFaceZPos(IBlockAccess world, RenderBlocks renderer, Block block, int x, int y, int z, Icon icon)
+    {
+        int blockColour = block.colorMultiplier(world, x, y, z);  
+        int brightness = block.getMixedBrightnessForBlock(world, x, y, z);
+        float[] rgb = this.colourMultiplerToRGBWithLight(blockColour, 3);
+
+        if(icon == null)
+        {
+        	icon = renderer.getBlockIcon(block, world, x, y, z, 3);
+        }
+
+        if (renderer.renderAllFaces || block.shouldSideBeRendered(renderer.blockAccess, x, y, z + 1, 3))
+        {
+            tessellator.setBrightness(renderer.renderMaxZ > 0.0D ? brightness : block.getMixedBrightnessForBlock(renderer.blockAccess, x, y, z + 1));
+            tessellator.setColorOpaque_F(rgb[0], rgb[1], rgb[2]);
+            renderer.renderFaceZPos(block, (double)x, (double)y, (double)z, icon);
+        }	
+    }
+    
+    public void renderFaceXNeg(IBlockAccess world, RenderBlocks renderer, Block block, int x, int y, int z, Icon icon)
+    {
+        int blockColour = block.colorMultiplier(world, x, y, z); 
+        int brightness = block.getMixedBrightnessForBlock(world, x, y, z);
+        float[] rgb = this.colourMultiplerToRGBWithLight(blockColour, 4);
+
+        if(icon == null)
+        {
+        	icon = renderer.getBlockIcon(block, world, x, y, z, 4);
+        }
+
+        if (renderer.renderAllFaces || block.shouldSideBeRendered(renderer.blockAccess, x - 1, y, z, 4))
+        {
+            tessellator.setBrightness(renderer.renderMinX > 0.0D ? brightness : block.getMixedBrightnessForBlock(renderer.blockAccess, x - 1, y, z));
+            tessellator.setColorOpaque_F(rgb[0], rgb[1], rgb[2]);
+            renderer.renderFaceXNeg(block, (double)x, (double)y, (double)z, icon);
+        }	
+    }
+    
+    public void renderFaceXPos(IBlockAccess world, RenderBlocks renderer, Block block, int x, int y, int z, Icon icon)
+    {
+        int blockColour = block.colorMultiplier(world, x, y, z);      
+        int brightness = block.getMixedBrightnessForBlock(world, x, y, z);
+        float[] rgb = this.colourMultiplerToRGBWithLight(blockColour, 5);
+
+        if(icon == null)
+        {
+        	icon = renderer.getBlockIcon(block, world, x, y, z, 5);
+        }
+
+        if (renderer.renderAllFaces || block.shouldSideBeRendered(renderer.blockAccess, x + 1, y, z, 5))
+        {
+            tessellator.setBrightness(renderer.renderMaxX > 0.0D ? brightness : block.getMixedBrightnessForBlock(renderer.blockAccess, x + 1, y, z));
+            tessellator.setColorOpaque_F(rgb[0], rgb[1], rgb[2]);
+            renderer.renderFaceXPos(block, (double)x, (double)y, (double)z, icon);
+        }	
+    }
+    
+    private float[] colourMultiplerToRGB(int colour)
+    {
+        float r = (float)(colour >> 16 & 255) / 255.0F;
+        float g = (float)(colour >> 8 & 255) / 255.0F;
+        float b = (float)(colour & 255) / 255.0F;
+        
+        return new float[]{r,g,b};
+    }
+    
+    private float[] colourMultiplerToRGBWithLight(int colour, int side)
+    {
+    	float[] a = this.colourMultiplerToRGB(colour);
+    	
+    	for(int i = 0; i < a.length; i++)
+    	{
+    		a[i] = a[i] * this.getSideLightMultiplier(side);
+    	}
+    	
+    	return a;
+    }
+    
+    
+    //returns the simple lighting light multiplier for a given side
+    private float getSideLightMultiplier(int side)
+    {
+    	
+    	switch(side)
+    	{
+    		case 0:
+    			return 0.5F;
+    		
+    		case 1:
+    			return 1.0F;
+    			
+    		case 2:
+    			return 0.8F;
+    		
+    		case 3:
+    			return 0.8F;
+    		
+    		case 4:
+    			return 0.6F;
+    		
+    		case 5:
+    			return 0.6F;
+    	}
+    	
+    	return 1.0F;
     }
 
 }

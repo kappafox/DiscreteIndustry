@@ -49,34 +49,37 @@ public class DiscreteTransportEventListener
 		
 		MovingObjectPosition clickedOn = this.getMovingObjectPositionFromPlayer(player.worldObj, player, true);
 		
-		//System.out.println((clickedOn.hitVec.xCoord - event.x) + " " + (clickedOn.hitVec.yCoord - event.y) + " " + (clickedOn.hitVec.zCoord - event.z));
-		switch(event.action)
+		if(clickedOn != null && clickedOn.hitVec != null)
 		{
-			case RIGHT_CLICK_BLOCK:
+			//System.out.println((clickedOn.hitVec.xCoord - event.x) + " " + (clickedOn.hitVec.yCoord - event.y) + " " + (clickedOn.hitVec.zCoord - event.z));
+			switch(event.action)
 			{
-				break;
-			}
-			
-			case LEFT_CLICK_BLOCK:
-			{
-				Block target = Block.blocksList[player.worldObj.getBlockId(event.x, event.y, event.z)];
-				
-				if(target != null && target instanceof BlockDiscreteTransport)
+				case RIGHT_CLICK_BLOCK:
 				{
-					BlockDiscreteTransport bdt = (BlockDiscreteTransport)target;
-					
-					float hitx = (float)clickedOn.hitVec.xCoord - event.x;
-					float hity = (float)clickedOn.hitVec.yCoord - event.y;
-					float hitz = (float)clickedOn.hitVec.zCoord - event.z;
-								
-					bdt.onBlockClicked(player.worldObj, event.x, event.y, event.z, player, event.face, hitx, hity, hitz);
+					break;
 				}
-				break;
-			}
-			
-			default:
-			{
 				
+				case LEFT_CLICK_BLOCK:
+				{
+					Block target = Block.blocksList[player.worldObj.getBlockId(event.x, event.y, event.z)];
+					
+					if(target != null && target instanceof BlockDiscreteTransport)
+					{
+						BlockDiscreteTransport bdt = (BlockDiscreteTransport)target;
+						
+						float hitx = (float)clickedOn.hitVec.xCoord - event.x;
+						float hity = (float)clickedOn.hitVec.yCoord - event.y;
+						float hitz = (float)clickedOn.hitVec.zCoord - event.z;
+									
+						bdt.onBlockClicked(player.worldObj, event.x, event.y, event.z, player, event.face, hitx, hity, hitz);
+					}
+					break;
+				}
+				
+				default:
+				{
+					
+				}
 			}
 		}
 	}

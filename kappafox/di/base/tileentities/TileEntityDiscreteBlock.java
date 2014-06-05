@@ -191,7 +191,7 @@ public class TileEntityDiscreteBlock extends TileEntitySubtype
 	
 	public ForgeDirection getForgeDirection( )
 	{
-		return ForgeDirection.getOrientation(direction);
+		return ForgeDirection.getOrientation(this.getDirection());
 	}
 	
 	public void setDirection(short dir)

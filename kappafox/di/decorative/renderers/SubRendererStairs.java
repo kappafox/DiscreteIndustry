@@ -100,54 +100,64 @@ public class SubRendererStairs extends SubBlockRenderingHandler
 		TileEntityDiscreteBlock east = null;
 		TileEntityDiscreteBlock west = null;
 		
+		ForgeDirection northDirection = null;
+		ForgeDirection southDirection = null;
+		ForgeDirection eastDirection = null;
+		ForgeDirection westDirection = null;
+		
 		
 		if(n != null && n instanceof TileEntityDiscreteBlock)
 		{
 			north = (TileEntityDiscreteBlock)n;
+			northDirection = north.getForgeDirection();
 		}
 		
 		if(s != null && s instanceof TileEntityDiscreteBlock)
 		{
 			south = (TileEntityDiscreteBlock)s;
+			southDirection = south.getForgeDirection();
 		}
 		
 		if(e != null && e instanceof TileEntityDiscreteBlock)
 		{
 			east = (TileEntityDiscreteBlock)e;
+			eastDirection = east.getForgeDirection();
 		}
 		
 		if(w != null && w instanceof TileEntityDiscreteBlock)
 		{
 			west = (TileEntityDiscreteBlock)w;
+			westDirection = west.getForgeDirection();
 		}
 		
-		
-		//int dir = tile.getDirection();
-		int ori = tile.getVariable();
+		int orient = tile.getVariable();
 		
 		float y1 = px.zero;
 		float y2 = px.four;
-		float y3 = px.four;
-		float y4 = px.eight;
+		
+		float y3 = y1 + px.four;
+		float y4 = y2 + px.four;
 		
 		float x1 = px.zero;
-		float x2 = px.four;
+		float x2 = px.sixteen;
+
+		float yinc = px.four;
+		float vinc = px.four;
 		
-		/*
-		if(ori == 1)
+		if(orient == 1)
 		{
-			float f = y1;
+			y1 = px.twelve;
+			y2 = px.sixteen;
 			
-			y1 = y3;
-			y3 = f;
-			f = y2;
-			y2 = y4;
-			y4 = f;
+			y3 = px.eight;
+			y4 = px.twelve;
+			yinc *= -1.0F;
+			
 		}
-		*/
 		
-		renderer.setRenderBounds(px.zero, y1, px.zero, px.sixteen, y2, px.sixteen);
-		drh.renderDiscreteQuad(world, renderer, block, x, y, z);
+		
+		//renderer.setRenderBounds(px.zero, y1, px.zero, px.sixteen, y2, px.sixteen);
+		//drh.renderDiscreteQuad(world, renderer, block, x, y, z);
 		
 		ForgeDirection direction = ForgeDirection.getOrientation(tile.getDirection());
 		
@@ -156,40 +166,182 @@ public class SubRendererStairs extends SubBlockRenderingHandler
 			//-Z
 			case NORTH:
 			{
-				int offset = 4;
-				TextureOffset off = new TextureOffset();
-				off.setOffsetU(5, offset);	//Offsetting +X
+				boolean shorten = false;
+				boolean noCorner = false;
 				
-				float min = px.zero;
-				float max = px.twelve;
-				for(int i = 0; i < 3; i++)
+				//this block is in a line
+				if((this.isSmallStair(east) && this.isSmallStair(west)) && eastDirection == direction && westDirection == direction)
 				{
-					renderer.setRenderBounds(px.zero, y3  + (i * px.four), min, px.sixteen, y4  + (i * px.four), max);
-					drh.renderDiscreteQuadWithTextureOffsets(world, renderer, block, x, y, z, off);
-					
-					off.setOffsetU(5, off.getOffsetU(5) + 4);
-					max -= px.four;
+					if(east.getVariable() == orient && west.getVariable() == orient)
+					{
+						noCorner = true;
+					}
 				}
 				
+				if(noCorner == false && this.isSmallStair(north) && north.getVariable() == orient)
+				{
+					//stair to the EAST
+					if(northDirection == ForgeDirection.EAST)
+					{
+						shorten = true;
+					}
+					
+					//stair to the WEST
+					if(northDirection == ForgeDirection.WEST)
+					{
+						shorten = true;
+					}
+				}
+				
+				float xs = x1;
+				float xe = x2;
+				
+				int offset = 4;
+				TextureOffset off = new TextureOffset();
+				
+				for(int i = 0; i < 4; i++)
+				{
+					renderer.setRenderBounds(xs, y1  + (i * yinc), x1, xe, y2  + (i * yinc), x2 - (i * vinc));
+					drh.renderDiscreteQuadWithTextureOffsets(world, renderer, block, x, y, z, off);
+					
+					off.setOffsetU(5, off.getOffsetU(5) + offset);
+					
+					if(shorten)
+					{
+						if(northDirection == ForgeDirection.EAST)
+						{
+							xs += vinc;
+						}
+						
+						if(northDirection == ForgeDirection.WEST)
+						{
+							xe -= vinc;
+						}
+
+					}
+				}
+				
+				
+				//Cornering
+				if(south != null && south.getSubtype() == subtype && shorten == false && noCorner == false)
+				{
+					float x3 = px.zero;
+					float x4 = px.twelve;
+
+					if(southDirection == ForgeDirection.WEST && south.getVariable() == orient && westDirection != direction)
+					{
+						TextureOffset off2 = new TextureOffset();
+						off2.setOffsetU(5, -12);
+						
+						for(int i = 0; i < 3; i++)
+						{
+							renderer.setRenderBounds(px.zero, y3 + (i * yinc), px.twelve - (i * vinc), px.twelve - (i * vinc), y4 + (i * yinc), x2);
+							drh.renderDiscreteQuadWithTextureOffsets(world, renderer, block, x, y, z, off2);
+							off2.setOffsetU(5, off2.getOffsetU(5) + 4);
+						}
+					}
+					
+
+					if(southDirection == ForgeDirection.EAST && south.getVariable() == orient && eastDirection != direction)
+					{
+						TextureOffset off2 = new TextureOffset();
+						off2.setOffsetU(5, -12);
+						
+						for(int i = 0; i < 3; i++)
+						{
+							renderer.setRenderBounds(px.four + (i * vinc), y3 + (i * yinc), px.twelve - (i * vinc), px.sixteen, y4 + (i * yinc), x2);
+							drh.renderDiscreteQuadWithTextureOffsets(world, renderer, block, x, y, z, off2);
+							off2.setOffsetU(5, off2.getOffsetU(5) + 4);
+						}
+					}
+				}
 				break;
 			}
 			
 			//+Z
 			case SOUTH:
 			{
+				boolean shorten = false;
+				boolean noCorner = false;
+				
+				//this block is in a line
+				if((this.isSmallStair(east) && this.isSmallStair(west)) && eastDirection == direction && westDirection == direction)
+				{
+					if(east.getVariable() == orient && west.getVariable() == orient)
+					{
+						noCorner = true;
+					}
+				}
+				
+				if(noCorner == false && this.isSmallStair(south) && south.getVariable() == orient)
+				{
+					//stair to the EAST or WEST
+					if(southDirection == ForgeDirection.EAST || southDirection == ForgeDirection.WEST)
+					{
+						shorten = true;
+					}
+				}
+				
+				float xs = x1;
+				float xe = x2;
+						
 				int offset = -4;
 				TextureOffset off = new TextureOffset();
-				off.setOffsetU(5, offset);	//Offsetting +X
-				
-				float min = px.four;
-				float max = px.sixteen;
-				for(int i = 0; i < 3; i++)
+
+				for(int i = 0; i < 4; i++)
 				{
-					renderer.setRenderBounds(px.zero, y3 + (i * px.four), min, px.sixteen, y4  + (i * px.four), max);
+					renderer.setRenderBounds(xs, y1  + (i * yinc), x1 + (i * vinc), xe, y2  + (i * yinc), x2);
 					drh.renderDiscreteQuadWithTextureOffsets(world, renderer, block, x, y, z, off);
 					
 					off.setOffsetU(5, off.getOffsetU(5) - 4);
-					min += px.four;
+					
+					if(shorten)
+					{
+						if(southDirection == ForgeDirection.EAST)
+						{
+							xs += vinc;
+						}
+						
+						if(southDirection == ForgeDirection.WEST)
+						{
+							xe -= vinc;
+						}
+					}
+				}
+
+				//Cornering
+				if(north != null && north.getSubtype() == subtype && shorten == false && noCorner == false)
+				{
+					float x3 = px.zero;
+					float x4 = px.twelve;
+
+					if(northDirection == ForgeDirection.WEST && north.getVariable() == orient && westDirection != direction)
+					{
+						TextureOffset off2 = new TextureOffset();
+						off2.setOffsetU(5, 12);
+						
+						for(int i = 0; i < 3; i++)
+						{
+							renderer.setRenderBounds(px.zero, y3 + (i * yinc), px.zero, px.twelve - (i * vinc), y4 + (i * yinc), px.four + (i * vinc));
+							drh.renderDiscreteQuadWithTextureOffsets(world, renderer, block, x, y, z, off2);
+							off2.setOffsetU(5, off2.getOffsetU(5) - 4);
+						}
+					}
+					
+					
+
+					if(northDirection == ForgeDirection.EAST && north.getVariable() == orient && eastDirection != direction)
+					{
+						TextureOffset off2 = new TextureOffset();
+						off2.setOffsetU(5, 12);
+						
+						for(int i = 0; i < 3; i++)
+						{
+							renderer.setRenderBounds(px.four + (i * vinc), y3 + (i * yinc), px.zero, px.sixteen, y4 + (i * yinc), px.four + (i * vinc));
+							drh.renderDiscreteQuadWithTextureOffsets(world, renderer, block, x, y, z, off2);
+							off2.setOffsetU(5, off2.getOffsetU(5) - 4);
+						}
+					}
 				}
 				break;
 			}
@@ -197,20 +349,94 @@ public class SubRendererStairs extends SubBlockRenderingHandler
 			//-X
 			case WEST:
 			{
+				boolean shorten = false;
+				boolean noCorner = false;
+				
+				//this block is in a line
+				if((this.isSmallStair(north) && this.isSmallStair(south)) && northDirection == direction && southDirection == direction)
+				{
+					if(north.getVariable() == orient && south.getVariable() == orient)
+					{
+						noCorner = true;
+					}
+				}
+				
+				if(noCorner == false && this.isSmallStair(west) && west.getVariable() == orient)
+				{
+					//stair to the EAST or WEST
+					if(westDirection == ForgeDirection.NORTH || westDirection == ForgeDirection.SOUTH)
+					{
+						shorten = true;
+					}
+				}
+				
+				float zs = x1;
+				float ze = x2;
 				
 				int offset = 4;
 				TextureOffset off = new TextureOffset();
-				off.setOffsetU(2, offset);	//Offsetting +X
-				
-				float min = px.zero;
-				float max = px.twelve;
-				for(int i = 0; i < 3; i++)
+
+				for(int i = 0; i < 4; i++)
 				{
-					renderer.setRenderBounds(min, y3  + (i * px.four), px.zero, max, y4  + (i * px.four), px.sixteen);
+					renderer.setRenderBounds(x1, y1  + (i * yinc), zs, x2 - (i * vinc), y2  + (i * yinc), ze);
 					drh.renderDiscreteQuadWithTextureOffsets(world, renderer, block, x, y, z, off);
 					
-					off.setOffsetU(2, off.getOffsetU(2) + 4);
-					max -= px.four;
+					
+					
+					if(shorten)
+					{
+						if(westDirection == ForgeDirection.SOUTH)
+						{
+							zs += vinc;
+							off.setOffsetU(5, off.getOffsetU(5) - 4);
+							off.setOffsetU(2, off.getOffsetU(2) + 4);
+						}
+						
+						if(westDirection == ForgeDirection.NORTH)
+						{
+							ze -= vinc;
+						}
+					}
+					else
+					{
+						off.setOffsetU(2, off.getOffsetU(2) + 4);
+					}
+				}
+				
+				//Cornering
+				if(east != null && east.getSubtype() == subtype && shorten == false && noCorner == false)
+				{
+					float x3 = px.zero;
+					float x4 = px.twelve;
+
+					if(eastDirection == ForgeDirection.NORTH && east.getVariable() == orient && northDirection != direction)
+					{
+						TextureOffset off2 = new TextureOffset();
+						off2.setOffsetU(2, -12);
+						
+						for(int i = 0; i < 3; i++)
+						{
+							renderer.setRenderBounds(px.twelve - (i * vinc), y3 + (i * yinc), px.zero, px.sixteen, y4 + (i * yinc), px.twelve - (i * vinc));
+							drh.renderDiscreteQuadWithTextureOffsets(world, renderer, block, x, y, z, off2);
+							off2.setOffsetU(2, off2.getOffsetU(2) + 4);
+						}
+					}
+					
+					
+					
+					if(eastDirection == ForgeDirection.SOUTH && east.getVariable() == orient && southDirection != direction)
+					{
+						TextureOffset off2 = new TextureOffset();
+						off2.setOffsetU(2, -12);
+						
+						for(int i = 0; i < 3; i++)
+						{
+							renderer.setRenderBounds(px.twelve - (i * vinc), y3 + (i * yinc), px.four + (i * vinc), px.sixteen, y4 + (i * yinc), px.sixteen);
+							drh.renderDiscreteQuadWithTextureOffsets(world, renderer, block, x, y, z, off2);
+							off2.setOffsetU(2, off2.getOffsetU(2) + 4);
+						}
+					}
+					
 				}
 				break;
 			}
@@ -218,19 +444,93 @@ public class SubRendererStairs extends SubBlockRenderingHandler
 			//+X
 			case EAST:
 			{
+				
+				boolean shorten = false;
+				boolean noCorner = false;
+				
+				//this block is in a line
+				if((this.isSmallStair(north) && this.isSmallStair(south)) && northDirection == direction && southDirection == direction)
+				{
+					if(north.getVariable() == orient && south.getVariable() == orient)
+					{
+						noCorner = true;
+					}
+				}
+				
+				if(noCorner == false && this.isSmallStair(east) && east.getVariable() == orient)
+				{
+					//stair to the EAST or WEST
+					if(eastDirection == ForgeDirection.NORTH || eastDirection == ForgeDirection.SOUTH)
+					{
+						shorten = true;
+					}
+				}
+				
+				float zs = x1;
+				float ze = x2;
+				
 				int offset = -4;
 				TextureOffset off = new TextureOffset();
-				off.setOffsetU(2, offset);	//Offsetting +X
-				
-				float min = px.four;
-				float max = px.sixteen;
-				for(int i = 0; i < 3; i++)
+
+				for(int i = 0; i < 4; i++)
 				{
-					renderer.setRenderBounds(min, y3  + (i * px.four), px.zero, max, y4  + (i * px.four), px.sixteen);
+					renderer.setRenderBounds(x1 + (i * vinc), y1  + (i * yinc), zs, x2, y2  + (i * yinc), ze);
 					drh.renderDiscreteQuadWithTextureOffsets(world, renderer, block, x, y, z, off);
 					
 					off.setOffsetU(2, off.getOffsetU(2) - 4);
-					min += px.four;
+					
+					if(shorten)
+					{
+						if(eastDirection == ForgeDirection.SOUTH)
+						{
+							zs += vinc;
+							//off.setOffsetU(5, off.getOffsetU(5) - 4);
+							//off.setOffsetU(2, off.getOffsetU(2) + 4);
+						}
+						
+						if(eastDirection == ForgeDirection.NORTH)
+						{
+							ze -= vinc;
+						}
+					}
+					
+				}
+				
+				//Cornering
+				if(west != null && west.getSubtype() == subtype && shorten == false && noCorner == false)
+				{
+					float x3 = px.zero;
+					float x4 = px.twelve;
+
+					if(westDirection == ForgeDirection.NORTH && west.getVariable() == orient && northDirection != direction)
+					{
+						TextureOffset off2 = new TextureOffset();
+						off2.setOffsetU(2, 12);
+						
+						for(int i = 0; i < 3; i++)
+						{
+							renderer.setRenderBounds(px.zero, y3 + (i * yinc), px.zero, px.four + (i * vinc), y4 + (i * yinc), px.twelve - (i * vinc));
+							drh.renderDiscreteQuadWithTextureOffsets(world, renderer, block, x, y, z, off2);
+							off2.setOffsetU(2, off2.getOffsetU(2) - 4);
+						}
+					}
+					
+					
+					
+					if(westDirection == ForgeDirection.SOUTH && west.getVariable() == orient && southDirection != direction)
+					{
+						TextureOffset off2 = new TextureOffset();
+						off2.setOffsetU(2, 12);
+						
+						for(int i = 0; i < 3; i++)
+						{
+							renderer.setRenderBounds(px.zero, y3 + (i * yinc), px.four + (i * vinc), px.four + (i * vinc), y4 + (i * yinc), px.sixteen);
+							drh.renderDiscreteQuadWithTextureOffsets(world, renderer, block, x, y, z, off2);
+							off2.setOffsetU(2, off2.getOffsetU(2) - 4);
+						}
+					}
+					
+					
 				}
 				break;
 			}
@@ -245,7 +545,8 @@ public class SubRendererStairs extends SubBlockRenderingHandler
 
         return true;	
 	}
-	
+
+
 	private boolean renderWorldDiscreteStairsBlock(IBlockAccess world, int x, int y, int z, Block block, TileEntityDiscreteBlock tile, RenderBlocks renderer, int subtype)
 	{
 		
@@ -536,5 +837,16 @@ public class SubRendererStairs extends SubBlockRenderingHandler
 		}
 
         return true;
+	}
+	
+	
+	private boolean isSmallStair(TileEntityDiscreteBlock tile)
+	{
+		if(tile != null && tile instanceof TileEntityDiscreteBlock && tile.getSubtype() == BlockDecor.ID_STAIRS_SMALL)
+		{
+			return true;
+		}
+		
+		return false;
 	}
 }
